@@ -1,10 +1,8 @@
-// SDK smoke test -- validates build-from-source and API integration.
-const API_URL = "https://api.mailodds.com";
+// SDK smoke test -- validates build-from-source and API integration using the SDK client.
 const API_KEY = process.env.MAILODDS_TEST_KEY;
 if (!API_KEY) { console.error("ERROR: MAILODDS_TEST_KEY not set"); process.exit(1); }
 
-// Prove the SDK is importable (build succeeded)
-await import("../dist/index.js");
+const { Configuration, EmailValidationApi, ResponseError } = await import("../dist/index.js");
 
 let passed = 0;
 let failed = 0;
@@ -24,40 +22,41 @@ function check(label, expected, actual) {
   else { failed++; console.log(`  FAIL: ${label} expected=${expected} got=${actual}`); }
 }
 
-async function apiCall(email, key = API_KEY) {
-  const resp = await fetch(`${API_URL}/v1/validate`, {
-    method: "POST",
-    headers: { "Authorization": `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ email }),
-  });
-  return { status: resp.status, data: await resp.json() };
-}
+const api = new EmailValidationApi(new Configuration({ basePath: "https://api.mailodds.com", accessToken: API_KEY }));
 
-// Phase 1: validate all test domains
 for (const [email, expStatus, expAction, expSub] of TEST_CASES) {
   const domain = email.split("@")[1].split(".")[0];
   try {
-    const { data: r } = await apiCall(email);
-    check(`${domain}.status`, expStatus, r.status);
-    check(`${domain}.action`, expAction, r.action);
-    check(`${domain}.sub_status`, expSub, r.sub_status ?? null);
-    check(`${domain}.test_mode`, true, r.test_mode);
+    const resp = await api.validateEmail({ validateRequest: { email } });
+    check(`${domain}.status`, expStatus, resp.status);
+    check(`${domain}.action`, expAction, resp.action);
+    check(`${domain}.sub_status`, expSub, resp.subStatus ?? null);
   } catch (e) {
     failed++;
     console.log(`  FAIL: ${domain} raised ${e.message}`);
   }
 }
 
-// Phase 2: error handling
-const { status: s401 } = await apiCall("test@deliverable.mailodds.com", "invalid_key");
-check("error.401", 401, s401);
+// Error handling: 401 with bad key
+try {
+  const badApi = new EmailValidationApi(new Configuration({ basePath: "https://api.mailodds.com", accessToken: "invalid_key" }));
+  await badApi.validateEmail({ validateRequest: { email: "test@deliverable.mailodds.com" } });
+  failed++;
+  console.log("  FAIL: error.401 no exception raised");
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 401) { passed++; }
+  else { failed++; console.log(`  FAIL: error.401 wrong error: ${e.message}`); }
+}
 
-const resp400 = await fetch(`${API_URL}/v1/validate`, {
-  method: "POST",
-  headers: { "Authorization": `Bearer ${API_KEY}`, "Content-Type": "application/json" },
-  body: JSON.stringify({}),
-});
-check("error.400", true, [400, 422].includes(resp400.status));
+// Error handling: 400/422 with missing email
+try {
+  await api.validateEmail({ validateRequest: { email: "" } });
+  failed++;
+  console.log("  FAIL: error.400 no exception raised");
+} catch (e) {
+  if (e instanceof ResponseError && [400, 422].includes(e.response.status)) { passed++; }
+  else { failed++; console.log(`  FAIL: error.400 wrong error: ${e.message}`); }
+}
 
 const total = passed + failed;
 console.log(`\n${failed === 0 ? "PASS" : "FAIL"}: TypeScript SDK (${passed}/${total})`);

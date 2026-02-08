@@ -108,6 +108,7 @@ export interface ValidationResponse {
 export const ValidationResponseStatusEnum = {
     Valid: 'valid',
     Invalid: 'invalid',
+    CatchAll: 'catch_all',
     DoNotMail: 'do_not_mail',
     Unknown: 'unknown'
 } as const;
@@ -117,9 +118,10 @@ export type ValidationResponseStatusEnum = typeof ValidationResponseStatusEnum[k
  * @export
  */
 export const ValidationResponseActionEnum = {
-    SafeToSend: 'safe_to_send',
-    DoNotSend: 'do_not_send',
-    ManualReview: 'manual_review'
+    Accept: 'accept',
+    AcceptWithCaution: 'accept_with_caution',
+    Reject: 'reject',
+    RetryLater: 'retry_later'
 } as const;
 export type ValidationResponseActionEnum = typeof ValidationResponseActionEnum[keyof typeof ValidationResponseActionEnum];
 
