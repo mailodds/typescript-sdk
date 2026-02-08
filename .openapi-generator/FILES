@@ -61,7 +61,6 @@ docs/ValidationResponse.md
 docs/ValidationResponsePolicyApplied.md
 docs/ValidationResponseSuppressionMatch.md
 docs/ValidationResult.md
-package.json
 src/apis/BulkValidationApi.ts
 src/apis/EmailValidationApi.ts
 src/apis/SuppressionListsApi.ts
@@ -126,5 +125,3 @@ src/models/ValidationResponseSuppressionMatch.ts
 src/models/ValidationResult.ts
 src/models/index.ts
 src/runtime.ts
-tsconfig.esm.json
-tsconfig.json
