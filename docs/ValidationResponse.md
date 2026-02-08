@@ -1,6 +1,7 @@
 
 # ValidationResponse
 
+Flat validation response. Conditional fields are omitted (not null) when not applicable.
 
 ## Properties
 
@@ -9,15 +10,22 @@ Name | Type
 `schemaVersion` | string
 `email` | string
 `status` | string
-`subStatus` | string
 `action` | string
+`subStatus` | string
 `domain` | string
 `mxFound` | boolean
+`mxHost` | string
 `smtpCheck` | boolean
+`catchAll` | boolean
 `disposable` | boolean
 `roleAccount` | boolean
 `freeProvider` | boolean
+`depth` | string
+`processedAt` | Date
+`suggestedEmail` | string
+`retryAfterMs` | number
 `suppressionMatch` | [ValidationResponseSuppressionMatch](ValidationResponseSuppressionMatch.md)
+`policyApplied` | [ValidationResponsePolicyApplied](ValidationResponsePolicyApplied.md)
 
 ## Example
 
@@ -29,15 +37,22 @@ const example = {
   "schemaVersion": 1.0,
   "email": null,
   "status": null,
-  "subStatus": null,
   "action": null,
+  "subStatus": null,
   "domain": null,
   "mxFound": null,
+  "mxHost": null,
   "smtpCheck": null,
+  "catchAll": null,
   "disposable": null,
   "roleAccount": null,
   "freeProvider": null,
+  "depth": null,
+  "processedAt": null,
+  "suggestedEmail": null,
+  "retryAfterMs": null,
   "suppressionMatch": null,
+  "policyApplied": null,
 } satisfies ValidationResponse
 
 console.log(example)

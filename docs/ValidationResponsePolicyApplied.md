@@ -1,27 +1,29 @@
 
-# ValidationResponseSuppressionMatch
+# ValidationResponsePolicyApplied
 
-Present only when email matched a suppression list entry.
+Present when a validation policy modified the result.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`matchType` | string
-`matchValue` | string
-`reason` | string
+`policyId` | number
+`policyName` | string
+`ruleId` | number
+`ruleType` | string
 
 ## Example
 
 ```typescript
-import type { ValidationResponseSuppressionMatch } from '@mailodds/sdk'
+import type { ValidationResponsePolicyApplied } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "matchType": null,
-  "matchValue": null,
-  "reason": null,
-} satisfies ValidationResponseSuppressionMatch
+  "policyId": null,
+  "policyName": null,
+  "ruleId": null,
+  "ruleType": null,
+} satisfies ValidationResponsePolicyApplied
 
 console.log(example)
 
@@ -30,7 +32,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ValidationResponseSuppressionMatch
+const exampleParsed = JSON.parse(exampleJSON) as ValidationResponsePolicyApplied
 console.log(exampleParsed)
 ```
 

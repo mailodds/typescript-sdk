@@ -1,6 +1,5 @@
 .gitignore
 .npmignore
-.openapi-generator-ignore
 README.md
 docs/AddPolicyRule201Response.md
 docs/AddSuppressionRequest.md
@@ -53,9 +52,13 @@ docs/TelemetrySummaryTotals.md
 docs/TestPolicyRequest.md
 docs/TestPolicyRequestTestResult.md
 docs/UpdatePolicyRequest.md
+docs/ValidateBatch200Response.md
+docs/ValidateBatch200ResponseSummary.md
+docs/ValidateBatchRequest.md
 docs/ValidateRequest.md
 docs/ValidationPoliciesApi.md
 docs/ValidationResponse.md
+docs/ValidationResponsePolicyApplied.md
 docs/ValidationResponseSuppressionMatch.md
 docs/ValidationResult.md
 package.json
@@ -113,8 +116,12 @@ src/models/TelemetrySummaryTotals.ts
 src/models/TestPolicyRequest.ts
 src/models/TestPolicyRequestTestResult.ts
 src/models/UpdatePolicyRequest.ts
+src/models/ValidateBatch200Response.ts
+src/models/ValidateBatch200ResponseSummary.ts
+src/models/ValidateBatchRequest.ts
 src/models/ValidateRequest.ts
 src/models/ValidationResponse.ts
+src/models/ValidationResponsePolicyApplied.ts
 src/models/ValidationResponseSuppressionMatch.ts
 src/models/ValidationResult.ts
 src/models/index.ts

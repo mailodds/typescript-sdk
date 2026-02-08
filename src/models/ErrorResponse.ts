@@ -36,7 +36,7 @@ export interface ErrorResponse {
      * @type {string}
      * @memberof ErrorResponse
      */
-    message: string;
+    message?: string;
 }
 
 /**
@@ -44,7 +44,6 @@ export interface ErrorResponse {
  */
 export function instanceOfErrorResponse(value: object): value is ErrorResponse {
     if (!('error' in value) || value['error'] === undefined) return false;
-    if (!('message' in value) || value['message'] === undefined) return false;
     return true;
 }
 
@@ -60,7 +59,7 @@ export function ErrorResponseFromJSONTyped(json: any, ignoreDiscriminator: boole
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
         'error': json['error'],
-        'message': json['message'],
+        'message': json['message'] == null ? undefined : json['message'],
     };
 }
 

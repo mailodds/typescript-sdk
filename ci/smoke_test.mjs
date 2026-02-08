@@ -7,14 +7,15 @@ const { Configuration, EmailValidationApi, ResponseError } = await import("../di
 let passed = 0;
 let failed = 0;
 
+// [email, status, action, sub_status, free_provider, disposable, role_account, mx_found, depth]
 const TEST_CASES = [
-  ["test@deliverable.mailodds.com", "valid", "accept", null],
-  ["test@invalid.mailodds.com", "invalid", "reject", "smtp_rejected"],
-  ["test@risky.mailodds.com", "catch_all", "accept_with_caution", "catch_all_detected"],
-  ["test@disposable.mailodds.com", "do_not_mail", "reject", "disposable"],
-  ["test@role.mailodds.com", "do_not_mail", "reject", "role_account"],
-  ["test@timeout.mailodds.com", "unknown", "retry_later", "smtp_unreachable"],
-  ["test@freeprovider.mailodds.com", "valid", "accept", null],
+  ["test@deliverable.mailodds.com", "valid", "accept", null, false, false, false, true, "enhanced"],
+  ["test@invalid.mailodds.com", "invalid", "reject", "smtp_rejected", false, false, false, true, "enhanced"],
+  ["test@risky.mailodds.com", "catch_all", "accept_with_caution", "catch_all_detected", false, false, false, true, "enhanced"],
+  ["test@disposable.mailodds.com", "do_not_mail", "reject", "disposable", false, true, false, true, "enhanced"],
+  ["test@role.mailodds.com", "do_not_mail", "reject", "role_account", false, false, true, true, "enhanced"],
+  ["test@timeout.mailodds.com", "unknown", "retry_later", "smtp_unreachable", false, false, false, true, "enhanced"],
+  ["test@freeprovider.mailodds.com", "valid", "accept", null, true, false, false, true, "enhanced"],
 ];
 
 function check(label, expected, actual) {
@@ -24,13 +25,20 @@ function check(label, expected, actual) {
 
 const api = new EmailValidationApi(new Configuration({ basePath: "https://api.mailodds.com", accessToken: API_KEY }));
 
-for (const [email, expStatus, expAction, expSub] of TEST_CASES) {
+for (const [email, expStatus, expAction, expSub, expFree, expDisp, expRole, expMx, expDepth] of TEST_CASES) {
   const domain = email.split("@")[1].split(".")[0];
   try {
     const resp = await api.validateEmail({ validateRequest: { email } });
     check(`${domain}.status`, expStatus, resp.status);
     check(`${domain}.action`, expAction, resp.action);
     check(`${domain}.sub_status`, expSub, resp.subStatus ?? null);
+    check(`${domain}.free_provider`, expFree, resp.freeProvider);
+    check(`${domain}.disposable`, expDisp, resp.disposable);
+    check(`${domain}.role_account`, expRole, resp.roleAccount);
+    check(`${domain}.mx_found`, expMx, resp.mxFound);
+    check(`${domain}.depth`, expDepth, resp.depth);
+    if (!resp.processedAt) { failed++; console.log(`  FAIL: ${domain}.processed_at is empty`); }
+    else { passed++; }
   } catch (e) {
     failed++;
     console.log(`  FAIL: ${domain} raised ${e.message}`);

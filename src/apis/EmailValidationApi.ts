@@ -16,17 +16,27 @@
 import * as runtime from '../runtime';
 import type {
   ErrorResponse,
+  ValidateBatch200Response,
+  ValidateBatchRequest,
   ValidateRequest,
   ValidationResponse,
 } from '../models/index';
 import {
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    ValidateBatch200ResponseFromJSON,
+    ValidateBatch200ResponseToJSON,
+    ValidateBatchRequestFromJSON,
+    ValidateBatchRequestToJSON,
     ValidateRequestFromJSON,
     ValidateRequestToJSON,
     ValidationResponseFromJSON,
     ValidationResponseToJSON,
 } from '../models/index';
+
+export interface ValidateBatchOperationRequest {
+    validateBatchRequest: ValidateBatchRequest;
+}
 
 export interface ValidateEmailRequest {
     validateRequest: ValidateRequest;
@@ -36,6 +46,55 @@ export interface ValidateEmailRequest {
  * 
  */
 export class EmailValidationApi extends runtime.BaseAPI {
+
+    /**
+     * Validate up to 100 email addresses synchronously. For larger lists, use the bulk jobs API.
+     * Validate multiple emails (sync)
+     */
+    async validateBatchRaw(requestParameters: ValidateBatchOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ValidateBatch200Response>> {
+        if (requestParameters['validateBatchRequest'] == null) {
+            throw new runtime.RequiredError(
+                'validateBatchRequest',
+                'Required parameter "validateBatchRequest" was null or undefined when calling validateBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/validate/batch`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ValidateBatchRequestToJSON(requestParameters['validateBatchRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ValidateBatch200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Validate up to 100 email addresses synchronously. For larger lists, use the bulk jobs API.
+     * Validate multiple emails (sync)
+     */
+    async validateBatch(requestParameters: ValidateBatchOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ValidateBatch200Response> {
+        const response = await this.validateBatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Validate a single email address. Returns detailed validation results including status, sub-status, and recommended action.

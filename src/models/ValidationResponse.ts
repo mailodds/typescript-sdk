@@ -20,9 +20,16 @@ import {
     ValidationResponseSuppressionMatchToJSON,
     ValidationResponseSuppressionMatchToJSONTyped,
 } from './ValidationResponseSuppressionMatch';
+import type { ValidationResponsePolicyApplied } from './ValidationResponsePolicyApplied';
+import {
+    ValidationResponsePolicyAppliedFromJSON,
+    ValidationResponsePolicyAppliedFromJSONTyped,
+    ValidationResponsePolicyAppliedToJSON,
+    ValidationResponsePolicyAppliedToJSONTyped,
+} from './ValidationResponsePolicyApplied';
 
 /**
- * 
+ * Flat validation response. Conditional fields are omitted (not null) when not applicable.
  * @export
  * @interface ValidationResponse
  */
@@ -32,7 +39,7 @@ export interface ValidationResponse {
      * @type {string}
      * @memberof ValidationResponse
      */
-    schemaVersion?: string;
+    schemaVersion: string;
     /**
      * 
      * @type {string}
@@ -46,59 +53,101 @@ export interface ValidationResponse {
      */
     status: ValidationResponseStatusEnum;
     /**
-     * Detailed status reason
-     * @type {string}
-     * @memberof ValidationResponse
-     */
-    subStatus?: string;
-    /**
      * Recommended action
      * @type {string}
      * @memberof ValidationResponse
      */
     action: ValidationResponseActionEnum;
     /**
+     * Detailed status reason. Omitted when none.
+     * @type {string}
+     * @memberof ValidationResponse
+     */
+    subStatus?: ValidationResponseSubStatusEnum;
+    /**
      * 
      * @type {string}
      * @memberof ValidationResponse
      */
-    domain?: string;
+    domain: string;
     /**
-     * 
+     * Whether MX records were found for the domain
      * @type {boolean}
      * @memberof ValidationResponse
      */
-    mxFound?: boolean;
+    mxFound: boolean;
     /**
-     * 
+     * Primary MX hostname. Omitted when MX not resolved.
+     * @type {string}
+     * @memberof ValidationResponse
+     */
+    mxHost?: string;
+    /**
+     * Whether SMTP verification passed. Omitted when SMTP not checked.
      * @type {boolean}
      * @memberof ValidationResponse
      */
     smtpCheck?: boolean;
     /**
-     * 
+     * Whether domain is catch-all. Omitted when SMTP not checked.
      * @type {boolean}
      * @memberof ValidationResponse
      */
-    disposable?: boolean;
+    catchAll?: boolean;
     /**
-     * 
+     * Whether domain is a known disposable email provider
      * @type {boolean}
      * @memberof ValidationResponse
      */
-    roleAccount?: boolean;
+    disposable: boolean;
     /**
-     * 
+     * Whether address is a role account (e.g., info@, admin@)
      * @type {boolean}
      * @memberof ValidationResponse
      */
-    freeProvider?: boolean;
+    roleAccount: boolean;
+    /**
+     * Whether domain is a known free email provider (e.g., gmail.com)
+     * @type {boolean}
+     * @memberof ValidationResponse
+     */
+    freeProvider: boolean;
+    /**
+     * Validation depth used for this check
+     * @type {string}
+     * @memberof ValidationResponse
+     */
+    depth: ValidationResponseDepthEnum;
+    /**
+     * ISO 8601 timestamp of validation
+     * @type {Date}
+     * @memberof ValidationResponse
+     */
+    processedAt: Date;
+    /**
+     * Typo correction suggestion. Omitted when no typo detected.
+     * @type {string}
+     * @memberof ValidationResponse
+     */
+    suggestedEmail?: string;
+    /**
+     * Suggested retry delay in milliseconds. Present only for retry_later action.
+     * @type {number}
+     * @memberof ValidationResponse
+     */
+    retryAfterMs?: number;
     /**
      * 
      * @type {ValidationResponseSuppressionMatch}
      * @memberof ValidationResponse
      */
     suppressionMatch?: ValidationResponseSuppressionMatch;
+    /**
+     * 
+     * @type {ValidationResponsePolicyApplied}
+     * @memberof ValidationResponse
+     */
+    policyApplied?: ValidationResponsePolicyApplied;
 }
 
 
@@ -125,14 +174,48 @@ export const ValidationResponseActionEnum = {
 } as const;
 export type ValidationResponseActionEnum = typeof ValidationResponseActionEnum[keyof typeof ValidationResponseActionEnum];
 
+/**
+ * @export
+ */
+export const ValidationResponseSubStatusEnum = {
+    FormatInvalid: 'format_invalid',
+    MxMissing: 'mx_missing',
+    MxTimeout: 'mx_timeout',
+    SmtpUnreachable: 'smtp_unreachable',
+    SmtpRejected: 'smtp_rejected',
+    Disposable: 'disposable',
+    RoleAccount: 'role_account',
+    Greylisted: 'greylisted',
+    CatchAllDetected: 'catch_all_detected',
+    SuppressionMatch: 'suppression_match'
+} as const;
+export type ValidationResponseSubStatusEnum = typeof ValidationResponseSubStatusEnum[keyof typeof ValidationResponseSubStatusEnum];
+
+/**
+ * @export
+ */
+export const ValidationResponseDepthEnum = {
+    Standard: 'standard',
+    Enhanced: 'enhanced'
+} as const;
+export type ValidationResponseDepthEnum = typeof ValidationResponseDepthEnum[keyof typeof ValidationResponseDepthEnum];
+
 
 /**
  * Check if a given object implements the ValidationResponse interface.
  */
 export function instanceOfValidationResponse(value: object): value is ValidationResponse {
+    if (!('schemaVersion' in value) || value['schemaVersion'] === undefined) return false;
     if (!('email' in value) || value['email'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     if (!('action' in value) || value['action'] === undefined) return false;
+    if (!('domain' in value) || value['domain'] === undefined) return false;
+    if (!('mxFound' in value) || value['mxFound'] === undefined) return false;
+    if (!('disposable' in value) || value['disposable'] === undefined) return false;
+    if (!('roleAccount' in value) || value['roleAccount'] === undefined) return false;
+    if (!('freeProvider' in value) || value['freeProvider'] === undefined) return false;
+    if (!('depth' in value) || value['depth'] === undefined) return false;
+    if (!('processedAt' in value) || value['processedAt'] === undefined) return false;
     return true;
 }
 
@@ -146,18 +229,25 @@ export function ValidationResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'schemaVersion': json['schema_version'],
         'email': json['email'],
         'status': json['status'],
-        'subStatus': json['sub_status'] == null ? undefined : json['sub_status'],
         'action': json['action'],
-        'domain': json['domain'] == null ? undefined : json['domain'],
-        'mxFound': json['mx_found'] == null ? undefined : json['mx_found'],
+        'subStatus': json['sub_status'] == null ? undefined : json['sub_status'],
+        'domain': json['domain'],
+        'mxFound': json['mx_found'],
+        'mxHost': json['mx_host'] == null ? undefined : json['mx_host'],
         'smtpCheck': json['smtp_check'] == null ? undefined : json['smtp_check'],
-        'disposable': json['disposable'] == null ? undefined : json['disposable'],
-        'roleAccount': json['role_account'] == null ? undefined : json['role_account'],
-        'freeProvider': json['free_provider'] == null ? undefined : json['free_provider'],
+        'catchAll': json['catch_all'] == null ? undefined : json['catch_all'],
+        'disposable': json['disposable'],
+        'roleAccount': json['role_account'],
+        'freeProvider': json['free_provider'],
+        'depth': json['depth'],
+        'processedAt': (new Date(json['processed_at'])),
+        'suggestedEmail': json['suggested_email'] == null ? undefined : json['suggested_email'],
+        'retryAfterMs': json['retry_after_ms'] == null ? undefined : json['retry_after_ms'],
         'suppressionMatch': json['suppression_match'] == null ? undefined : ValidationResponseSuppressionMatchFromJSON(json['suppression_match']),
+        'policyApplied': json['policy_applied'] == null ? undefined : ValidationResponsePolicyAppliedFromJSON(json['policy_applied']),
     };
 }
 
@@ -175,15 +265,22 @@ export function ValidationResponseToJSONTyped(value?: ValidationResponse | null,
         'schema_version': value['schemaVersion'],
         'email': value['email'],
         'status': value['status'],
-        'sub_status': value['subStatus'],
         'action': value['action'],
+        'sub_status': value['subStatus'],
         'domain': value['domain'],
         'mx_found': value['mxFound'],
+        'mx_host': value['mxHost'],
         'smtp_check': value['smtpCheck'],
+        'catch_all': value['catchAll'],
         'disposable': value['disposable'],
         'role_account': value['roleAccount'],
         'free_provider': value['freeProvider'],
+        'depth': value['depth'],
+        'processed_at': value['processedAt'].toISOString(),
+        'suggested_email': value['suggestedEmail'],
+        'retry_after_ms': value['retryAfterMs'],
         'suppression_match': ValidationResponseSuppressionMatchToJSON(value['suppressionMatch']),
+        'policy_applied': ValidationResponsePolicyAppliedToJSON(value['policyApplied']),
     };
 }
 

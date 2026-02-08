@@ -1,27 +1,28 @@
 
-# ValidationResponseSuppressionMatch
+# ValidateBatch200Response
 
-Present only when email matched a suppression list entry.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`matchType` | string
-`matchValue` | string
-`reason` | string
+`schemaVersion` | string
+`total` | number
+`summary` | [ValidateBatch200ResponseSummary](ValidateBatch200ResponseSummary.md)
+`results` | [Array&lt;ValidationResponse&gt;](ValidationResponse.md)
 
 ## Example
 
 ```typescript
-import type { ValidationResponseSuppressionMatch } from '@mailodds/sdk'
+import type { ValidateBatch200Response } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "matchType": null,
-  "matchValue": null,
-  "reason": null,
-} satisfies ValidationResponseSuppressionMatch
+  "schemaVersion": null,
+  "total": null,
+  "summary": null,
+  "results": null,
+} satisfies ValidateBatch200Response
 
 console.log(example)
 
@@ -30,7 +31,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ValidationResponseSuppressionMatch
+const exampleParsed = JSON.parse(exampleJSON) as ValidateBatch200Response
 console.log(exampleParsed)
 ```
 

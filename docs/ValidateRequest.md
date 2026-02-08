@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `email` | string
+`depth` | string
 `policyId` | number
 
 ## Example
@@ -17,6 +18,7 @@ import type { ValidateRequest } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "email": null,
+  "depth": null,
   "policyId": null,
 } satisfies ValidateRequest
 

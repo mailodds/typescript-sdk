@@ -1,27 +1,26 @@
 
-# ValidationResponseSuppressionMatch
+# ValidateBatchRequest
 
-Present only when email matched a suppression list entry.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`matchType` | string
-`matchValue` | string
-`reason` | string
+`emails` | Array&lt;string&gt;
+`depth` | string
+`policyId` | number
 
 ## Example
 
 ```typescript
-import type { ValidationResponseSuppressionMatch } from '@mailodds/sdk'
+import type { ValidateBatchRequest } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "matchType": null,
-  "matchValue": null,
-  "reason": null,
-} satisfies ValidationResponseSuppressionMatch
+  "emails": null,
+  "depth": null,
+  "policyId": null,
+} satisfies ValidateBatchRequest
 
 console.log(example)
 
@@ -30,7 +29,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ValidationResponseSuppressionMatch
+const exampleParsed = JSON.parse(exampleJSON) as ValidateBatchRequest
 console.log(exampleParsed)
 ```
 

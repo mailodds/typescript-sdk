@@ -16,25 +16,25 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface ValidateRequest
+ * @interface ValidateBatchRequest
  */
-export interface ValidateRequest {
+export interface ValidateBatchRequest {
     /**
-     * Email address to validate
-     * @type {string}
-     * @memberof ValidateRequest
+     * List of emails to validate
+     * @type {Array<string>}
+     * @memberof ValidateBatchRequest
      */
-    email: string;
+    emails: Array<string>;
     /**
-     * Validation depth. 'standard' skips SMTP verification.
+     * 
      * @type {string}
-     * @memberof ValidateRequest
+     * @memberof ValidateBatchRequest
      */
-    depth?: ValidateRequestDepthEnum;
+    depth?: ValidateBatchRequestDepthEnum;
     /**
-     * Optional policy ID to use instead of default policy
+     * Optional policy ID
      * @type {number}
-     * @memberof ValidateRequest
+     * @memberof ValidateBatchRequest
      */
     policyId?: number;
 }
@@ -43,49 +43,49 @@ export interface ValidateRequest {
 /**
  * @export
  */
-export const ValidateRequestDepthEnum = {
+export const ValidateBatchRequestDepthEnum = {
     Standard: 'standard',
     Enhanced: 'enhanced'
 } as const;
-export type ValidateRequestDepthEnum = typeof ValidateRequestDepthEnum[keyof typeof ValidateRequestDepthEnum];
+export type ValidateBatchRequestDepthEnum = typeof ValidateBatchRequestDepthEnum[keyof typeof ValidateBatchRequestDepthEnum];
 
 
 /**
- * Check if a given object implements the ValidateRequest interface.
+ * Check if a given object implements the ValidateBatchRequest interface.
  */
-export function instanceOfValidateRequest(value: object): value is ValidateRequest {
-    if (!('email' in value) || value['email'] === undefined) return false;
+export function instanceOfValidateBatchRequest(value: object): value is ValidateBatchRequest {
+    if (!('emails' in value) || value['emails'] === undefined) return false;
     return true;
 }
 
-export function ValidateRequestFromJSON(json: any): ValidateRequest {
-    return ValidateRequestFromJSONTyped(json, false);
+export function ValidateBatchRequestFromJSON(json: any): ValidateBatchRequest {
+    return ValidateBatchRequestFromJSONTyped(json, false);
 }
 
-export function ValidateRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ValidateRequest {
+export function ValidateBatchRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ValidateBatchRequest {
     if (json == null) {
         return json;
     }
     return {
         
-        'email': json['email'],
+        'emails': json['emails'],
         'depth': json['depth'] == null ? undefined : json['depth'],
         'policyId': json['policy_id'] == null ? undefined : json['policy_id'],
     };
 }
 
-export function ValidateRequestToJSON(json: any): ValidateRequest {
-    return ValidateRequestToJSONTyped(json, false);
+export function ValidateBatchRequestToJSON(json: any): ValidateBatchRequest {
+    return ValidateBatchRequestToJSONTyped(json, false);
 }
 
-export function ValidateRequestToJSONTyped(value?: ValidateRequest | null, ignoreDiscriminator: boolean = false): any {
+export function ValidateBatchRequestToJSONTyped(value?: ValidateBatchRequest | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'email': value['email'],
+        'emails': value['emails'],
         'depth': value['depth'],
         'policy_id': value['policyId'],
     };

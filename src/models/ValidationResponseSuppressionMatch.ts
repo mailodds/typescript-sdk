@@ -14,17 +14,11 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Present only when email matched a suppression list entry.
  * @export
  * @interface ValidationResponseSuppressionMatch
  */
 export interface ValidationResponseSuppressionMatch {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ValidationResponseSuppressionMatch
-     */
-    matched?: boolean;
     /**
      * 
      * @type {string}
@@ -37,6 +31,12 @@ export interface ValidationResponseSuppressionMatch {
      * @memberof ValidationResponseSuppressionMatch
      */
     matchValue?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValidationResponseSuppressionMatch
+     */
+    reason?: string;
 }
 
 
@@ -67,9 +67,9 @@ export function ValidationResponseSuppressionMatchFromJSONTyped(json: any, ignor
     }
     return {
         
-        'matched': json['matched'] == null ? undefined : json['matched'],
         'matchType': json['match_type'] == null ? undefined : json['match_type'],
         'matchValue': json['match_value'] == null ? undefined : json['match_value'],
+        'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
 
@@ -84,9 +84,9 @@ export function ValidationResponseSuppressionMatchToJSONTyped(value?: Validation
 
     return {
         
-        'matched': value['matched'],
         'match_type': value['matchType'],
         'match_value': value['matchValue'],
+        'reason': value['reason'],
     };
 }
 

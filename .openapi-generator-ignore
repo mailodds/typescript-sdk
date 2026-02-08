@@ -26,3 +26,7 @@
 ci/**
 # Preserve GitHub Actions workflows
 .github/**
+# Preserve package metadata and TypeScript config (enterprise code needs @types/node, es2017+)
+package.json
+tsconfig.json
+tsconfig.esm.json

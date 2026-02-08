@@ -14,80 +14,76 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Present when a validation policy modified the result.
  * @export
- * @interface ValidateRequest
+ * @interface ValidationResponsePolicyApplied
  */
-export interface ValidateRequest {
+export interface ValidationResponsePolicyApplied {
     /**
-     * Email address to validate
-     * @type {string}
-     * @memberof ValidateRequest
-     */
-    email: string;
-    /**
-     * Validation depth. 'standard' skips SMTP verification.
-     * @type {string}
-     * @memberof ValidateRequest
-     */
-    depth?: ValidateRequestDepthEnum;
-    /**
-     * Optional policy ID to use instead of default policy
+     * 
      * @type {number}
-     * @memberof ValidateRequest
+     * @memberof ValidationResponsePolicyApplied
      */
     policyId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValidationResponsePolicyApplied
+     */
+    policyName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ValidationResponsePolicyApplied
+     */
+    ruleId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValidationResponsePolicyApplied
+     */
+    ruleType?: string;
 }
 
-
 /**
- * @export
+ * Check if a given object implements the ValidationResponsePolicyApplied interface.
  */
-export const ValidateRequestDepthEnum = {
-    Standard: 'standard',
-    Enhanced: 'enhanced'
-} as const;
-export type ValidateRequestDepthEnum = typeof ValidateRequestDepthEnum[keyof typeof ValidateRequestDepthEnum];
-
-
-/**
- * Check if a given object implements the ValidateRequest interface.
- */
-export function instanceOfValidateRequest(value: object): value is ValidateRequest {
-    if (!('email' in value) || value['email'] === undefined) return false;
+export function instanceOfValidationResponsePolicyApplied(value: object): value is ValidationResponsePolicyApplied {
     return true;
 }
 
-export function ValidateRequestFromJSON(json: any): ValidateRequest {
-    return ValidateRequestFromJSONTyped(json, false);
+export function ValidationResponsePolicyAppliedFromJSON(json: any): ValidationResponsePolicyApplied {
+    return ValidationResponsePolicyAppliedFromJSONTyped(json, false);
 }
 
-export function ValidateRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ValidateRequest {
+export function ValidationResponsePolicyAppliedFromJSONTyped(json: any, ignoreDiscriminator: boolean): ValidationResponsePolicyApplied {
     if (json == null) {
         return json;
     }
     return {
         
-        'email': json['email'],
-        'depth': json['depth'] == null ? undefined : json['depth'],
         'policyId': json['policy_id'] == null ? undefined : json['policy_id'],
+        'policyName': json['policy_name'] == null ? undefined : json['policy_name'],
+        'ruleId': json['rule_id'] == null ? undefined : json['rule_id'],
+        'ruleType': json['rule_type'] == null ? undefined : json['rule_type'],
     };
 }
 
-export function ValidateRequestToJSON(json: any): ValidateRequest {
-    return ValidateRequestToJSONTyped(json, false);
+export function ValidationResponsePolicyAppliedToJSON(json: any): ValidationResponsePolicyApplied {
+    return ValidationResponsePolicyAppliedToJSONTyped(json, false);
 }
 
-export function ValidateRequestToJSONTyped(value?: ValidateRequest | null, ignoreDiscriminator: boolean = false): any {
+export function ValidationResponsePolicyAppliedToJSONTyped(value?: ValidationResponsePolicyApplied | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'email': value['email'],
-        'depth': value['depth'],
         'policy_id': value['policyId'],
+        'policy_name': value['policyName'],
+        'rule_id': value['ruleId'],
+        'rule_type': value['ruleType'],
     };
 }
 
