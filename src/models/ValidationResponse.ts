@@ -41,6 +41,12 @@ export interface ValidationResponse {
      */
     schemaVersion: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof ValidationResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {string}
      * @memberof ValidationResponse
@@ -137,6 +143,30 @@ export interface ValidationResponse {
      */
     retryAfterMs?: number;
     /**
+     * Whether the domain has an SPF record. Omitted for standard depth.
+     * @type {boolean}
+     * @memberof ValidationResponse
+     */
+    hasSpf?: boolean;
+    /**
+     * Whether the domain has a DMARC record. Omitted for standard depth.
+     * @type {boolean}
+     * @memberof ValidationResponse
+     */
+    hasDmarc?: boolean;
+    /**
+     * The domain's DMARC policy. Omitted when no DMARC record found.
+     * @type {string}
+     * @memberof ValidationResponse
+     */
+    dmarcPolicy?: ValidationResponseDmarcPolicyEnum;
+    /**
+     * Whether the domain's MX IP is on a DNS blocklist (Spamhaus ZEN). Omitted for standard depth.
+     * @type {boolean}
+     * @memberof ValidationResponse
+     */
+    dnsblListed?: boolean;
+    /**
      * 
      * @type {ValidationResponseSuppressionMatch}
      * @memberof ValidationResponse
@@ -187,7 +217,10 @@ export const ValidationResponseSubStatusEnum = {
     RoleAccount: 'role_account',
     Greylisted: 'greylisted',
     CatchAllDetected: 'catch_all_detected',
-    SuppressionMatch: 'suppression_match'
+    DomainNotFound: 'domain_not_found',
+    SuppressionMatch: 'suppression_match',
+    RestrictedMilitary: 'restricted_military',
+    RestrictedSanctioned: 'restricted_sanctioned'
 } as const;
 export type ValidationResponseSubStatusEnum = typeof ValidationResponseSubStatusEnum[keyof typeof ValidationResponseSubStatusEnum];
 
@@ -199,6 +232,16 @@ export const ValidationResponseDepthEnum = {
     Enhanced: 'enhanced'
 } as const;
 export type ValidationResponseDepthEnum = typeof ValidationResponseDepthEnum[keyof typeof ValidationResponseDepthEnum];
+
+/**
+ * @export
+ */
+export const ValidationResponseDmarcPolicyEnum = {
+    None: 'none',
+    Quarantine: 'quarantine',
+    Reject: 'reject'
+} as const;
+export type ValidationResponseDmarcPolicyEnum = typeof ValidationResponseDmarcPolicyEnum[keyof typeof ValidationResponseDmarcPolicyEnum];
 
 
 /**
@@ -230,6 +273,7 @@ export function ValidationResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     return {
         
         'schemaVersion': json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'email': json['email'],
         'status': json['status'],
         'action': json['action'],
@@ -246,6 +290,10 @@ export function ValidationResponseFromJSONTyped(json: any, ignoreDiscriminator: 
         'processedAt': (new Date(json['processed_at'])),
         'suggestedEmail': json['suggested_email'] == null ? undefined : json['suggested_email'],
         'retryAfterMs': json['retry_after_ms'] == null ? undefined : json['retry_after_ms'],
+        'hasSpf': json['has_spf'] == null ? undefined : json['has_spf'],
+        'hasDmarc': json['has_dmarc'] == null ? undefined : json['has_dmarc'],
+        'dmarcPolicy': json['dmarc_policy'] == null ? undefined : json['dmarc_policy'],
+        'dnsblListed': json['dnsbl_listed'] == null ? undefined : json['dnsbl_listed'],
         'suppressionMatch': json['suppression_match'] == null ? undefined : ValidationResponseSuppressionMatchFromJSON(json['suppression_match']),
         'policyApplied': json['policy_applied'] == null ? undefined : ValidationResponsePolicyAppliedFromJSON(json['policy_applied']),
     };
@@ -263,6 +311,7 @@ export function ValidationResponseToJSONTyped(value?: ValidationResponse | null,
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'email': value['email'],
         'status': value['status'],
         'action': value['action'],
@@ -279,6 +328,10 @@ export function ValidationResponseToJSONTyped(value?: ValidationResponse | null,
         'processed_at': value['processedAt'].toISOString(),
         'suggested_email': value['suggestedEmail'],
         'retry_after_ms': value['retryAfterMs'],
+        'has_spf': value['hasSpf'],
+        'has_dmarc': value['hasDmarc'],
+        'dmarc_policy': value['dmarcPolicy'],
+        'dnsbl_listed': value['dnsblListed'],
         'suppression_match': ValidationResponseSuppressionMatchToJSON(value['suppressionMatch']),
         'policy_applied': ValidationResponsePolicyAppliedToJSON(value['policyApplied']),
     };

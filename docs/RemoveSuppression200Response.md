@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `removed` | number
 
 ## Example
@@ -17,6 +18,7 @@ import type { RemoveSuppression200Response } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "removed": null,
 } satisfies RemoveSuppression200Response
 

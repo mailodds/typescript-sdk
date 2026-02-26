@@ -26,6 +26,12 @@ export interface PolicyTestResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof PolicyTestResponse
+     */
+    requestId?: string;
+    /**
      * Original validation result before policy
      * @type {object}
      * @memberof PolicyTestResponse
@@ -69,6 +75,7 @@ export function PolicyTestResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'original': json['original'] == null ? undefined : json['original'],
         'modified': json['modified'] == null ? undefined : json['modified'],
         'matchedRule': json['matched_rule'] == null ? undefined : json['matched_rule'],
@@ -88,6 +95,7 @@ export function PolicyTestResponseToJSONTyped(value?: PolicyTestResponse | null,
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'original': value['original'],
         'modified': value['modified'],
         'matched_rule': value['matchedRule'],

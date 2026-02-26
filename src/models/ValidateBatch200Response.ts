@@ -41,6 +41,12 @@ export interface ValidateBatch200Response {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof ValidateBatch200Response
+     */
+    requestId?: string;
+    /**
      * 
      * @type {number}
      * @memberof ValidateBatch200Response
@@ -78,6 +84,7 @@ export function ValidateBatch200ResponseFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'total': json['total'] == null ? undefined : json['total'],
         'summary': json['summary'] == null ? undefined : ValidateBatch200ResponseSummaryFromJSON(json['summary']),
         'results': json['results'] == null ? undefined : ((json['results'] as Array<any>).map(ValidationResponseFromJSON)),
@@ -96,6 +103,7 @@ export function ValidateBatch200ResponseToJSONTyped(value?: ValidateBatch200Resp
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'total': value['total'],
         'summary': ValidateBatch200ResponseSummaryToJSON(value['summary']),
         'results': value['results'] == null ? undefined : ((value['results'] as Array<any>).map(ValidationResponseToJSON)),

@@ -34,6 +34,12 @@ export interface JobResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof JobResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {Job}
      * @memberof JobResponse
@@ -59,6 +65,7 @@ export function JobResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'job': json['job'] == null ? undefined : JobFromJSON(json['job']),
     };
 }
@@ -75,6 +82,7 @@ export function JobResponseToJSONTyped(value?: JobResponse | null, ignoreDiscrim
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'job': JobToJSON(value['job']),
     };
 }

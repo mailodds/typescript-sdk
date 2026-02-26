@@ -41,6 +41,12 @@ export interface PolicyListResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof PolicyListResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {Array<Policy>}
      * @memberof PolicyListResponse
@@ -72,6 +78,7 @@ export function PolicyListResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'policies': json['policies'] == null ? undefined : ((json['policies'] as Array<any>).map(PolicyFromJSON)),
         'limits': json['limits'] == null ? undefined : PolicyListResponseLimitsFromJSON(json['limits']),
     };
@@ -89,6 +96,7 @@ export function PolicyListResponseToJSONTyped(value?: PolicyListResponse | null,
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'policies': value['policies'] == null ? undefined : ((value['policies'] as Array<any>).map(PolicyToJSON)),
         'limits': PolicyListResponseLimitsToJSON(value['limits']),
     };

@@ -34,6 +34,12 @@ export interface PolicyPresetsResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof PolicyPresetsResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {Array<PolicyPresetsResponsePresetsInner>}
      * @memberof PolicyPresetsResponse
@@ -59,6 +65,7 @@ export function PolicyPresetsResponseFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'presets': json['presets'] == null ? undefined : ((json['presets'] as Array<any>).map(PolicyPresetsResponsePresetsInnerFromJSON)),
     };
 }
@@ -75,6 +82,7 @@ export function PolicyPresetsResponseToJSONTyped(value?: PolicyPresetsResponse |
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'presets': value['presets'] == null ? undefined : ((value['presets'] as Array<any>).map(PolicyPresetsResponsePresetsInnerToJSON)),
     };
 }

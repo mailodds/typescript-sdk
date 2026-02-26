@@ -41,6 +41,12 @@ export interface SuppressionListResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof SuppressionListResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {Array<SuppressionEntry>}
      * @memberof SuppressionListResponse
@@ -72,6 +78,7 @@ export function SuppressionListResponseFromJSONTyped(json: any, ignoreDiscrimina
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'entries': json['entries'] == null ? undefined : ((json['entries'] as Array<any>).map(SuppressionEntryFromJSON)),
         'pagination': json['pagination'] == null ? undefined : PaginationFromJSON(json['pagination']),
     };
@@ -89,6 +96,7 @@ export function SuppressionListResponseToJSONTyped(value?: SuppressionListRespon
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'entries': value['entries'] == null ? undefined : ((value['entries'] as Array<any>).map(SuppressionEntryToJSON)),
         'pagination': PaginationToJSON(value['pagination']),
     };

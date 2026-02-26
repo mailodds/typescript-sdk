@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `results` | [Array&lt;ValidationResult&gt;](ValidationResult.md)
 `pagination` | [Pagination](Pagination.md)
 
@@ -18,6 +19,7 @@ import type { ResultsResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "results": null,
   "pagination": null,
 } satisfies ResultsResponse

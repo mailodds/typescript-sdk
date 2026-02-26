@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `total` | number
 `byType` | [SuppressionStatsResponseByType](SuppressionStatsResponseByType.md)
 
@@ -18,6 +19,7 @@ import type { SuppressionStatsResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "total": null,
   "byType": null,
 } satisfies SuppressionStatsResponse

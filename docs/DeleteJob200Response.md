@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `deleted` | boolean
 
 ## Example
@@ -17,6 +18,7 @@ import type { DeleteJob200Response } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "deleted": null,
 } satisfies DeleteJob200Response
 

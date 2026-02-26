@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `entries` | [Array&lt;SuppressionEntry&gt;](SuppressionEntry.md)
 `pagination` | [Pagination](Pagination.md)
 
@@ -18,6 +19,7 @@ import type { SuppressionListResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "entries": null,
   "pagination": null,
 } satisfies SuppressionListResponse

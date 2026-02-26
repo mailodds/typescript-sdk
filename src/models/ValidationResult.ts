@@ -30,7 +30,7 @@ export interface ValidationResult {
      * @type {string}
      * @memberof ValidationResult
      */
-    status?: string;
+    status?: ValidationResultStatusEnum;
     /**
      * 
      * @type {string}
@@ -42,7 +42,7 @@ export interface ValidationResult {
      * @type {string}
      * @memberof ValidationResult
      */
-    action?: string;
+    action?: ValidationResultActionEnum;
     /**
      * 
      * @type {Date}
@@ -50,6 +50,31 @@ export interface ValidationResult {
      */
     processedAt?: Date;
 }
+
+
+/**
+ * @export
+ */
+export const ValidationResultStatusEnum = {
+    Valid: 'valid',
+    Invalid: 'invalid',
+    CatchAll: 'catch_all',
+    DoNotMail: 'do_not_mail',
+    Unknown: 'unknown'
+} as const;
+export type ValidationResultStatusEnum = typeof ValidationResultStatusEnum[keyof typeof ValidationResultStatusEnum];
+
+/**
+ * @export
+ */
+export const ValidationResultActionEnum = {
+    Accept: 'accept',
+    AcceptWithCaution: 'accept_with_caution',
+    Reject: 'reject',
+    RetryLater: 'retry_later'
+} as const;
+export type ValidationResultActionEnum = typeof ValidationResultActionEnum[keyof typeof ValidationResultActionEnum];
+
 
 /**
  * Check if a given object implements the ValidationResult interface.

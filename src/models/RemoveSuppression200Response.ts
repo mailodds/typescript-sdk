@@ -26,6 +26,12 @@ export interface RemoveSuppression200Response {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof RemoveSuppression200Response
+     */
+    requestId?: string;
+    /**
      * 
      * @type {number}
      * @memberof RemoveSuppression200Response
@@ -51,6 +57,7 @@ export function RemoveSuppression200ResponseFromJSONTyped(json: any, ignoreDiscr
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'removed': json['removed'] == null ? undefined : json['removed'],
     };
 }
@@ -67,6 +74,7 @@ export function RemoveSuppression200ResponseToJSONTyped(value?: RemoveSuppressio
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'removed': value['removed'],
     };
 }

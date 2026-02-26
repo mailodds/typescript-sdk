@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `valid` | number
 `invalid` | number
+`catchAll` | number
 `doNotMail` | number
 `unknown` | number
 `cancelledPending` | number
@@ -21,6 +22,7 @@ import type { JobSummary } from '@mailodds/sdk'
 const example = {
   "valid": null,
   "invalid": null,
+  "catchAll": null,
   "doNotMail": null,
   "unknown": null,
   "cancelledPending": null,

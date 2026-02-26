@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `presets` | [Array&lt;PolicyPresetsResponsePresetsInner&gt;](PolicyPresetsResponsePresetsInner.md)
 
 ## Example
@@ -17,6 +18,7 @@ import type { PolicyPresetsResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "presets": null,
 } satisfies PolicyPresetsResponse
 

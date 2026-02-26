@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `total` | number
 `summary` | [ValidateBatch200ResponseSummary](ValidateBatch200ResponseSummary.md)
 `results` | [Array&lt;ValidationResponse&gt;](ValidationResponse.md)
@@ -19,6 +20,7 @@ import type { ValidateBatch200Response } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "total": null,
   "summary": null,
   "results": null,

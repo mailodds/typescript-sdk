@@ -26,6 +26,12 @@ export interface ErrorResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    requestId?: string;
+    /**
      * Machine-readable error code
      * @type {string}
      * @memberof ErrorResponse
@@ -58,6 +64,7 @@ export function ErrorResponseFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'error': json['error'],
         'message': json['message'] == null ? undefined : json['message'],
     };
@@ -75,6 +82,7 @@ export function ErrorResponseToJSONTyped(value?: ErrorResponse | null, ignoreDis
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'error': value['error'],
         'message': value['message'],
     };

@@ -7,8 +7,11 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `added` | number
-`skipped` | number
+`duplicates` | number
+`invalid` | number
+`total` | number
 
 ## Example
 
@@ -18,8 +21,11 @@ import type { AddSuppressionResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "added": null,
-  "skipped": null,
+  "duplicates": null,
+  "invalid": null,
+  "total": null,
 } satisfies AddSuppressionResponse
 
 console.log(example)

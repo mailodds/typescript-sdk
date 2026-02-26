@@ -36,6 +36,12 @@ export interface JobSummary {
      * @type {number}
      * @memberof JobSummary
      */
+    catchAll?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JobSummary
+     */
     doNotMail?: number;
     /**
      * 
@@ -70,6 +76,7 @@ export function JobSummaryFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         
         'valid': json['valid'] == null ? undefined : json['valid'],
         'invalid': json['invalid'] == null ? undefined : json['invalid'],
+        'catchAll': json['catch_all'] == null ? undefined : json['catch_all'],
         'doNotMail': json['do_not_mail'] == null ? undefined : json['do_not_mail'],
         'unknown': json['unknown'] == null ? undefined : json['unknown'],
         'cancelledPending': json['cancelled_pending'] == null ? undefined : json['cancelled_pending'],
@@ -89,6 +96,7 @@ export function JobSummaryToJSONTyped(value?: JobSummary | null, ignoreDiscrimin
         
         'valid': value['valid'],
         'invalid': value['invalid'],
+        'catch_all': value['catchAll'],
         'do_not_mail': value['doNotMail'],
         'unknown': value['unknown'],
         'cancelled_pending': value['cancelledPending'],

@@ -63,8 +63,25 @@ All URIs are relative to *https://api.mailodds.com/v1*
 *BulkValidationApi* | [**getJobResults**](docs/BulkValidationApi.md#getjobresults) | **GET** /v1/jobs/{job_id}/results | Get job results
 *BulkValidationApi* | [**getPresignedUpload**](docs/BulkValidationApi.md#getpresigneduploadoperation) | **POST** /v1/jobs/upload/presigned | Get S3 presigned upload URL
 *BulkValidationApi* | [**listJobs**](docs/BulkValidationApi.md#listjobs) | **GET** /v1/jobs | List validation jobs
+*EmailSendingApi* | [**deliverBatch**](docs/EmailSendingApi.md#deliverbatch) | **POST** /v1/deliver/batch | Send to multiple recipients (max 100)
+*EmailSendingApi* | [**deliverEmail**](docs/EmailSendingApi.md#deliveremail) | **POST** /v1/deliver | Send a single email
 *EmailValidationApi* | [**validateBatch**](docs/EmailValidationApi.md#validatebatchoperation) | **POST** /v1/validate/batch | Validate multiple emails (sync)
 *EmailValidationApi* | [**validateEmail**](docs/EmailValidationApi.md#validateemail) | **POST** /v1/validate | Validate single email
+*SendingDomainsApi* | [**createSendingDomain**](docs/SendingDomainsApi.md#createsendingdomainoperation) | **POST** /v1/sending-domains | Add a sending domain
+*SendingDomainsApi* | [**deleteSendingDomain**](docs/SendingDomainsApi.md#deletesendingdomain) | **DELETE** /v1/sending-domains/{domain_id} | Delete a sending domain
+*SendingDomainsApi* | [**getSendingDomain**](docs/SendingDomainsApi.md#getsendingdomain) | **GET** /v1/sending-domains/{domain_id} | Get a sending domain
+*SendingDomainsApi* | [**getSendingDomainIdentityScore**](docs/SendingDomainsApi.md#getsendingdomainidentityscore) | **GET** /v1/sending-domains/{domain_id}/identity-score | Get domain identity score
+*SendingDomainsApi* | [**getSendingStats**](docs/SendingDomainsApi.md#getsendingstats) | **GET** /v1/sending-stats | Get sending statistics
+*SendingDomainsApi* | [**listSendingDomains**](docs/SendingDomainsApi.md#listsendingdomains) | **GET** /v1/sending-domains | List sending domains
+*SendingDomainsApi* | [**verifySendingDomain**](docs/SendingDomainsApi.md#verifysendingdomain) | **POST** /v1/sending-domains/{domain_id}/verify | Verify domain DNS records
+*SubscriberListsApi* | [**confirmSubscription**](docs/SubscriberListsApi.md#confirmsubscription) | **GET** /v1/confirm/{token} | Confirm subscription
+*SubscriberListsApi* | [**createList**](docs/SubscriberListsApi.md#createlistoperation) | **POST** /v1/lists | Create a subscriber list
+*SubscriberListsApi* | [**deleteList**](docs/SubscriberListsApi.md#deletelist) | **DELETE** /v1/lists/{list_id} | Delete a subscriber list
+*SubscriberListsApi* | [**getList**](docs/SubscriberListsApi.md#getlist) | **GET** /v1/lists/{list_id} | Get a subscriber list
+*SubscriberListsApi* | [**getLists**](docs/SubscriberListsApi.md#getlists) | **GET** /v1/lists | List subscriber lists
+*SubscriberListsApi* | [**getSubscribers**](docs/SubscriberListsApi.md#getsubscribers) | **GET** /v1/lists/{list_id}/subscribers | List subscribers
+*SubscriberListsApi* | [**subscribe**](docs/SubscriberListsApi.md#subscribeoperation) | **POST** /v1/subscribe/{list_id} | Subscribe to a list
+*SubscriberListsApi* | [**unsubscribeSubscriber**](docs/SubscriberListsApi.md#unsubscribesubscriber) | **DELETE** /v1/lists/{list_id}/subscribers/{subscriber_id} | Unsubscribe a subscriber
 *SuppressionListsApi* | [**addSuppression**](docs/SuppressionListsApi.md#addsuppressionoperation) | **POST** /v1/suppression | Add suppression entries
 *SuppressionListsApi* | [**checkSuppression**](docs/SuppressionListsApi.md#checksuppressionoperation) | **POST** /v1/suppression/check | Check suppression status
 *SuppressionListsApi* | [**getSuppressionStats**](docs/SuppressionListsApi.md#getsuppressionstats) | **GET** /v1/suppression/stats | Get suppression statistics
@@ -90,21 +107,43 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [AddSuppressionRequest](docs/AddSuppressionRequest.md)
 - [AddSuppressionRequestEntriesInner](docs/AddSuppressionRequestEntriesInner.md)
 - [AddSuppressionResponse](docs/AddSuppressionResponse.md)
+- [BatchDeliverRequest](docs/BatchDeliverRequest.md)
+- [BatchDeliverRequestStructuredData](docs/BatchDeliverRequestStructuredData.md)
+- [BatchDeliverResponse](docs/BatchDeliverResponse.md)
+- [BatchDeliverResponseDelivery](docs/BatchDeliverResponseDelivery.md)
+- [BatchDeliverResponseRejectedInner](docs/BatchDeliverResponseRejectedInner.md)
 - [CheckSuppressionRequest](docs/CheckSuppressionRequest.md)
+- [ConfirmSubscription200Response](docs/ConfirmSubscription200Response.md)
 - [CreateJobFromS3Request](docs/CreateJobFromS3Request.md)
 - [CreateJobRequest](docs/CreateJobRequest.md)
+- [CreateList201Response](docs/CreateList201Response.md)
+- [CreateListRequest](docs/CreateListRequest.md)
 - [CreatePolicyFromPresetRequest](docs/CreatePolicyFromPresetRequest.md)
 - [CreatePolicyRequest](docs/CreatePolicyRequest.md)
+- [CreateSendingDomain201Response](docs/CreateSendingDomain201Response.md)
+- [CreateSendingDomainRequest](docs/CreateSendingDomainRequest.md)
 - [DeleteJob200Response](docs/DeleteJob200Response.md)
 - [DeletePolicy200Response](docs/DeletePolicy200Response.md)
 - [DeletePolicyRule200Response](docs/DeletePolicyRule200Response.md)
+- [DeliverRequest](docs/DeliverRequest.md)
+- [DeliverRequestOptions](docs/DeliverRequestOptions.md)
+- [DeliverRequestStructuredData](docs/DeliverRequestStructuredData.md)
+- [DeliverRequestToInner](docs/DeliverRequestToInner.md)
+- [DeliverResponse](docs/DeliverResponse.md)
+- [DeliverResponseDelivery](docs/DeliverResponseDelivery.md)
 - [ErrorResponse](docs/ErrorResponse.md)
+- [GetLists200Response](docs/GetLists200Response.md)
 - [GetPresignedUploadRequest](docs/GetPresignedUploadRequest.md)
+- [GetSendingDomainIdentityScore200Response](docs/GetSendingDomainIdentityScore200Response.md)
+- [GetSendingStats200Response](docs/GetSendingStats200Response.md)
+- [GetSendingStats200ResponseStats](docs/GetSendingStats200ResponseStats.md)
+- [GetSubscribers200Response](docs/GetSubscribers200Response.md)
 - [HealthCheck200Response](docs/HealthCheck200Response.md)
 - [Job](docs/Job.md)
 - [JobListResponse](docs/JobListResponse.md)
 - [JobResponse](docs/JobResponse.md)
 - [JobSummary](docs/JobSummary.md)
+- [ListSendingDomains200Response](docs/ListSendingDomains200Response.md)
 - [Pagination](docs/Pagination.md)
 - [Policy](docs/Policy.md)
 - [PolicyListResponse](docs/PolicyListResponse.md)
@@ -120,6 +159,16 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [RemoveSuppression200Response](docs/RemoveSuppression200Response.md)
 - [RemoveSuppressionRequest](docs/RemoveSuppressionRequest.md)
 - [ResultsResponse](docs/ResultsResponse.md)
+- [SendingDomain](docs/SendingDomain.md)
+- [SendingDomainDnsRecords](docs/SendingDomainDnsRecords.md)
+- [SendingDomainDnsRecordsNs](docs/SendingDomainDnsRecordsNs.md)
+- [SendingDomainIdentityScore](docs/SendingDomainIdentityScore.md)
+- [SendingDomainIdentityScoreChecks](docs/SendingDomainIdentityScoreChecks.md)
+- [SendingDomainIdentityScoreChecksDkim](docs/SendingDomainIdentityScoreChecksDkim.md)
+- [SendingDomainIdentityScoreChecksDmarc](docs/SendingDomainIdentityScoreChecksDmarc.md)
+- [SubscribeRequest](docs/SubscribeRequest.md)
+- [Subscriber](docs/Subscriber.md)
+- [SubscriberList](docs/SubscriberList.md)
 - [SuppressionCheckResponse](docs/SuppressionCheckResponse.md)
 - [SuppressionEntry](docs/SuppressionEntry.md)
 - [SuppressionListResponse](docs/SuppressionListResponse.md)
@@ -132,6 +181,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [TelemetrySummaryTotals](docs/TelemetrySummaryTotals.md)
 - [TestPolicyRequest](docs/TestPolicyRequest.md)
 - [TestPolicyRequestTestResult](docs/TestPolicyRequestTestResult.md)
+- [UnsubscribeSubscriber200Response](docs/UnsubscribeSubscriber200Response.md)
 - [UpdatePolicyRequest](docs/UpdatePolicyRequest.md)
 - [ValidateBatch200Response](docs/ValidateBatch200Response.md)
 - [ValidateBatch200ResponseSummary](docs/ValidateBatch200ResponseSummary.md)

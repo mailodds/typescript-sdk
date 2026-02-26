@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `policy` | [Policy](Policy.md)
 
 ## Example
@@ -17,6 +18,7 @@ import type { PolicyResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "policy": null,
 } satisfies PolicyResponse
 

@@ -8,6 +8,7 @@ Flat validation response. Conditional fields are omitted (not null) when not app
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `email` | string
 `status` | string
 `action` | string
@@ -24,6 +25,10 @@ Name | Type
 `processedAt` | Date
 `suggestedEmail` | string
 `retryAfterMs` | number
+`hasSpf` | boolean
+`hasDmarc` | boolean
+`dmarcPolicy` | string
+`dnsblListed` | boolean
 `suppressionMatch` | [ValidationResponseSuppressionMatch](ValidationResponseSuppressionMatch.md)
 `policyApplied` | [ValidationResponsePolicyApplied](ValidationResponsePolicyApplied.md)
 
@@ -35,6 +40,7 @@ import type { ValidationResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": 1.0,
+  "requestId": null,
   "email": null,
   "status": null,
   "action": null,
@@ -51,6 +57,10 @@ const example = {
   "processedAt": null,
   "suggestedEmail": null,
   "retryAfterMs": null,
+  "hasSpf": null,
+  "hasDmarc": null,
+  "dmarcPolicy": null,
+  "dnsblListed": null,
   "suppressionMatch": null,
   "policyApplied": null,
 } satisfies ValidationResponse

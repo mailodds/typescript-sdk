@@ -41,6 +41,12 @@ export interface ResultsResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof ResultsResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {Array<ValidationResult>}
      * @memberof ResultsResponse
@@ -72,6 +78,7 @@ export function ResultsResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'results': json['results'] == null ? undefined : ((json['results'] as Array<any>).map(ValidationResultFromJSON)),
         'pagination': json['pagination'] == null ? undefined : PaginationFromJSON(json['pagination']),
     };
@@ -89,6 +96,7 @@ export function ResultsResponseToJSONTyped(value?: ResultsResponse | null, ignor
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'results': value['results'] == null ? undefined : ((value['results'] as Array<any>).map(ValidationResultToJSON)),
         'pagination': PaginationToJSON(value['pagination']),
     };

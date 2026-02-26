@@ -34,6 +34,12 @@ export interface PresignedUploadResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof PresignedUploadResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {PresignedUploadResponseUpload}
      * @memberof PresignedUploadResponse
@@ -59,6 +65,7 @@ export function PresignedUploadResponseFromJSONTyped(json: any, ignoreDiscrimina
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'upload': json['upload'] == null ? undefined : PresignedUploadResponseUploadFromJSON(json['upload']),
     };
 }
@@ -75,6 +82,7 @@ export function PresignedUploadResponseToJSONTyped(value?: PresignedUploadRespon
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'upload': PresignedUploadResponseUploadToJSON(value['upload']),
     };
 }

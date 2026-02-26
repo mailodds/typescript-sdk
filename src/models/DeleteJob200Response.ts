@@ -26,6 +26,12 @@ export interface DeleteJob200Response {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof DeleteJob200Response
+     */
+    requestId?: string;
+    /**
      * 
      * @type {boolean}
      * @memberof DeleteJob200Response
@@ -51,6 +57,7 @@ export function DeleteJob200ResponseFromJSONTyped(json: any, ignoreDiscriminator
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'deleted': json['deleted'] == null ? undefined : json['deleted'],
     };
 }
@@ -67,6 +74,7 @@ export function DeleteJob200ResponseToJSONTyped(value?: DeleteJob200Response | n
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'deleted': value['deleted'],
     };
 }

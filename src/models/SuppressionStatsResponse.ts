@@ -34,6 +34,12 @@ export interface SuppressionStatsResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof SuppressionStatsResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {number}
      * @memberof SuppressionStatsResponse
@@ -65,6 +71,7 @@ export function SuppressionStatsResponseFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'total': json['total'] == null ? undefined : json['total'],
         'byType': json['by_type'] == null ? undefined : SuppressionStatsResponseByTypeFromJSON(json['by_type']),
     };
@@ -82,6 +89,7 @@ export function SuppressionStatsResponseToJSONTyped(value?: SuppressionStatsResp
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'total': value['total'],
         'by_type': SuppressionStatsResponseByTypeToJSON(value['byType']),
     };

@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `email` | string
 `suppressed` | boolean
 `matchType` | string
@@ -20,6 +21,7 @@ import type { SuppressionCheckResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "email": null,
   "suppressed": null,
   "matchType": null,

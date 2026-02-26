@@ -41,6 +41,12 @@ export interface JobListResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof JobListResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {Array<Job>}
      * @memberof JobListResponse
@@ -72,6 +78,7 @@ export function JobListResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'jobs': json['jobs'] == null ? undefined : ((json['jobs'] as Array<any>).map(JobFromJSON)),
         'pagination': json['pagination'] == null ? undefined : PaginationFromJSON(json['pagination']),
     };
@@ -89,6 +96,7 @@ export function JobListResponseToJSONTyped(value?: JobListResponse | null, ignor
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'jobs': value['jobs'] == null ? undefined : ((value['jobs'] as Array<any>).map(JobToJSON)),
         'pagination': PaginationToJSON(value['pagination']),
     };

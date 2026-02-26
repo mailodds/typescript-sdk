@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `original` | object
 `modified` | object
 `matchedRule` | object
@@ -20,6 +21,7 @@ import type { PolicyTestResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "original": null,
   "modified": null,
   "matchedRule": null,

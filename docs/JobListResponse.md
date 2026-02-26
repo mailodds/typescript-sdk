@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `jobs` | [Array&lt;Job&gt;](Job.md)
 `pagination` | [Pagination](Pagination.md)
 
@@ -18,6 +19,7 @@ import type { JobListResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "jobs": null,
   "pagination": null,
 } satisfies JobListResponse

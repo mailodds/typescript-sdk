@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `error` | string
 `message` | string
 
@@ -18,6 +19,7 @@ import type { ErrorResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": 1.0,
+  "requestId": null,
   "error": null,
   "message": null,
 } satisfies ErrorResponse

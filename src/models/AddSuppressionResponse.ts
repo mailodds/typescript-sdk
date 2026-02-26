@@ -26,17 +26,35 @@ export interface AddSuppressionResponse {
      */
     schemaVersion?: string;
     /**
-     * 
+     * Unique request identifier
+     * @type {string}
+     * @memberof AddSuppressionResponse
+     */
+    requestId?: string;
+    /**
+     * Number of entries successfully added
      * @type {number}
      * @memberof AddSuppressionResponse
      */
     added?: number;
     /**
-     * 
+     * Number of duplicate entries skipped
      * @type {number}
      * @memberof AddSuppressionResponse
      */
-    skipped?: number;
+    duplicates?: number;
+    /**
+     * Number of invalid entries rejected
+     * @type {number}
+     * @memberof AddSuppressionResponse
+     */
+    invalid?: number;
+    /**
+     * Total entries in the request
+     * @type {number}
+     * @memberof AddSuppressionResponse
+     */
+    total?: number;
 }
 
 /**
@@ -57,8 +75,11 @@ export function AddSuppressionResponseFromJSONTyped(json: any, ignoreDiscriminat
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'added': json['added'] == null ? undefined : json['added'],
-        'skipped': json['skipped'] == null ? undefined : json['skipped'],
+        'duplicates': json['duplicates'] == null ? undefined : json['duplicates'],
+        'invalid': json['invalid'] == null ? undefined : json['invalid'],
+        'total': json['total'] == null ? undefined : json['total'],
     };
 }
 
@@ -74,8 +95,11 @@ export function AddSuppressionResponseToJSONTyped(value?: AddSuppressionResponse
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'added': value['added'],
-        'skipped': value['skipped'],
+        'duplicates': value['duplicates'],
+        'invalid': value['invalid'],
+        'total': value['total'],
     };
 }
 

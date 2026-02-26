@@ -34,6 +34,12 @@ export interface PolicyResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof PolicyResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {Policy}
      * @memberof PolicyResponse
@@ -59,6 +65,7 @@ export function PolicyResponseFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'policy': json['policy'] == null ? undefined : PolicyFromJSON(json['policy']),
     };
 }
@@ -75,6 +82,7 @@ export function PolicyResponseToJSONTyped(value?: PolicyResponse | null, ignoreD
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'policy': PolicyToJSON(value['policy']),
     };
 }

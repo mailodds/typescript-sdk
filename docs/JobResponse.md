@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `job` | [Job](Job.md)
 
 ## Example
@@ -17,6 +18,7 @@ import type { JobResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": 1.0,
+  "requestId": null,
   "job": null,
 } satisfies JobResponse
 

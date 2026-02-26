@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `upload` | [PresignedUploadResponseUpload](PresignedUploadResponseUpload.md)
 
 ## Example
@@ -17,6 +18,7 @@ import type { PresignedUploadResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "upload": null,
 } satisfies PresignedUploadResponse
 

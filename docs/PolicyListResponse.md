@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `schemaVersion` | string
+`requestId` | string
 `policies` | [Array&lt;Policy&gt;](Policy.md)
 `limits` | [PolicyListResponseLimits](PolicyListResponseLimits.md)
 
@@ -18,6 +19,7 @@ import type { PolicyListResponse } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "schemaVersion": null,
+  "requestId": null,
   "policies": null,
   "limits": null,
 } satisfies PolicyListResponse

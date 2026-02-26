@@ -26,6 +26,12 @@ export interface SuppressionCheckResponse {
      */
     schemaVersion?: string;
     /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof SuppressionCheckResponse
+     */
+    requestId?: string;
+    /**
      * 
      * @type {string}
      * @memberof SuppressionCheckResponse
@@ -80,6 +86,7 @@ export function SuppressionCheckResponseFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'email': json['email'] == null ? undefined : json['email'],
         'suppressed': json['suppressed'] == null ? undefined : json['suppressed'],
         'matchType': json['match_type'] == null ? undefined : json['match_type'],
@@ -99,6 +106,7 @@ export function SuppressionCheckResponseToJSONTyped(value?: SuppressionCheckResp
     return {
         
         'schema_version': value['schemaVersion'],
+        'request_id': value['requestId'],
         'email': value['email'],
         'suppressed': value['suppressed'],
         'match_type': value['matchType'],
