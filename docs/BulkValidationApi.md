@@ -621,7 +621,7 @@ example().catch(console.error);
 
 ## listJobs
 
-> JobListResponse listJobs(page, perPage, status)
+> JobListResponse listJobs(cursor, limit, status)
 
 List validation jobs
 
@@ -645,10 +645,10 @@ async function example() {
   const api = new BulkValidationApi(config);
 
   const body = {
-    // number (optional)
-    page: 56,
-    // number (optional)
-    perPage: 56,
+    // string | Pagination cursor (ISO timestamp from previous response) (optional)
+    cursor: cursor_example,
+    // number | Results per page (optional)
+    limit: 56,
     // 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled' (optional)
     status: status_example,
   } satisfies ListJobsRequest;
@@ -670,8 +670,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **page** | `number` |  | [Optional] [Defaults to `1`] |
-| **perPage** | `number` |  | [Optional] [Defaults to `20`] |
+| **cursor** | `string` | Pagination cursor (ISO timestamp from previous response) | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` | Results per page | [Optional] [Defaults to `50`] |
 | **status** | `pending`, `processing`, `completed`, `failed`, `cancelled` |  | [Optional] [Defaults to `undefined`] [Enum: pending, processing, completed, failed, cancelled] |
 
 ### Return type

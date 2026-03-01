@@ -1,24 +1,27 @@
 
-# SendingDomainIdentityScoreChecksDkim
+# JobArtifacts
 
+Download URLs for completed jobs. Present only when status is completed.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`status` | string
-`score` | number
+`csvAll` | string
+`csvValid` | string
+`csvInvalid` | string
 
 ## Example
 
 ```typescript
-import type { SendingDomainIdentityScoreChecksDkim } from '@mailodds/sdk'
+import type { JobArtifacts } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "status": null,
-  "score": null,
-} satisfies SendingDomainIdentityScoreChecksDkim
+  "csvAll": null,
+  "csvValid": null,
+  "csvInvalid": null,
+} satisfies JobArtifacts
 
 console.log(example)
 
@@ -27,7 +30,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as SendingDomainIdentityScoreChecksDkim
+const exampleParsed = JSON.parse(exampleJSON) as JobArtifacts
 console.log(exampleParsed)
 ```
 

@@ -84,6 +84,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 *SubscriberListsApi* | [**unsubscribeSubscriber**](docs/SubscriberListsApi.md#unsubscribesubscriber) | **DELETE** /v1/lists/{list_id}/subscribers/{subscriber_id} | Unsubscribe a subscriber
 *SuppressionListsApi* | [**addSuppression**](docs/SuppressionListsApi.md#addsuppressionoperation) | **POST** /v1/suppression | Add suppression entries
 *SuppressionListsApi* | [**checkSuppression**](docs/SuppressionListsApi.md#checksuppressionoperation) | **POST** /v1/suppression/check | Check suppression status
+*SuppressionListsApi* | [**getSuppressionAuditLog**](docs/SuppressionListsApi.md#getsuppressionauditlog) | **GET** /v1/suppression/audit | Get suppression audit log
 *SuppressionListsApi* | [**getSuppressionStats**](docs/SuppressionListsApi.md#getsuppressionstats) | **GET** /v1/suppression/stats | Get suppression statistics
 *SuppressionListsApi* | [**listSuppression**](docs/SuppressionListsApi.md#listsuppression) | **GET** /v1/suppression | List suppression entries
 *SuppressionListsApi* | [**removeSuppression**](docs/SuppressionListsApi.md#removesuppressionoperation) | **DELETE** /v1/suppression | Remove suppression entries
@@ -139,7 +140,9 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [GetSendingStats200ResponseStats](docs/GetSendingStats200ResponseStats.md)
 - [GetSubscribers200Response](docs/GetSubscribers200Response.md)
 - [HealthCheck200Response](docs/HealthCheck200Response.md)
+- [IdentityScoreCheck](docs/IdentityScoreCheck.md)
 - [Job](docs/Job.md)
+- [JobArtifacts](docs/JobArtifacts.md)
 - [JobListResponse](docs/JobListResponse.md)
 - [JobResponse](docs/JobResponse.md)
 - [JobSummary](docs/JobSummary.md)
@@ -163,12 +166,12 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [SendingDomainDnsRecords](docs/SendingDomainDnsRecords.md)
 - [SendingDomainDnsRecordsNs](docs/SendingDomainDnsRecordsNs.md)
 - [SendingDomainIdentityScore](docs/SendingDomainIdentityScore.md)
-- [SendingDomainIdentityScoreChecks](docs/SendingDomainIdentityScoreChecks.md)
-- [SendingDomainIdentityScoreChecksDkim](docs/SendingDomainIdentityScoreChecksDkim.md)
-- [SendingDomainIdentityScoreChecksDmarc](docs/SendingDomainIdentityScoreChecksDmarc.md)
+- [SendingDomainIdentityScoreBreakdown](docs/SendingDomainIdentityScoreBreakdown.md)
 - [SubscribeRequest](docs/SubscribeRequest.md)
 - [Subscriber](docs/Subscriber.md)
 - [SubscriberList](docs/SubscriberList.md)
+- [SuppressionAuditResponse](docs/SuppressionAuditResponse.md)
+- [SuppressionAuditResponseEntriesInner](docs/SuppressionAuditResponseEntriesInner.md)
 - [SuppressionCheckResponse](docs/SuppressionCheckResponse.md)
 - [SuppressionEntry](docs/SuppressionEntry.md)
 - [SuppressionListResponse](docs/SuppressionListResponse.md)
@@ -191,6 +194,8 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [ValidationResponsePolicyApplied](docs/ValidationResponsePolicyApplied.md)
 - [ValidationResponseSuppressionMatch](docs/ValidationResponseSuppressionMatch.md)
 - [ValidationResult](docs/ValidationResult.md)
+- [ValidationResultSuppression](docs/ValidationResultSuppression.md)
+- [WebhookEvent](docs/WebhookEvent.md)
 
 ### Authorization
 

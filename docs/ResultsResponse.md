@@ -8,7 +8,8 @@ Name | Type
 ------------ | -------------
 `schemaVersion` | string
 `requestId` | string
-`results` | [Array&lt;ValidationResult&gt;](ValidationResult.md)
+`job` | [Job](Job.md)
+`data` | [Array&lt;ValidationResult&gt;](ValidationResult.md)
 `pagination` | [Pagination](Pagination.md)
 
 ## Example
@@ -20,7 +21,8 @@ import type { ResultsResponse } from '@mailodds/sdk'
 const example = {
   "schemaVersion": null,
   "requestId": null,
-  "results": null,
+  "job": null,
+  "data": null,
   "pagination": null,
 } satisfies ResultsResponse
 

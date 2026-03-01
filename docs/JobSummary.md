@@ -1,6 +1,7 @@
 
 # JobSummary
 
+Status breakdown. Present when processing has started.
 
 ## Properties
 
@@ -11,7 +12,6 @@ Name | Type
 `catchAll` | number
 `doNotMail` | number
 `unknown` | number
-`cancelledPending` | number
 
 ## Example
 
@@ -25,7 +25,6 @@ const example = {
   "catchAll": null,
   "doNotMail": null,
   "unknown": null,
-  "cancelledPending": null,
 } satisfies JobSummary
 
 console.log(example)

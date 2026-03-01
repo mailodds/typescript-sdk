@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * MailOdds Email Validation API
- * MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+ * MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: support@mailodds.com
@@ -20,6 +20,13 @@ import {
     PaginationToJSON,
     PaginationToJSONTyped,
 } from './Pagination';
+import type { Job } from './Job';
+import {
+    JobFromJSON,
+    JobFromJSONTyped,
+    JobToJSON,
+    JobToJSONTyped,
+} from './Job';
 import type { ValidationResult } from './ValidationResult';
 import {
     ValidationResultFromJSON,
@@ -48,10 +55,16 @@ export interface ResultsResponse {
     requestId?: string;
     /**
      * 
+     * @type {Job}
+     * @memberof ResultsResponse
+     */
+    job?: Job;
+    /**
+     * Validation results for this page
      * @type {Array<ValidationResult>}
      * @memberof ResultsResponse
      */
-    results?: Array<ValidationResult>;
+    data?: Array<ValidationResult>;
     /**
      * 
      * @type {Pagination}
@@ -79,7 +92,8 @@ export function ResultsResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
         'requestId': json['request_id'] == null ? undefined : json['request_id'],
-        'results': json['results'] == null ? undefined : ((json['results'] as Array<any>).map(ValidationResultFromJSON)),
+        'job': json['job'] == null ? undefined : JobFromJSON(json['job']),
+        'data': json['data'] == null ? undefined : ((json['data'] as Array<any>).map(ValidationResultFromJSON)),
         'pagination': json['pagination'] == null ? undefined : PaginationFromJSON(json['pagination']),
     };
 }
@@ -97,7 +111,8 @@ export function ResultsResponseToJSONTyped(value?: ResultsResponse | null, ignor
         
         'schema_version': value['schemaVersion'],
         'request_id': value['requestId'],
-        'results': value['results'] == null ? undefined : ((value['results'] as Array<any>).map(ValidationResultToJSON)),
+        'job': JobToJSON(value['job']),
+        'data': value['data'] == null ? undefined : ((value['data'] as Array<any>).map(ValidationResultToJSON)),
         'pagination': PaginationToJSON(value['pagination']),
     };
 }

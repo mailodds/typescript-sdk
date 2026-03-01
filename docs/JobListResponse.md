@@ -8,8 +8,9 @@ Name | Type
 ------------ | -------------
 `schemaVersion` | string
 `requestId` | string
-`jobs` | [Array&lt;Job&gt;](Job.md)
-`pagination` | [Pagination](Pagination.md)
+`data` | [Array&lt;Job&gt;](Job.md)
+`nextCursor` | string
+`hasMore` | boolean
 
 ## Example
 
@@ -20,8 +21,9 @@ import type { JobListResponse } from '@mailodds/sdk'
 const example = {
   "schemaVersion": null,
   "requestId": null,
-  "jobs": null,
-  "pagination": null,
+  "data": null,
+  "nextCursor": null,
+  "hasMore": null,
 } satisfies JobListResponse
 
 console.log(example)

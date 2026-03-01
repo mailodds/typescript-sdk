@@ -6,8 +6,11 @@
 
 Name | Type
 ------------ | -------------
-`overallScore` | number
-`checks` | [SendingDomainIdentityScoreChecks](SendingDomainIdentityScoreChecks.md)
+`score` | number
+`maxScore` | number
+`percentage` | number
+`breakdown` | [SendingDomainIdentityScoreBreakdown](SendingDomainIdentityScoreBreakdown.md)
+`grade` | string
 
 ## Example
 
@@ -16,8 +19,11 @@ import type { SendingDomainIdentityScore } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "overallScore": null,
-  "checks": null,
+  "score": null,
+  "maxScore": null,
+  "percentage": null,
+  "breakdown": null,
+  "grade": null,
 } satisfies SendingDomainIdentityScore
 
 console.log(example)

@@ -7,14 +7,19 @@
 Name | Type
 ------------ | -------------
 `id` | string
+`name` | string
 `status` | string
 `totalCount` | number
 `processedCount` | number
-`progressPercent` | number
 `summary` | [JobSummary](JobSummary.md)
 `createdAt` | Date
+`startedAt` | Date
 `completedAt` | Date
+`resultsExpireAt` | Date
 `metadata` | object
+`errorMessage` | string
+`requestId` | string
+`artifacts` | [JobArtifacts](JobArtifacts.md)
 
 ## Example
 
@@ -24,14 +29,19 @@ import type { Job } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "id": job_abc123xyz,
+  "name": null,
   "status": null,
   "totalCount": null,
   "processedCount": null,
-  "progressPercent": null,
   "summary": null,
   "createdAt": null,
+  "startedAt": null,
   "completedAt": null,
+  "resultsExpireAt": null,
   "metadata": null,
+  "errorMessage": null,
+  "requestId": null,
+  "artifacts": null,
 } satisfies Job
 
 console.log(example)

@@ -17,6 +17,9 @@ Name | Type
 `tags` | Array&lt;string&gt;
 `campaignType` | string
 `structuredData` | [DeliverRequestStructuredData](DeliverRequestStructuredData.md)
+`schemaData` | { [key: string]: string; }
+`autoDetectSchema` | boolean
+`aiSummary` | string
 `options` | [DeliverRequestOptions](DeliverRequestOptions.md)
 
 ## Example
@@ -37,6 +40,9 @@ const example = {
   "tags": null,
   "campaignType": null,
   "structuredData": null,
+  "schemaData": null,
+  "autoDetectSchema": null,
+  "aiSummary": null,
   "options": null,
 } satisfies DeliverRequest
 

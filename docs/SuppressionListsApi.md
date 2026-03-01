@@ -6,6 +6,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 |------------- | ------------- | -------------|
 | [**addSuppression**](SuppressionListsApi.md#addsuppressionoperation) | **POST** /v1/suppression | Add suppression entries |
 | [**checkSuppression**](SuppressionListsApi.md#checksuppressionoperation) | **POST** /v1/suppression/check | Check suppression status |
+| [**getSuppressionAuditLog**](SuppressionListsApi.md#getsuppressionauditlog) | **GET** /v1/suppression/audit | Get suppression audit log |
 | [**getSuppressionStats**](SuppressionListsApi.md#getsuppressionstats) | **GET** /v1/suppression/stats | Get suppression statistics |
 | [**listSuppression**](SuppressionListsApi.md#listsuppression) | **GET** /v1/suppression | List suppression entries |
 | [**removeSuppression**](SuppressionListsApi.md#removesuppressionoperation) | **DELETE** /v1/suppression | Remove suppression entries |
@@ -157,6 +158,81 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## getSuppressionAuditLog
+
+> SuppressionAuditResponse getSuppressionAuditLog(page, limit)
+
+Get suppression audit log
+
+Get a chronological log of suppression list changes (additions, removals).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SuppressionListsApi,
+} from '@mailodds/sdk';
+import type { GetSuppressionAuditLogRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new SuppressionListsApi(config);
+
+  const body = {
+    // number (optional)
+    page: 56,
+    // number (optional)
+    limit: 56,
+  } satisfies GetSuppressionAuditLogRequest;
+
+  try {
+    const data = await api.getSuppressionAuditLog(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **page** | `number` |  | [Optional] [Defaults to `1`] |
+| **limit** | `number` |  | [Optional] [Defaults to `20`] |
+
+### Return type
+
+[**SuppressionAuditResponse**](SuppressionAuditResponse.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Audit log entries |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## getSuppressionStats
 
 > SuppressionStatsResponse getSuppressionStats()
@@ -223,7 +299,7 @@ This endpoint does not need any parameter.
 
 ## listSuppression
 
-> SuppressionListResponse listSuppression(page, perPage, type, search)
+> SuppressionListResponse listSuppression(page, perPage, type, search, source)
 
 List suppression entries
 
@@ -255,6 +331,8 @@ async function example() {
     type: type_example,
     // string (optional)
     search: search_example,
+    // string | Filter by entry source (e.g. api, bounce, complaint) (optional)
+    source: source_example,
   } satisfies ListSuppressionRequest;
 
   try {
@@ -278,6 +356,7 @@ example().catch(console.error);
 | **perPage** | `number` |  | [Optional] [Defaults to `50`] |
 | **type** | `email`, `domain` |  | [Optional] [Defaults to `undefined`] [Enum: email, domain] |
 | **search** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **source** | `string` | Filter by entry source (e.g. api, bounce, complaint) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

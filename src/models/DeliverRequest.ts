@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * MailOdds Email Validation API
- * MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+ * MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: support@mailodds.com
@@ -108,6 +108,24 @@ export interface DeliverRequest {
      */
     structuredData?: DeliverRequestStructuredData;
     /**
+     * Key-value pairs for campaign_type JSON-LD resolution (e.g., order_number, tracking_url)
+     * @type {{ [key: string]: string; }}
+     * @memberof DeliverRequest
+     */
+    schemaData?: { [key: string]: string; };
+    /**
+     * Auto-detect JSON-LD structured data type from subject line
+     * @type {boolean}
+     * @memberof DeliverRequest
+     */
+    autoDetectSchema?: boolean;
+    /**
+     * Hidden text summary for AI email assistants (max 500 characters)
+     * @type {string}
+     * @memberof DeliverRequest
+     */
+    aiSummary?: string;
+    /**
      * 
      * @type {DeliverRequestOptions}
      * @memberof DeliverRequest
@@ -166,6 +184,9 @@ export function DeliverRequestFromJSONTyped(json: any, ignoreDiscriminator: bool
         'tags': json['tags'] == null ? undefined : json['tags'],
         'campaignType': json['campaign_type'] == null ? undefined : json['campaign_type'],
         'structuredData': json['structured_data'] == null ? undefined : DeliverRequestStructuredDataFromJSON(json['structured_data']),
+        'schemaData': json['schema_data'] == null ? undefined : json['schema_data'],
+        'autoDetectSchema': json['auto_detect_schema'] == null ? undefined : json['auto_detect_schema'],
+        'aiSummary': json['ai_summary'] == null ? undefined : json['ai_summary'],
         'options': json['options'] == null ? undefined : DeliverRequestOptionsFromJSON(json['options']),
     };
 }
@@ -192,6 +213,9 @@ export function DeliverRequestToJSONTyped(value?: DeliverRequest | null, ignoreD
         'tags': value['tags'],
         'campaign_type': value['campaignType'],
         'structured_data': DeliverRequestStructuredDataToJSON(value['structuredData']),
+        'schema_data': value['schemaData'],
+        'auto_detect_schema': value['autoDetectSchema'],
+        'ai_summary': value['aiSummary'],
         'options': DeliverRequestOptionsToJSON(value['options']),
     };
 }

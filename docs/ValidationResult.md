@@ -1,6 +1,7 @@
 
 # ValidationResult
 
+Individual result from a bulk validation job
 
 ## Properties
 
@@ -10,6 +11,10 @@ Name | Type
 `status` | string
 `subStatus` | string
 `action` | string
+`domain` | string
+`mxHost` | string
+`checks` | { [key: string]: any; }
+`suppression` | [ValidationResultSuppression](ValidationResultSuppression.md)
 `processedAt` | Date
 
 ## Example
@@ -23,6 +28,10 @@ const example = {
   "status": null,
   "subStatus": null,
   "action": null,
+  "domain": null,
+  "mxHost": null,
+  "checks": null,
+  "suppression": null,
   "processedAt": null,
 } satisfies ValidationResult
 

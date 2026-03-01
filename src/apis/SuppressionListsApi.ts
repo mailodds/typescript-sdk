@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * MailOdds Email Validation API
- * MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+ * MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: support@mailodds.com
@@ -21,6 +21,7 @@ import type {
   ErrorResponse,
   RemoveSuppression200Response,
   RemoveSuppressionRequest,
+  SuppressionAuditResponse,
   SuppressionCheckResponse,
   SuppressionListResponse,
   SuppressionStatsResponse,
@@ -38,6 +39,8 @@ import {
     RemoveSuppression200ResponseToJSON,
     RemoveSuppressionRequestFromJSON,
     RemoveSuppressionRequestToJSON,
+    SuppressionAuditResponseFromJSON,
+    SuppressionAuditResponseToJSON,
     SuppressionCheckResponseFromJSON,
     SuppressionCheckResponseToJSON,
     SuppressionListResponseFromJSON,
@@ -54,11 +57,17 @@ export interface CheckSuppressionOperationRequest {
     checkSuppressionRequest: CheckSuppressionRequest;
 }
 
+export interface GetSuppressionAuditLogRequest {
+    page?: number;
+    limit?: number;
+}
+
 export interface ListSuppressionRequest {
     page?: number;
     perPage?: number;
     type?: ListSuppressionTypeEnum;
     search?: string;
+    source?: string;
 }
 
 export interface RemoveSuppressionOperationRequest {
@@ -169,6 +178,53 @@ export class SuppressionListsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Get a chronological log of suppression list changes (additions, removals).
+     * Get suppression audit log
+     */
+    async getSuppressionAuditLogRaw(requestParameters: GetSuppressionAuditLogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SuppressionAuditResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/suppression/audit`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SuppressionAuditResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a chronological log of suppression list changes (additions, removals).
+     * Get suppression audit log
+     */
+    async getSuppressionAuditLog(requestParameters: GetSuppressionAuditLogRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SuppressionAuditResponse> {
+        const response = await this.getSuppressionAuditLogRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Get statistics about the suppression list.
      * Get suppression statistics
      */
@@ -228,6 +284,10 @@ export class SuppressionListsApi extends runtime.BaseAPI {
 
         if (requestParameters['search'] != null) {
             queryParameters['search'] = requestParameters['search'];
+        }
+
+        if (requestParameters['source'] != null) {
+            queryParameters['source'] = requestParameters['source'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

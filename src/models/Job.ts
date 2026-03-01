@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * MailOdds Email Validation API
- * MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description 
+ * MailOdds provides email validation services to help maintain clean email lists  and improve deliverability. The API performs multiple validation checks including  format verification, domain validation, MX record checking, and disposable email detection.  ## Authentication  All API requests require authentication using a Bearer token. Include your API key  in the Authorization header:  ``` Authorization: Bearer YOUR_API_KEY ```  API keys can be created in the MailOdds dashboard.  ## Rate Limits  Rate limits vary by plan: - Free: 10 requests/minute - Starter: 60 requests/minute   - Pro: 300 requests/minute - Business: 1000 requests/minute - Enterprise: Custom limits  ## Response Format  All responses include: - `schema_version`: API schema version (currently \"1.0\") - `request_id`: Unique request identifier for debugging  Error responses include: - `error`: Machine-readable error code - `message`: Human-readable error description  ## Webhooks  MailOdds can send webhook notifications for job completion and email delivery events. Configure webhooks in the dashboard or per-job via the `webhook_url` field.  ### Event Types  | Event | Description | |-------|-------------| | `job.completed` | Validation job finished processing | | `job.failed` | Validation job failed | | `message.queued` | Email queued for delivery | | `message.delivered` | Email delivered to recipient | | `message.bounced` | Email bounced | | `message.deferred` | Email delivery deferred | | `message.failed` | Email delivery failed | | `message.opened` | Recipient opened the email | | `message.clicked` | Recipient clicked a link |  ### Payload Format  ```json {   \"event\": \"job.completed\",   \"job\": { ... },   \"timestamp\": \"2026-01-15T10:30:00Z\" } ```  ### Webhook Signing  If a webhook secret is configured, each request includes an `X-MailOdds-Signature` header containing an HMAC-SHA256 hex digest of the request body.  **Verification pseudocode:** ``` expected = HMAC-SHA256(webhook_secret, request_body) valid = constant_time_compare(request.headers[\"X-MailOdds-Signature\"], hex(expected)) ```  The payload is serialized with compact JSON (no extra whitespace, sorted keys) before signing.  ### Headers  All webhook requests include: - `Content-Type: application/json` - `User-Agent: MailOdds-Webhook/1.0` - `X-MailOdds-Event: {event_type}` - `X-Request-Id: {uuid}` - `X-MailOdds-Signature: {hmac}` (when secret is configured)  ### Retry Policy  Failed deliveries (non-2xx response or timeout) are retried up to 3 times with exponential backoff (10s, 60s, 300s). 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: support@mailodds.com
@@ -20,6 +20,13 @@ import {
     JobSummaryToJSON,
     JobSummaryToJSONTyped,
 } from './JobSummary';
+import type { JobArtifacts } from './JobArtifacts';
+import {
+    JobArtifactsFromJSON,
+    JobArtifactsFromJSONTyped,
+    JobArtifactsToJSON,
+    JobArtifactsToJSONTyped,
+} from './JobArtifacts';
 
 /**
  * 
@@ -32,31 +39,31 @@ export interface Job {
      * @type {string}
      * @memberof Job
      */
-    id?: string;
+    id: string;
+    /**
+     * Job name (from metadata or auto-generated)
+     * @type {string}
+     * @memberof Job
+     */
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof Job
      */
-    status?: JobStatusEnum;
+    status: JobStatusEnum;
     /**
      * 
      * @type {number}
      * @memberof Job
      */
-    totalCount?: number;
+    totalCount: number;
     /**
      * 
      * @type {number}
      * @memberof Job
      */
-    processedCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Job
-     */
-    progressPercent?: number;
+    processedCount: number;
     /**
      * 
      * @type {JobSummary}
@@ -68,19 +75,49 @@ export interface Job {
      * @type {Date}
      * @memberof Job
      */
-    createdAt?: Date;
+    createdAt: Date;
     /**
-     * 
+     * When processing began. Omitted if not yet started.
+     * @type {Date}
+     * @memberof Job
+     */
+    startedAt?: Date;
+    /**
+     * Omitted if not yet completed.
      * @type {Date}
      * @memberof Job
      */
     completedAt?: Date;
     /**
-     * 
+     * When job results will be purged
+     * @type {Date}
+     * @memberof Job
+     */
+    resultsExpireAt: Date;
+    /**
+     * Custom metadata attached at creation
      * @type {object}
      * @memberof Job
      */
     metadata?: object;
+    /**
+     * Error details. Present only for failed jobs.
+     * @type {string}
+     * @memberof Job
+     */
+    errorMessage?: string;
+    /**
+     * Request ID from the job creation request
+     * @type {string}
+     * @memberof Job
+     */
+    requestId?: string;
+    /**
+     * 
+     * @type {JobArtifacts}
+     * @memberof Job
+     */
+    artifacts?: JobArtifacts;
 }
 
 
@@ -101,6 +138,13 @@ export type JobStatusEnum = typeof JobStatusEnum[keyof typeof JobStatusEnum];
  * Check if a given object implements the Job interface.
  */
 export function instanceOfJob(value: object): value is Job {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('totalCount' in value) || value['totalCount'] === undefined) return false;
+    if (!('processedCount' in value) || value['processedCount'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('resultsExpireAt' in value) || value['resultsExpireAt'] === undefined) return false;
     return true;
 }
 
@@ -114,15 +158,20 @@ export function JobFromJSONTyped(json: any, ignoreDiscriminator: boolean): Job {
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'status': json['status'] == null ? undefined : json['status'],
-        'totalCount': json['total_count'] == null ? undefined : json['total_count'],
-        'processedCount': json['processed_count'] == null ? undefined : json['processed_count'],
-        'progressPercent': json['progress_percent'] == null ? undefined : json['progress_percent'],
+        'id': json['id'],
+        'name': json['name'],
+        'status': json['status'],
+        'totalCount': json['total_count'],
+        'processedCount': json['processed_count'],
         'summary': json['summary'] == null ? undefined : JobSummaryFromJSON(json['summary']),
-        'createdAt': json['created_at'] == null ? undefined : (new Date(json['created_at'])),
+        'createdAt': (new Date(json['created_at'])),
+        'startedAt': json['started_at'] == null ? undefined : (new Date(json['started_at'])),
         'completedAt': json['completed_at'] == null ? undefined : (new Date(json['completed_at'])),
+        'resultsExpireAt': (new Date(json['results_expire_at'])),
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'artifacts': json['artifacts'] == null ? undefined : JobArtifactsFromJSON(json['artifacts']),
     };
 }
 
@@ -138,14 +187,19 @@ export function JobToJSONTyped(value?: Job | null, ignoreDiscriminator: boolean 
     return {
         
         'id': value['id'],
+        'name': value['name'],
         'status': value['status'],
         'total_count': value['totalCount'],
         'processed_count': value['processedCount'],
-        'progress_percent': value['progressPercent'],
         'summary': JobSummaryToJSON(value['summary']),
-        'created_at': value['createdAt'] == null ? value['createdAt'] : value['createdAt'].toISOString(),
+        'created_at': value['createdAt'].toISOString(),
+        'started_at': value['startedAt'] == null ? value['startedAt'] : value['startedAt'].toISOString(),
         'completed_at': value['completedAt'] == null ? value['completedAt'] : value['completedAt'].toISOString(),
+        'results_expire_at': value['resultsExpireAt'].toISOString(),
         'metadata': value['metadata'],
+        'error_message': value['errorMessage'],
+        'request_id': value['requestId'],
+        'artifacts': JobArtifactsToJSON(value['artifacts']),
     };
 }
 

@@ -1,26 +1,25 @@
 
-# SendingDomainIdentityScoreChecksDmarc
+# ValidationResultSuppression
 
+Present only when email matched a suppression entry.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`status` | string
-`score` | number
-`policy` | string
+`matchType` | string
+`matchValue` | string
 
 ## Example
 
 ```typescript
-import type { SendingDomainIdentityScoreChecksDmarc } from '@mailodds/sdk'
+import type { ValidationResultSuppression } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "status": null,
-  "score": null,
-  "policy": null,
-} satisfies SendingDomainIdentityScoreChecksDmarc
+  "matchType": null,
+  "matchValue": null,
+} satisfies ValidationResultSuppression
 
 console.log(example)
 
@@ -29,7 +28,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as SendingDomainIdentityScoreChecksDmarc
+const exampleParsed = JSON.parse(exampleJSON) as ValidationResultSuppression
 console.log(exampleParsed)
 ```
 
