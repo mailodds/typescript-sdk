@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * Present only when email matched a suppression list entry.
+ * Present only when email matched a suppression list entry. Null otherwise.
  * @export
  * @interface ValidationResponseSuppressionMatch
  */

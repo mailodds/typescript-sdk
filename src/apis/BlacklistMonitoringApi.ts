@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   AddBlacklistMonitor201Response,
   AddBlacklistMonitorRequest,
+  DeletePolicyRule200Response,
   ErrorResponse,
   GetBlacklistHistory200Response,
   ListBlacklistMonitors200Response,
@@ -27,6 +28,8 @@ import {
     AddBlacklistMonitor201ResponseToJSON,
     AddBlacklistMonitorRequestFromJSON,
     AddBlacklistMonitorRequestToJSON,
+    DeletePolicyRule200ResponseFromJSON,
+    DeletePolicyRule200ResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     GetBlacklistHistory200ResponseFromJSON,
@@ -39,6 +42,10 @@ import {
 
 export interface AddBlacklistMonitorOperationRequest {
     addBlacklistMonitorRequest: AddBlacklistMonitorRequest;
+}
+
+export interface DeleteBlacklistMonitorRequest {
+    monitorId: string;
 }
 
 export interface GetBlacklistHistoryRequest {
@@ -102,6 +109,53 @@ export class BlacklistMonitoringApi extends runtime.BaseAPI {
      */
     async addBlacklistMonitor(requestParameters: AddBlacklistMonitorOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AddBlacklistMonitor201Response> {
         const response = await this.addBlacklistMonitorRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Permanently remove a blacklist monitor and its check history.
+     * Delete a blacklist monitor
+     */
+    async deleteBlacklistMonitorRaw(requestParameters: DeleteBlacklistMonitorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeletePolicyRule200Response>> {
+        if (requestParameters['monitorId'] == null) {
+            throw new runtime.RequiredError(
+                'monitorId',
+                'Required parameter "monitorId" was null or undefined when calling deleteBlacklistMonitor().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/blacklist-monitors/{monitor_id}`;
+        urlPath = urlPath.replace(`{${"monitor_id"}}`, encodeURIComponent(String(requestParameters['monitorId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeletePolicyRule200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Permanently remove a blacklist monitor and its check history.
+     * Delete a blacklist monitor
+     */
+    async deleteBlacklistMonitor(requestParameters: DeleteBlacklistMonitorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletePolicyRule200Response> {
+        const response = await this.deleteBlacklistMonitorRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

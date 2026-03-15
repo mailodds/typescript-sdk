@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   AddDmarcDomain201Response,
   AddDmarcDomainRequest,
+  DeletePolicyRule200Response,
   ErrorResponse,
   GetDmarcDomain200Response,
   GetDmarcRecommendation200Response,
@@ -29,6 +30,8 @@ import {
     AddDmarcDomain201ResponseToJSON,
     AddDmarcDomainRequestFromJSON,
     AddDmarcDomainRequestToJSON,
+    DeletePolicyRule200ResponseFromJSON,
+    DeletePolicyRule200ResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     GetDmarcDomain200ResponseFromJSON,
@@ -45,6 +48,10 @@ import {
 
 export interface AddDmarcDomainOperationRequest {
     addDmarcDomainRequest: AddDmarcDomainRequest;
+}
+
+export interface DeleteDmarcDomainRequest {
+    domainId: string;
 }
 
 export interface GetDmarcDomainRequest {
@@ -123,6 +130,53 @@ export class DMARCMonitoringApi extends runtime.BaseAPI {
      */
     async addDmarcDomain(requestParameters: AddDmarcDomainOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AddDmarcDomain201Response> {
         const response = await this.addDmarcDomainRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Delete a DMARC domain and all its associated reports.
+     * Delete a DMARC domain
+     */
+    async deleteDmarcDomainRaw(requestParameters: DeleteDmarcDomainRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeletePolicyRule200Response>> {
+        if (requestParameters['domainId'] == null) {
+            throw new runtime.RequiredError(
+                'domainId',
+                'Required parameter "domainId" was null or undefined when calling deleteDmarcDomain().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/dmarc-domains/{domain_id}`;
+        urlPath = urlPath.replace(`{${"domain_id"}}`, encodeURIComponent(String(requestParameters['domainId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeletePolicyRule200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Delete a DMARC domain and all its associated reports.
+     * Delete a DMARC domain
+     */
+    async deleteDmarcDomain(requestParameters: DeleteDmarcDomainRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletePolicyRule200Response> {
+        const response = await this.deleteDmarcDomainRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

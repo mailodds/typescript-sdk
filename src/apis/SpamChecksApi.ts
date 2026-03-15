@@ -50,7 +50,7 @@ export interface RunSpamCheckOperationRequest {
 export class SpamChecksApi extends runtime.BaseAPI {
 
     /**
-     * Get the detailed result of a specific spam check. Currently available to beta accounts only.
+     * Get the detailed result of a specific spam check.
      * Get spam check
      */
     async getSpamCheckRaw(requestParameters: GetSpamCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RunSpamCheck201Response>> {
@@ -88,7 +88,7 @@ export class SpamChecksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the detailed result of a specific spam check. Currently available to beta accounts only.
+     * Get the detailed result of a specific spam check.
      * Get spam check
      */
     async getSpamCheck(requestParameters: GetSpamCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RunSpamCheck201Response> {
@@ -97,7 +97,7 @@ export class SpamChecksApi extends runtime.BaseAPI {
     }
 
     /**
-     * List past spam check results with pagination. Currently available to beta accounts only.
+     * List past spam check results with pagination.
      * List spam checks
      */
     async listSpamChecksRaw(requestParameters: ListSpamChecksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListSpamChecks200Response>> {
@@ -135,7 +135,7 @@ export class SpamChecksApi extends runtime.BaseAPI {
     }
 
     /**
-     * List past spam check results with pagination. Currently available to beta accounts only.
+     * List past spam check results with pagination.
      * List spam checks
      */
     async listSpamChecks(requestParameters: ListSpamChecksRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ListSpamChecks200Response> {
@@ -144,7 +144,7 @@ export class SpamChecksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Run backend spam checks on email sending parameters. Checks domain reputation, link safety, and subject line quality. Currently available to beta accounts only.
+     * Run backend spam checks on email sending parameters. Checks domain reputation, link safety, and subject line quality.
      * Run spam check
      */
     async runSpamCheckRaw(requestParameters: RunSpamCheckOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RunSpamCheck201Response>> {
@@ -184,7 +184,7 @@ export class SpamChecksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Run backend spam checks on email sending parameters. Checks domain reputation, link safety, and subject line quality. Currently available to beta accounts only.
+     * Run backend spam checks on email sending parameters. Checks domain reputation, link safety, and subject line quality.
      * Run spam check
      */
     async runSpamCheck(requestParameters: RunSpamCheckOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RunSpamCheck201Response> {

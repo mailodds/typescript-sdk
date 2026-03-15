@@ -5,6 +5,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**addBlacklistMonitor**](BlacklistMonitoringApi.md#addblacklistmonitoroperation) | **POST** /v1/blacklist-monitors | Add blacklist monitor |
+| [**deleteBlacklistMonitor**](BlacklistMonitoringApi.md#deleteblacklistmonitor) | **DELETE** /v1/blacklist-monitors/{monitor_id} | Delete a blacklist monitor |
 | [**getBlacklistHistory**](BlacklistMonitoringApi.md#getblacklisthistory) | **GET** /v1/blacklist-monitors/{monitor_id}/history | Get blacklist check history |
 | [**listBlacklistMonitors**](BlacklistMonitoringApi.md#listblacklistmonitors) | **GET** /v1/blacklist-monitors | List blacklist monitors |
 | [**runBlacklistCheck**](BlacklistMonitoringApi.md#runblacklistcheck) | **POST** /v1/blacklist-monitors/{monitor_id}/check | Run blacklist check |
@@ -80,6 +81,79 @@ example().catch(console.error);
 | **201** | Monitor created with initial check result |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteBlacklistMonitor
+
+> DeletePolicyRule200Response deleteBlacklistMonitor(monitorId)
+
+Delete a blacklist monitor
+
+Permanently remove a blacklist monitor and its check history.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BlacklistMonitoringApi,
+} from '@mailodds/sdk';
+import type { DeleteBlacklistMonitorRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new BlacklistMonitoringApi(config);
+
+  const body = {
+    // string | Monitor UUID
+    monitorId: monitorId_example,
+  } satisfies DeleteBlacklistMonitorRequest;
+
+  try {
+    const data = await api.deleteBlacklistMonitor(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **monitorId** | `string` | Monitor UUID | [Defaults to `undefined`] |
+
+### Return type
+
+[**DeletePolicyRule200Response**](DeletePolicyRule200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Monitor deleted |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

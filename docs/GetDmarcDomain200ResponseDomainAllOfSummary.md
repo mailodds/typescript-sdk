@@ -6,12 +6,13 @@
 
 Name | Type
 ------------ | -------------
-`totalReports` | number
-`totalRecords` | number
+`days` | number
+`reportCount` | number
+`sourceCount` | number
+`totalMessages` | number
+`totalPass` | number
+`totalFail` | number
 `passRate` | number
-`failRate` | number
-`dkimAligned` | number
-`spfAligned` | number
 
 ## Example
 
@@ -20,12 +21,13 @@ import type { GetDmarcDomain200ResponseDomainAllOfSummary } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "totalReports": null,
-  "totalRecords": null,
+  "days": null,
+  "reportCount": null,
+  "sourceCount": null,
+  "totalMessages": null,
+  "totalPass": null,
+  "totalFail": null,
   "passRate": null,
-  "failRate": null,
-  "dkimAligned": null,
-  "spfAligned": null,
 } satisfies GetDmarcDomain200ResponseDomainAllOfSummary
 
 console.log(example)

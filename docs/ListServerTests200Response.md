@@ -8,7 +8,7 @@ Name | Type
 ------------ | -------------
 `schemaVersion` | string
 `requestId` | string
-`tests` | [Array&lt;ServerTest&gt;](ServerTest.md)
+`data` | [Array&lt;ServerTest&gt;](ServerTest.md)
 `pagination` | [Pagination](Pagination.md)
 
 ## Example
@@ -20,7 +20,7 @@ import type { ListServerTests200Response } from '@mailodds/sdk'
 const example = {
   "schemaVersion": null,
   "requestId": null,
-  "tests": null,
+  "data": null,
   "pagination": null,
 } satisfies ListServerTests200Response
 

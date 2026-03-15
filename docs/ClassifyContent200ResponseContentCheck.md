@@ -6,10 +6,12 @@
 
 Name | Type
 ------------ | -------------
-`score` | number
-`verdict` | string
-`categories` | [Array&lt;ClassifyContent200ResponseContentCheckCategoriesInner&gt;](ClassifyContent200ResponseContentCheckCategoriesInner.md)
+`status` | string
+`flag` | boolean
+`reason` | string
+`priority` | number
 `suggestions` | Array&lt;string&gt;
+`durationMs` | number
 
 ## Example
 
@@ -18,10 +20,12 @@ import type { ClassifyContent200ResponseContentCheck } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "score": null,
-  "verdict": null,
-  "categories": null,
+  "status": null,
+  "flag": null,
+  "reason": null,
+  "priority": null,
   "suggestions": null,
+  "durationMs": null,
 } satisfies ClassifyContent200ResponseContentCheck
 
 console.log(example)

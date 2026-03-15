@@ -16,7 +16,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 
 Get spam check
 
-Get the detailed result of a specific spam check. Currently available to beta accounts only.
+Get the detailed result of a specific spam check.
 
 ### Example
 
@@ -78,7 +78,6 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Spam check details |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **403** | Feature not available - beta access required |  -  |
 | **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -90,7 +89,7 @@ example().catch(console.error);
 
 List spam checks
 
-List past spam check results with pagination. Currently available to beta accounts only.
+List past spam check results with pagination.
 
 ### Example
 
@@ -155,7 +154,6 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | List of spam checks |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **403** | Feature not available - beta access required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -166,7 +164,7 @@ example().catch(console.error);
 
 Run spam check
 
-Run backend spam checks on email sending parameters. Checks domain reputation, link safety, and subject line quality. Currently available to beta accounts only.
+Run backend spam checks on email sending parameters. Checks domain reputation, link safety, and subject line quality.
 
 ### Example
 
@@ -229,7 +227,6 @@ example().catch(console.error);
 | **201** | Spam check result |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **403** | Feature not available - beta access required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

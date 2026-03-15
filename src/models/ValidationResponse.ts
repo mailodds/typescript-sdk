@@ -171,13 +171,13 @@ export interface ValidationResponse {
      * @type {ValidationResponseSuppressionMatch}
      * @memberof ValidationResponse
      */
-    suppressionMatch?: ValidationResponseSuppressionMatch;
+    suppressionMatch?: ValidationResponseSuppressionMatch | null;
     /**
      * 
      * @type {ValidationResponsePolicyApplied}
      * @memberof ValidationResponse
      */
-    policyApplied?: ValidationResponsePolicyApplied;
+    policyApplied?: ValidationResponsePolicyApplied | null;
 }
 
 

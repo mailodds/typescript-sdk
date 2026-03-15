@@ -1,7 +1,7 @@
 
 # ValidationResponsePolicyApplied
 
-Present when a validation policy modified the result.
+Present when a validation policy modified the result. Null when no policy is applied.
 
 ## Properties
 

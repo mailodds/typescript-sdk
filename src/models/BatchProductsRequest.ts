@@ -13,69 +13,62 @@
  */
 
 import { mapValues } from '../runtime';
+import type { BatchProductsRequestProductsInner } from './BatchProductsRequestProductsInner';
+import {
+    BatchProductsRequestProductsInnerFromJSON,
+    BatchProductsRequestProductsInnerFromJSONTyped,
+    BatchProductsRequestProductsInnerToJSON,
+    BatchProductsRequestProductsInnerToJSONTyped,
+} from './BatchProductsRequestProductsInner';
+
 /**
  * 
  * @export
- * @interface ClassifyContent200ResponseContentCheckCategoriesInner
+ * @interface BatchProductsRequest
  */
-export interface ClassifyContent200ResponseContentCheckCategoriesInner {
+export interface BatchProductsRequest {
     /**
      * 
-     * @type {string}
-     * @memberof ClassifyContent200ResponseContentCheckCategoriesInner
+     * @type {Array<BatchProductsRequestProductsInner>}
+     * @memberof BatchProductsRequest
      */
-    name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClassifyContent200ResponseContentCheckCategoriesInner
-     */
-    score?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClassifyContent200ResponseContentCheckCategoriesInner
-     */
-    details?: string;
+    products: Array<BatchProductsRequestProductsInner>;
 }
 
 /**
- * Check if a given object implements the ClassifyContent200ResponseContentCheckCategoriesInner interface.
+ * Check if a given object implements the BatchProductsRequest interface.
  */
-export function instanceOfClassifyContent200ResponseContentCheckCategoriesInner(value: object): value is ClassifyContent200ResponseContentCheckCategoriesInner {
+export function instanceOfBatchProductsRequest(value: object): value is BatchProductsRequest {
+    if (!('products' in value) || value['products'] === undefined) return false;
     return true;
 }
 
-export function ClassifyContent200ResponseContentCheckCategoriesInnerFromJSON(json: any): ClassifyContent200ResponseContentCheckCategoriesInner {
-    return ClassifyContent200ResponseContentCheckCategoriesInnerFromJSONTyped(json, false);
+export function BatchProductsRequestFromJSON(json: any): BatchProductsRequest {
+    return BatchProductsRequestFromJSONTyped(json, false);
 }
 
-export function ClassifyContent200ResponseContentCheckCategoriesInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): ClassifyContent200ResponseContentCheckCategoriesInner {
+export function BatchProductsRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): BatchProductsRequest {
     if (json == null) {
         return json;
     }
     return {
         
-        'name': json['name'] == null ? undefined : json['name'],
-        'score': json['score'] == null ? undefined : json['score'],
-        'details': json['details'] == null ? undefined : json['details'],
+        'products': ((json['products'] as Array<any>).map(BatchProductsRequestProductsInnerFromJSON)),
     };
 }
 
-export function ClassifyContent200ResponseContentCheckCategoriesInnerToJSON(json: any): ClassifyContent200ResponseContentCheckCategoriesInner {
-    return ClassifyContent200ResponseContentCheckCategoriesInnerToJSONTyped(json, false);
+export function BatchProductsRequestToJSON(json: any): BatchProductsRequest {
+    return BatchProductsRequestToJSONTyped(json, false);
 }
 
-export function ClassifyContent200ResponseContentCheckCategoriesInnerToJSONTyped(value?: ClassifyContent200ResponseContentCheckCategoriesInner | null, ignoreDiscriminator: boolean = false): any {
+export function BatchProductsRequestToJSONTyped(value?: BatchProductsRequest | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'name': value['name'],
-        'score': value['score'],
-        'details': value['details'],
+        'products': ((value['products'] as Array<any>).map(BatchProductsRequestProductsInnerToJSON)),
     };
 }
 

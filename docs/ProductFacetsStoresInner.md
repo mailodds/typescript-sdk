@@ -1,26 +1,26 @@
 
-# ClassifyContent200ResponseContentCheckCategoriesInner
+# ProductFacetsStoresInner
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`name` | string
-`score` | number
-`details` | string
+`storeId` | string
+`storeName` | string
+`count` | number
 
 ## Example
 
 ```typescript
-import type { ClassifyContent200ResponseContentCheckCategoriesInner } from '@mailodds/sdk'
+import type { ProductFacetsStoresInner } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "name": null,
-  "score": null,
-  "details": null,
-} satisfies ClassifyContent200ResponseContentCheckCategoriesInner
+  "storeId": null,
+  "storeName": null,
+  "count": null,
+} satisfies ProductFacetsStoresInner
 
 console.log(example)
 
@@ -29,7 +29,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ClassifyContent200ResponseContentCheckCategoriesInner
+const exampleParsed = JSON.parse(exampleJSON) as ProductFacetsStoresInner
 console.log(exampleParsed)
 ```
 

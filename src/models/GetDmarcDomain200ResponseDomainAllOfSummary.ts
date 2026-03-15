@@ -24,37 +24,43 @@ export interface GetDmarcDomain200ResponseDomainAllOfSummary {
      * @type {number}
      * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
      */
-    totalReports?: number;
+    days?: number;
     /**
      * 
      * @type {number}
      * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
      */
-    totalRecords?: number;
+    reportCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
+     */
+    sourceCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
+     */
+    totalMessages?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
+     */
+    totalPass?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
+     */
+    totalFail?: number;
     /**
      * 
      * @type {number}
      * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
      */
     passRate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
-     */
-    failRate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
-     */
-    dkimAligned?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetDmarcDomain200ResponseDomainAllOfSummary
-     */
-    spfAligned?: number;
 }
 
 /**
@@ -74,12 +80,13 @@ export function GetDmarcDomain200ResponseDomainAllOfSummaryFromJSONTyped(json: a
     }
     return {
         
-        'totalReports': json['total_reports'] == null ? undefined : json['total_reports'],
-        'totalRecords': json['total_records'] == null ? undefined : json['total_records'],
+        'days': json['days'] == null ? undefined : json['days'],
+        'reportCount': json['report_count'] == null ? undefined : json['report_count'],
+        'sourceCount': json['source_count'] == null ? undefined : json['source_count'],
+        'totalMessages': json['total_messages'] == null ? undefined : json['total_messages'],
+        'totalPass': json['total_pass'] == null ? undefined : json['total_pass'],
+        'totalFail': json['total_fail'] == null ? undefined : json['total_fail'],
         'passRate': json['pass_rate'] == null ? undefined : json['pass_rate'],
-        'failRate': json['fail_rate'] == null ? undefined : json['fail_rate'],
-        'dkimAligned': json['dkim_aligned'] == null ? undefined : json['dkim_aligned'],
-        'spfAligned': json['spf_aligned'] == null ? undefined : json['spf_aligned'],
     };
 }
 
@@ -94,12 +101,13 @@ export function GetDmarcDomain200ResponseDomainAllOfSummaryToJSONTyped(value?: G
 
     return {
         
-        'total_reports': value['totalReports'],
-        'total_records': value['totalRecords'],
+        'days': value['days'],
+        'report_count': value['reportCount'],
+        'source_count': value['sourceCount'],
+        'total_messages': value['totalMessages'],
+        'total_pass': value['totalPass'],
+        'total_fail': value['totalFail'],
         'pass_rate': value['passRate'],
-        'fail_rate': value['failRate'],
-        'dkim_aligned': value['dkimAligned'],
-        'spf_aligned': value['spfAligned'],
     };
 }
 

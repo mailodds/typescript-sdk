@@ -51,7 +51,7 @@ export interface ListServerTests200Response {
      * @type {Array<ServerTest>}
      * @memberof ListServerTests200Response
      */
-    tests?: Array<ServerTest>;
+    data?: Array<ServerTest>;
     /**
      * 
      * @type {Pagination}
@@ -79,7 +79,7 @@ export function ListServerTests200ResponseFromJSONTyped(json: any, ignoreDiscrim
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
         'requestId': json['request_id'] == null ? undefined : json['request_id'],
-        'tests': json['tests'] == null ? undefined : ((json['tests'] as Array<any>).map(ServerTestFromJSON)),
+        'data': json['data'] == null ? undefined : ((json['data'] as Array<any>).map(ServerTestFromJSON)),
         'pagination': json['pagination'] == null ? undefined : PaginationFromJSON(json['pagination']),
     };
 }
@@ -97,7 +97,7 @@ export function ListServerTests200ResponseToJSONTyped(value?: ListServerTests200
         
         'schema_version': value['schemaVersion'],
         'request_id': value['requestId'],
-        'tests': value['tests'] == null ? undefined : ((value['tests'] as Array<any>).map(ServerTestToJSON)),
+        'data': value['data'] == null ? undefined : ((value['data'] as Array<any>).map(ServerTestToJSON)),
         'pagination': PaginationToJSON(value['pagination']),
     };
 }

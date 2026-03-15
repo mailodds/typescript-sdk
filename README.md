@@ -16,25 +16,16 @@ Next, try it out.
 ```ts
 import {
   Configuration,
-  BlacklistMonitoringApi,
+  AgentControlPlaneApi,
 } from '@mailodds/sdk';
-import type { AddBlacklistMonitorOperationRequest } from '@mailodds/sdk';
+import type { GetMcpCapabilitiesRequest } from '@mailodds/sdk';
 
 async function example() {
   console.log("🚀 Testing @mailodds/sdk SDK...");
-  const config = new Configuration({ 
-    // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new BlacklistMonitoringApi(config);
-
-  const body = {
-    // AddBlacklistMonitorRequest
-    addBlacklistMonitorRequest: ...,
-  } satisfies AddBlacklistMonitorOperationRequest;
+  const api = new AgentControlPlaneApi();
 
   try {
-    const data = await api.addBlacklistMonitor(body);
+    const data = await api.getMcpCapabilities();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -54,7 +45,9 @@ All URIs are relative to *https://api.mailodds.com/v1*
 
 | Class | Method | HTTP request | Description
 | ----- | ------ | ------------ | -------------
+*AgentControlPlaneApi* | [**getMcpCapabilities**](docs/AgentControlPlaneApi.md#getmcpcapabilities) | **GET** /v1/mcp/capabilities | Get MCP capabilities
 *BlacklistMonitoringApi* | [**addBlacklistMonitor**](docs/BlacklistMonitoringApi.md#addblacklistmonitoroperation) | **POST** /v1/blacklist-monitors | Add blacklist monitor
+*BlacklistMonitoringApi* | [**deleteBlacklistMonitor**](docs/BlacklistMonitoringApi.md#deleteblacklistmonitor) | **DELETE** /v1/blacklist-monitors/{monitor_id} | Delete a blacklist monitor
 *BlacklistMonitoringApi* | [**getBlacklistHistory**](docs/BlacklistMonitoringApi.md#getblacklisthistory) | **GET** /v1/blacklist-monitors/{monitor_id}/history | Get blacklist check history
 *BlacklistMonitoringApi* | [**listBlacklistMonitors**](docs/BlacklistMonitoringApi.md#listblacklistmonitors) | **GET** /v1/blacklist-monitors | List blacklist monitors
 *BlacklistMonitoringApi* | [**runBlacklistCheck**](docs/BlacklistMonitoringApi.md#runblacklistcheck) | **POST** /v1/blacklist-monitors/{monitor_id}/check | Run blacklist check
@@ -85,11 +78,13 @@ All URIs are relative to *https://api.mailodds.com/v1*
 *CampaignsApi* | [**sendCampaign**](docs/CampaignsApi.md#sendcampaign) | **POST** /v1/campaigns/{campaign_id}/send | Send a campaign
 *ContactListsApi* | [**appendToContactList**](docs/ContactListsApi.md#appendtocontactlistoperation) | **POST** /v1/contact-lists/{list_id}/append | Append to contact list
 *ContactListsApi* | [**createContactList**](docs/ContactListsApi.md#createcontactlistoperation) | **POST** /v1/contact-lists | Create contact list
+*ContactListsApi* | [**deleteContactList**](docs/ContactListsApi.md#deletecontactlist) | **DELETE** /v1/contact-lists/{list_id} | Delete a contact list
 *ContactListsApi* | [**getInactiveContactsReport**](docs/ContactListsApi.md#getinactivecontactsreport) | **GET** /v1/contacts/inactive-report | Get inactive contacts report
 *ContactListsApi* | [**listContactLists**](docs/ContactListsApi.md#listcontactlists) | **GET** /v1/contact-lists | List contact lists
 *ContactListsApi* | [**queryContactList**](docs/ContactListsApi.md#querycontactlistoperation) | **POST** /v1/contact-lists/{list_id}/query | Query contact list
 *ContentClassificationApi* | [**classifyContent**](docs/ContentClassificationApi.md#classifycontentoperation) | **POST** /v1/content-check | Classify email content
 *DMARCMonitoringApi* | [**addDmarcDomain**](docs/DMARCMonitoringApi.md#adddmarcdomainoperation) | **POST** /v1/dmarc-domains | Add DMARC domain
+*DMARCMonitoringApi* | [**deleteDmarcDomain**](docs/DMARCMonitoringApi.md#deletedmarcdomain) | **DELETE** /v1/dmarc-domains/{domain_id} | Delete a DMARC domain
 *DMARCMonitoringApi* | [**getDmarcDomain**](docs/DMARCMonitoringApi.md#getdmarcdomain) | **GET** /v1/dmarc-domains/{domain_id} | Get DMARC domain
 *DMARCMonitoringApi* | [**getDmarcRecommendation**](docs/DMARCMonitoringApi.md#getdmarcrecommendation) | **GET** /v1/dmarc-domains/{domain_id}/recommendation | Get DMARC policy recommendation
 *DMARCMonitoringApi* | [**getDmarcSources**](docs/DMARCMonitoringApi.md#getdmarcsources) | **GET** /v1/dmarc-domains/{domain_id}/sources | Get DMARC sending sources
@@ -100,7 +95,16 @@ All URIs are relative to *https://api.mailodds.com/v1*
 *EmailSendingApi* | [**deliverEmail**](docs/EmailSendingApi.md#deliveremail) | **POST** /v1/deliver | Send a single email
 *EmailValidationApi* | [**validateBatch**](docs/EmailValidationApi.md#validatebatchoperation) | **POST** /v1/validate/batch | Validate multiple emails (sync)
 *EmailValidationApi* | [**validateEmail**](docs/EmailValidationApi.md#validateemail) | **POST** /v1/validate | Validate single email
+*EventsApi* | [**trackEvent**](docs/EventsApi.md#trackeventoperation) | **POST** /v1/events/track | Track a commerce event
 *MessageEventsApi* | [**getMessageEvents**](docs/MessageEventsApi.md#getmessageevents) | **GET** /v1/message-events | Get message events
+*OAuth20Api* | [**createToken**](docs/OAuth20Api.md#createtoken) | **POST** /oauth/token | Create token
+*OAuth20Api* | [**getJwks**](docs/OAuth20Api.md#getjwks) | **GET** /.well-known/jwks.json | Get JSON Web Key Set
+*OAuth20Api* | [**introspectToken**](docs/OAuth20Api.md#introspecttoken) | **POST** /oauth/introspect | Introspect token
+*OAuth20Api* | [**oauthServerMetadata**](docs/OAuth20Api.md#oauthservermetadata) | **GET** /.well-known/oauth-authorization-server | OAuth server metadata
+*OAuth20Api* | [**revokeToken**](docs/OAuth20Api.md#revoketoken) | **POST** /oauth/revoke | Revoke token
+*ProductsApi* | [**batchProducts**](docs/ProductsApi.md#batchproductsoperation) | **POST** /v1/stores/{store_id}/products/batch | Batch push products
+*ProductsApi* | [**getProduct**](docs/ProductsApi.md#getproduct) | **GET** /v1/store-products/{product_id} | Get a product
+*ProductsApi* | [**queryProducts**](docs/ProductsApi.md#queryproducts) | **GET** /v1/store-products | Query products
 *SenderHealthApi* | [**getSenderHealth**](docs/SenderHealthApi.md#getsenderhealth) | **GET** /v1/sender-health | Get sender health score
 *SenderHealthApi* | [**getSenderHealthTrend**](docs/SenderHealthApi.md#getsenderhealthtrend) | **GET** /v1/sender-health/trend | Get sender health trend
 *SendingDomainsApi* | [**createSendingDomain**](docs/SendingDomainsApi.md#createsendingdomainoperation) | **POST** /v1/sending-domains | Add a sending domain
@@ -116,6 +120,12 @@ All URIs are relative to *https://api.mailodds.com/v1*
 *SpamChecksApi* | [**getSpamCheck**](docs/SpamChecksApi.md#getspamcheck) | **GET** /v1/spam-checks/{check_id} | Get spam check
 *SpamChecksApi* | [**listSpamChecks**](docs/SpamChecksApi.md#listspamchecks) | **GET** /v1/spam-checks | List spam checks
 *SpamChecksApi* | [**runSpamCheck**](docs/SpamChecksApi.md#runspamcheckoperation) | **POST** /v1/spam-checks | Run spam check
+*StoreConnectionsApi* | [**createStore**](docs/StoreConnectionsApi.md#createstoreoperation) | **POST** /v1/stores | Create a store connection
+*StoreConnectionsApi* | [**disconnectStore**](docs/StoreConnectionsApi.md#disconnectstore) | **DELETE** /v1/stores/{store_id} | Disconnect a store
+*StoreConnectionsApi* | [**getStore**](docs/StoreConnectionsApi.md#getstore) | **GET** /v1/stores/{store_id} | Get a store connection
+*StoreConnectionsApi* | [**listStores**](docs/StoreConnectionsApi.md#liststores) | **GET** /v1/stores | List store connections
+*StoreConnectionsApi* | [**triggerSync**](docs/StoreConnectionsApi.md#triggersync) | **POST** /v1/stores/{store_id}/sync | Trigger product sync
+*StoreConnectionsApi* | [**updateStore**](docs/StoreConnectionsApi.md#updatestoreoperation) | **PUT** /v1/stores/{store_id} | Update a store connection
 *SubscriberListsApi* | [**confirmSubscription**](docs/SubscriberListsApi.md#confirmsubscription) | **GET** /v1/confirm/{token} | Confirm subscription
 *SubscriberListsApi* | [**createList**](docs/SubscriberListsApi.md#createlistoperation) | **POST** /v1/lists | Create a subscriber list
 *SubscriberListsApi* | [**deleteList**](docs/SubscriberListsApi.md#deletelist) | **DELETE** /v1/lists/{list_id} | Delete a subscriber list
@@ -161,6 +171,10 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [BatchDeliverResponse](docs/BatchDeliverResponse.md)
 - [BatchDeliverResponseDelivery](docs/BatchDeliverResponseDelivery.md)
 - [BatchDeliverResponseRejectedInner](docs/BatchDeliverResponseRejectedInner.md)
+- [BatchProductsRequest](docs/BatchProductsRequest.md)
+- [BatchProductsRequestProductsInner](docs/BatchProductsRequestProductsInner.md)
+- [BatchProductsResponse](docs/BatchProductsResponse.md)
+- [BatchProductsResponseErrorsInner](docs/BatchProductsResponseErrorsInner.md)
 - [BlacklistMonitor](docs/BlacklistMonitor.md)
 - [BlacklistMonitorLatestCheck](docs/BlacklistMonitorLatestCheck.md)
 - [BounceAnalysisResponse](docs/BounceAnalysisResponse.md)
@@ -174,7 +188,6 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [CheckSuppressionRequest](docs/CheckSuppressionRequest.md)
 - [ClassifyContent200Response](docs/ClassifyContent200Response.md)
 - [ClassifyContent200ResponseContentCheck](docs/ClassifyContent200ResponseContentCheck.md)
-- [ClassifyContent200ResponseContentCheckCategoriesInner](docs/ClassifyContent200ResponseContentCheckCategoriesInner.md)
 - [ClassifyContentRequest](docs/ClassifyContentRequest.md)
 - [ConfirmSubscription200Response](docs/ConfirmSubscription200Response.md)
 - [ContactList](docs/ContactList.md)
@@ -191,6 +204,9 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [CreatePolicyRequest](docs/CreatePolicyRequest.md)
 - [CreateSendingDomain201Response](docs/CreateSendingDomain201Response.md)
 - [CreateSendingDomainRequest](docs/CreateSendingDomainRequest.md)
+- [CreateStore201Response](docs/CreateStore201Response.md)
+- [CreateStoreRequest](docs/CreateStoreRequest.md)
+- [CreateToken200Response](docs/CreateToken200Response.md)
 - [CreateVariantRequest](docs/CreateVariantRequest.md)
 - [CrossReferenceBounces200Response](docs/CrossReferenceBounces200Response.md)
 - [CrossReferenceBounces200ResponseCrossReference](docs/CrossReferenceBounces200ResponseCrossReference.md)
@@ -204,6 +220,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [DeliverRequestToInner](docs/DeliverRequestToInner.md)
 - [DeliverResponse](docs/DeliverResponse.md)
 - [DeliverResponseDelivery](docs/DeliverResponseDelivery.md)
+- [DisconnectStore200Response](docs/DisconnectStore200Response.md)
 - [DmarcDomain](docs/DmarcDomain.md)
 - [ErrorResponse](docs/ErrorResponse.md)
 - [GetBlacklistHistory200Response](docs/GetBlacklistHistory200Response.md)
@@ -243,6 +260,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [GetMessageEvents200ResponseEventsInner](docs/GetMessageEvents200ResponseEventsInner.md)
 - [GetMessageEvents200ResponseSummary](docs/GetMessageEvents200ResponseSummary.md)
 - [GetPresignedUploadRequest](docs/GetPresignedUploadRequest.md)
+- [GetProduct200Response](docs/GetProduct200Response.md)
 - [GetSenderHealth200Response](docs/GetSenderHealth200Response.md)
 - [GetSenderHealth200ResponseComponents](docs/GetSenderHealth200ResponseComponents.md)
 - [GetSenderHealth200ResponseComponentsDeliveryRate](docs/GetSenderHealth200ResponseComponentsDeliveryRate.md)
@@ -255,11 +273,14 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [GetSubscribers200Response](docs/GetSubscribers200Response.md)
 - [HealthCheck200Response](docs/HealthCheck200Response.md)
 - [IdentityScoreCheck](docs/IdentityScoreCheck.md)
+- [IntrospectToken200Response](docs/IntrospectToken200Response.md)
 - [Job](docs/Job.md)
 - [JobArtifacts](docs/JobArtifacts.md)
 - [JobListResponse](docs/JobListResponse.md)
 - [JobResponse](docs/JobResponse.md)
 - [JobSummary](docs/JobSummary.md)
+- [JwksResponse](docs/JwksResponse.md)
+- [JwksResponseKeysInner](docs/JwksResponseKeysInner.md)
 - [ListBlacklistMonitors200Response](docs/ListBlacklistMonitors200Response.md)
 - [ListCampaigns200Response](docs/ListCampaigns200Response.md)
 - [ListContactLists200Response](docs/ListContactLists200Response.md)
@@ -267,6 +288,11 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [ListSendingDomains200Response](docs/ListSendingDomains200Response.md)
 - [ListServerTests200Response](docs/ListServerTests200Response.md)
 - [ListSpamChecks200Response](docs/ListSpamChecks200Response.md)
+- [ListStores200Response](docs/ListStores200Response.md)
+- [McpCapabilities](docs/McpCapabilities.md)
+- [McpCapabilitiesPillarsInner](docs/McpCapabilitiesPillarsInner.md)
+- [McpCapabilitiesPillarsInnerToolsInner](docs/McpCapabilitiesPillarsInnerToolsInner.md)
+- [OAuthServerMetadata](docs/OAuthServerMetadata.md)
 - [Pagination](docs/Pagination.md)
 - [Policy](docs/Policy.md)
 - [PolicyListResponse](docs/PolicyListResponse.md)
@@ -279,10 +305,15 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [PolicyTestResponse](docs/PolicyTestResponse.md)
 - [PresignedUploadResponse](docs/PresignedUploadResponse.md)
 - [PresignedUploadResponseUpload](docs/PresignedUploadResponseUpload.md)
+- [ProductFacets](docs/ProductFacets.md)
+- [ProductFacetsCategoriesInner](docs/ProductFacetsCategoriesInner.md)
+- [ProductFacetsPriceRangesInner](docs/ProductFacetsPriceRangesInner.md)
+- [ProductFacetsStoresInner](docs/ProductFacetsStoresInner.md)
 - [QueryContactList200Response](docs/QueryContactList200Response.md)
 - [QueryContactList200ResponseEmailsInner](docs/QueryContactList200ResponseEmailsInner.md)
 - [QueryContactListRequest](docs/QueryContactListRequest.md)
 - [QueryContactListRequestFiltersInner](docs/QueryContactListRequestFiltersInner.md)
+- [QueryProducts200Response](docs/QueryProducts200Response.md)
 - [RemoveSuppression200Response](docs/RemoveSuppression200Response.md)
 - [RemoveSuppressionRequest](docs/RemoveSuppressionRequest.md)
 - [ResultsResponse](docs/ResultsResponse.md)
@@ -304,6 +335,8 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [ServerTestSmtpCheck](docs/ServerTestSmtpCheck.md)
 - [SpamCheck](docs/SpamCheck.md)
 - [SpamCheckChecks](docs/SpamCheckChecks.md)
+- [StoreConnection](docs/StoreConnection.md)
+- [StoreProduct](docs/StoreProduct.md)
 - [SubscribeRequest](docs/SubscribeRequest.md)
 - [Subscriber](docs/Subscriber.md)
 - [SubscriberList](docs/SubscriberList.md)
@@ -314,6 +347,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [SuppressionListResponse](docs/SuppressionListResponse.md)
 - [SuppressionStatsResponse](docs/SuppressionStatsResponse.md)
 - [SuppressionStatsResponseByType](docs/SuppressionStatsResponseByType.md)
+- [SyncResponse](docs/SyncResponse.md)
 - [TelemetrySummary](docs/TelemetrySummary.md)
 - [TelemetrySummaryRates](docs/TelemetrySummaryRates.md)
 - [TelemetrySummaryTopDomainsInner](docs/TelemetrySummaryTopDomainsInner.md)
@@ -321,8 +355,11 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [TelemetrySummaryTotals](docs/TelemetrySummaryTotals.md)
 - [TestPolicyRequest](docs/TestPolicyRequest.md)
 - [TestPolicyRequestTestResult](docs/TestPolicyRequestTestResult.md)
+- [TrackEventRequest](docs/TrackEventRequest.md)
+- [TrackEventResponse](docs/TrackEventResponse.md)
 - [UnsubscribeSubscriber200Response](docs/UnsubscribeSubscriber200Response.md)
 - [UpdatePolicyRequest](docs/UpdatePolicyRequest.md)
+- [UpdateStoreRequest](docs/UpdateStoreRequest.md)
 - [ValidateBatch200Response](docs/ValidateBatch200Response.md)
 - [ValidateBatch200ResponseSummary](docs/ValidateBatch200ResponseSummary.md)
 - [ValidateBatchRequest](docs/ValidateBatchRequest.md)

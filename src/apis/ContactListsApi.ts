@@ -19,6 +19,7 @@ import type {
   AppendToContactListRequest,
   CreateContactList201Response,
   CreateContactListRequest,
+  DeletePolicyRule200Response,
   ErrorResponse,
   GetInactiveContactsReport200Response,
   ListContactLists200Response,
@@ -34,6 +35,8 @@ import {
     CreateContactList201ResponseToJSON,
     CreateContactListRequestFromJSON,
     CreateContactListRequestToJSON,
+    DeletePolicyRule200ResponseFromJSON,
+    DeletePolicyRule200ResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     GetInactiveContactsReport200ResponseFromJSON,
@@ -53,6 +56,10 @@ export interface AppendToContactListOperationRequest {
 
 export interface CreateContactListOperationRequest {
     createContactListRequest: CreateContactListRequest;
+}
+
+export interface DeleteContactListRequest {
+    listId: string;
 }
 
 export interface GetInactiveContactsReportRequest {
@@ -177,6 +184,53 @@ export class ContactListsApi extends runtime.BaseAPI {
      */
     async createContactList(requestParameters: CreateContactListOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateContactList201Response> {
         const response = await this.createContactListRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Permanently delete a contact list and all its entries.
+     * Delete a contact list
+     */
+    async deleteContactListRaw(requestParameters: DeleteContactListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeletePolicyRule200Response>> {
+        if (requestParameters['listId'] == null) {
+            throw new runtime.RequiredError(
+                'listId',
+                'Required parameter "listId" was null or undefined when calling deleteContactList().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/contact-lists/{list_id}`;
+        urlPath = urlPath.replace(`{${"list_id"}}`, encodeURIComponent(String(requestParameters['listId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeletePolicyRule200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Permanently delete a contact list and all its entries.
+     * Delete a contact list
+     */
+    async deleteContactList(requestParameters: DeleteContactListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletePolicyRule200Response> {
+        const response = await this.deleteContactListRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -13,14 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { ClassifyContent200ResponseContentCheckCategoriesInner } from './ClassifyContent200ResponseContentCheckCategoriesInner';
-import {
-    ClassifyContent200ResponseContentCheckCategoriesInnerFromJSON,
-    ClassifyContent200ResponseContentCheckCategoriesInnerFromJSONTyped,
-    ClassifyContent200ResponseContentCheckCategoriesInnerToJSON,
-    ClassifyContent200ResponseContentCheckCategoriesInnerToJSONTyped,
-} from './ClassifyContent200ResponseContentCheckCategoriesInner';
-
 /**
  * 
  * @export
@@ -28,41 +20,53 @@ import {
  */
 export interface ClassifyContent200ResponseContentCheck {
     /**
-     * Overall content quality score (0-100)
-     * @type {number}
-     * @memberof ClassifyContent200ResponseContentCheck
-     */
-    score?: number;
-    /**
-     * Overall verdict
+     * Overall content status
      * @type {string}
      * @memberof ClassifyContent200ResponseContentCheck
      */
-    verdict?: ClassifyContent200ResponseContentCheckVerdictEnum;
+    status?: ClassifyContent200ResponseContentCheckStatusEnum;
     /**
-     * 
-     * @type {Array<ClassifyContent200ResponseContentCheckCategoriesInner>}
+     * Whether the content is flagged
+     * @type {boolean}
      * @memberof ClassifyContent200ResponseContentCheck
      */
-    categories?: Array<ClassifyContent200ResponseContentCheckCategoriesInner>;
+    flag?: boolean;
+    /**
+     * Human-readable reason for the status
+     * @type {string}
+     * @memberof ClassifyContent200ResponseContentCheck
+     */
+    reason?: string;
+    /**
+     * Priority level (1=lowest, 5=highest)
+     * @type {number}
+     * @memberof ClassifyContent200ResponseContentCheck
+     */
+    priority?: number;
     /**
      * Improvement suggestions
      * @type {Array<string>}
      * @memberof ClassifyContent200ResponseContentCheck
      */
     suggestions?: Array<string>;
+    /**
+     * Classification duration in milliseconds
+     * @type {number}
+     * @memberof ClassifyContent200ResponseContentCheck
+     */
+    durationMs?: number;
 }
 
 
 /**
  * @export
  */
-export const ClassifyContent200ResponseContentCheckVerdictEnum = {
+export const ClassifyContent200ResponseContentCheckStatusEnum = {
     Clean: 'clean',
     Warning: 'warning',
     Risky: 'risky'
 } as const;
-export type ClassifyContent200ResponseContentCheckVerdictEnum = typeof ClassifyContent200ResponseContentCheckVerdictEnum[keyof typeof ClassifyContent200ResponseContentCheckVerdictEnum];
+export type ClassifyContent200ResponseContentCheckStatusEnum = typeof ClassifyContent200ResponseContentCheckStatusEnum[keyof typeof ClassifyContent200ResponseContentCheckStatusEnum];
 
 
 /**
@@ -82,10 +86,12 @@ export function ClassifyContent200ResponseContentCheckFromJSONTyped(json: any, i
     }
     return {
         
-        'score': json['score'] == null ? undefined : json['score'],
-        'verdict': json['verdict'] == null ? undefined : json['verdict'],
-        'categories': json['categories'] == null ? undefined : ((json['categories'] as Array<any>).map(ClassifyContent200ResponseContentCheckCategoriesInnerFromJSON)),
+        'status': json['status'] == null ? undefined : json['status'],
+        'flag': json['flag'] == null ? undefined : json['flag'],
+        'reason': json['reason'] == null ? undefined : json['reason'],
+        'priority': json['priority'] == null ? undefined : json['priority'],
         'suggestions': json['suggestions'] == null ? undefined : json['suggestions'],
+        'durationMs': json['duration_ms'] == null ? undefined : json['duration_ms'],
     };
 }
 
@@ -100,10 +106,12 @@ export function ClassifyContent200ResponseContentCheckToJSONTyped(value?: Classi
 
     return {
         
-        'score': value['score'],
-        'verdict': value['verdict'],
-        'categories': value['categories'] == null ? undefined : ((value['categories'] as Array<any>).map(ClassifyContent200ResponseContentCheckCategoriesInnerToJSON)),
+        'status': value['status'],
+        'flag': value['flag'],
+        'reason': value['reason'],
+        'priority': value['priority'],
         'suggestions': value['suggestions'],
+        'duration_ms': value['durationMs'],
     };
 }
 
