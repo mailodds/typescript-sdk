@@ -13,62 +13,81 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetReputationTimeline200ResponseTimelineTimelineInner } from './GetReputationTimeline200ResponseTimelineTimelineInner';
+import {
+    GetReputationTimeline200ResponseTimelineTimelineInnerFromJSON,
+    GetReputationTimeline200ResponseTimelineTimelineInnerFromJSONTyped,
+    GetReputationTimeline200ResponseTimelineTimelineInnerToJSON,
+    GetReputationTimeline200ResponseTimelineTimelineInnerToJSONTyped,
+} from './GetReputationTimeline200ResponseTimelineTimelineInner';
+
 /**
  * 
  * @export
- * @interface CreateBounceAnalysisRequest
+ * @interface GetReputationTimeline200ResponseTimeline
  */
-export interface CreateBounceAnalysisRequest {
+export interface GetReputationTimeline200ResponseTimeline {
     /**
-     * Bounce log text to analyze. Identifies patterns, categorizes bounce types, and provides remediation recommendations.
+     * 
      * @type {string}
-     * @memberof CreateBounceAnalysisRequest
+     * @memberof GetReputationTimeline200ResponseTimeline
      */
-    text: string;
+    period?: GetReputationTimeline200ResponseTimelinePeriodEnum;
     /**
-     * Optional name for this bounce analysis
-     * @type {string}
-     * @memberof CreateBounceAnalysisRequest
+     * 
+     * @type {Array<GetReputationTimeline200ResponseTimelineTimelineInner>}
+     * @memberof GetReputationTimeline200ResponseTimeline
      */
-    name?: string;
+    timeline?: Array<GetReputationTimeline200ResponseTimelineTimelineInner>;
 }
 
+
 /**
- * Check if a given object implements the CreateBounceAnalysisRequest interface.
+ * @export
  */
-export function instanceOfCreateBounceAnalysisRequest(value: object): value is CreateBounceAnalysisRequest {
-    if (!('text' in value) || value['text'] === undefined) return false;
+export const GetReputationTimeline200ResponseTimelinePeriodEnum = {
+    _24h: '24h',
+    _7d: '7d',
+    _30d: '30d'
+} as const;
+export type GetReputationTimeline200ResponseTimelinePeriodEnum = typeof GetReputationTimeline200ResponseTimelinePeriodEnum[keyof typeof GetReputationTimeline200ResponseTimelinePeriodEnum];
+
+
+/**
+ * Check if a given object implements the GetReputationTimeline200ResponseTimeline interface.
+ */
+export function instanceOfGetReputationTimeline200ResponseTimeline(value: object): value is GetReputationTimeline200ResponseTimeline {
     return true;
 }
 
-export function CreateBounceAnalysisRequestFromJSON(json: any): CreateBounceAnalysisRequest {
-    return CreateBounceAnalysisRequestFromJSONTyped(json, false);
+export function GetReputationTimeline200ResponseTimelineFromJSON(json: any): GetReputationTimeline200ResponseTimeline {
+    return GetReputationTimeline200ResponseTimelineFromJSONTyped(json, false);
 }
 
-export function CreateBounceAnalysisRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBounceAnalysisRequest {
+export function GetReputationTimeline200ResponseTimelineFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetReputationTimeline200ResponseTimeline {
     if (json == null) {
         return json;
     }
     return {
         
-        'text': json['text'],
-        'name': json['name'] == null ? undefined : json['name'],
+        'period': json['period'] == null ? undefined : json['period'],
+        'timeline': json['timeline'] == null ? undefined : ((json['timeline'] as Array<any>).map(GetReputationTimeline200ResponseTimelineTimelineInnerFromJSON)),
     };
 }
 
-export function CreateBounceAnalysisRequestToJSON(json: any): CreateBounceAnalysisRequest {
-    return CreateBounceAnalysisRequestToJSONTyped(json, false);
+export function GetReputationTimeline200ResponseTimelineToJSON(json: any): GetReputationTimeline200ResponseTimeline {
+    return GetReputationTimeline200ResponseTimelineToJSONTyped(json, false);
 }
 
-export function CreateBounceAnalysisRequestToJSONTyped(value?: CreateBounceAnalysisRequest | null, ignoreDiscriminator: boolean = false): any {
+export function GetReputationTimeline200ResponseTimelineToJSONTyped(value?: GetReputationTimeline200ResponseTimeline | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'text': value['text'],
-        'name': value['name'],
+        'period': value['period'],
+        'timeline': value['timeline'] == null ? undefined : ((value['timeline'] as Array<any>).map(GetReputationTimeline200ResponseTimelineTimelineInnerToJSON)),
     };
 }
 

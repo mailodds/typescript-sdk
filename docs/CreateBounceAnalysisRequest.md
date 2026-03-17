@@ -6,8 +6,8 @@
 
 Name | Type
 ------------ | -------------
-`domainId` | string
-`period` | string
+`text` | string
+`name` | string
 
 ## Example
 
@@ -16,8 +16,8 @@ import type { CreateBounceAnalysisRequest } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "domainId": null,
-  "period": null,
+  "text": null,
+  "name": null,
 } satisfies CreateBounceAnalysisRequest
 
 console.log(example)

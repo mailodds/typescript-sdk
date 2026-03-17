@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetReputationTimeline200ResponseTimeline } from './GetReputationTimeline200ResponseTimeline';
+import {
+    GetReputationTimeline200ResponseTimelineFromJSON,
+    GetReputationTimeline200ResponseTimelineFromJSONTyped,
+    GetReputationTimeline200ResponseTimelineToJSON,
+    GetReputationTimeline200ResponseTimelineToJSONTyped,
+} from './GetReputationTimeline200ResponseTimeline';
+
 /**
  * 
  * @export
@@ -33,10 +41,10 @@ export interface GetReputationTimeline200Response {
     requestId?: string;
     /**
      * 
-     * @type {Array<object>}
+     * @type {GetReputationTimeline200ResponseTimeline}
      * @memberof GetReputationTimeline200Response
      */
-    timeline?: Array<object>;
+    timeline?: GetReputationTimeline200ResponseTimeline;
 }
 
 /**
@@ -58,7 +66,7 @@ export function GetReputationTimeline200ResponseFromJSONTyped(json: any, ignoreD
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
         'requestId': json['request_id'] == null ? undefined : json['request_id'],
-        'timeline': json['timeline'] == null ? undefined : json['timeline'],
+        'timeline': json['timeline'] == null ? undefined : GetReputationTimeline200ResponseTimelineFromJSON(json['timeline']),
     };
 }
 
@@ -75,7 +83,7 @@ export function GetReputationTimeline200ResponseToJSONTyped(value?: GetReputatio
         
         'schema_version': value['schemaVersion'],
         'request_id': value['requestId'],
-        'timeline': value['timeline'],
+        'timeline': GetReputationTimeline200ResponseTimelineToJSON(value['timeline']),
     };
 }
 

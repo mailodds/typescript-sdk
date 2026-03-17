@@ -135,6 +135,8 @@ export * from './GetProduct200Response';
 export * from './GetReplyForwarding200Response';
 export * from './GetReputation200Response';
 export * from './GetReputationTimeline200Response';
+export * from './GetReputationTimeline200ResponseTimeline';
+export * from './GetReputationTimeline200ResponseTimelineTimelineInner';
 export * from './GetSenderHealth200Response';
 export * from './GetSenderHealth200ResponseComponents';
 export * from './GetSenderHealth200ResponseComponentsDeliveryRate';

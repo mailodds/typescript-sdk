@@ -1,26 +1,24 @@
 
-# GetReputationTimeline200Response
+# GetReputationTimeline200ResponseTimeline
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`schemaVersion` | string
-`requestId` | string
-`timeline` | [GetReputationTimeline200ResponseTimeline](GetReputationTimeline200ResponseTimeline.md)
+`period` | string
+`timeline` | [Array&lt;GetReputationTimeline200ResponseTimelineTimelineInner&gt;](GetReputationTimeline200ResponseTimelineTimelineInner.md)
 
 ## Example
 
 ```typescript
-import type { GetReputationTimeline200Response } from '@mailodds/sdk'
+import type { GetReputationTimeline200ResponseTimeline } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "schemaVersion": null,
-  "requestId": null,
+  "period": null,
   "timeline": null,
-} satisfies GetReputationTimeline200Response
+} satisfies GetReputationTimeline200ResponseTimeline
 
 console.log(example)
 
@@ -29,7 +27,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as GetReputationTimeline200Response
+const exampleParsed = JSON.parse(exampleJSON) as GetReputationTimeline200ResponseTimeline
 console.log(exampleParsed)
 ```
 

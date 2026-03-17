@@ -335,6 +335,8 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [GetReplyForwarding200Response](docs/GetReplyForwarding200Response.md)
 - [GetReputation200Response](docs/GetReputation200Response.md)
 - [GetReputationTimeline200Response](docs/GetReputationTimeline200Response.md)
+- [GetReputationTimeline200ResponseTimeline](docs/GetReputationTimeline200ResponseTimeline.md)
+- [GetReputationTimeline200ResponseTimelineTimelineInner](docs/GetReputationTimeline200ResponseTimelineTimelineInner.md)
 - [GetSenderHealth200Response](docs/GetSenderHealth200Response.md)
 - [GetSenderHealth200ResponseComponents](docs/GetSenderHealth200ResponseComponents.md)
 - [GetSenderHealth200ResponseComponentsDeliveryRate](docs/GetSenderHealth200ResponseComponentsDeliveryRate.md)
