@@ -5,6 +5,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**batchProducts**](ProductsApi.md#batchproductsoperation) | **POST** /v1/stores/{store_id}/products/batch | Batch push products |
+| [**bulkUpdateProducts**](ProductsApi.md#bulkupdateproductsoperation) | **PATCH** /v1/store-products/bulk | Bulk update products |
 | [**getProduct**](ProductsApi.md#getproduct) | **GET** /v1/store-products/{product_id} | Get a product |
 | [**queryProducts**](ProductsApi.md#queryproducts) | **GET** /v1/store-products | Query products |
 
@@ -83,6 +84,79 @@ example().catch(console.error);
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## bulkUpdateProducts
+
+> BulkUpdateProducts200Response bulkUpdateProducts(bulkUpdateProductsRequest)
+
+Bulk update products
+
+Bulk update product visibility. Maximum 500 products per request.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProductsApi,
+} from '@mailodds/sdk';
+import type { BulkUpdateProductsOperationRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ProductsApi(config);
+
+  const body = {
+    // BulkUpdateProductsRequest
+    bulkUpdateProductsRequest: ...,
+  } satisfies BulkUpdateProductsOperationRequest;
+
+  try {
+    const data = await api.bulkUpdateProducts(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **bulkUpdateProductsRequest** | [BulkUpdateProductsRequest](BulkUpdateProductsRequest.md) |  | |
+
+### Return type
+
+[**BulkUpdateProducts200Response**](BulkUpdateProducts200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Bulk update result |  -  |
+| **400** | Bad request |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

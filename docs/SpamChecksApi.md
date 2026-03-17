@@ -4,10 +4,84 @@ All URIs are relative to *https://api.mailodds.com/v1*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**deleteSpamCheck**](SpamChecksApi.md#deletespamcheck) | **DELETE** /v1/spam-checks/{check_id} | Delete spam check |
 | [**getSpamCheck**](SpamChecksApi.md#getspamcheck) | **GET** /v1/spam-checks/{check_id} | Get spam check |
 | [**listSpamChecks**](SpamChecksApi.md#listspamchecks) | **GET** /v1/spam-checks | List spam checks |
 | [**runSpamCheck**](SpamChecksApi.md#runspamcheckoperation) | **POST** /v1/spam-checks | Run spam check |
 
+
+
+## deleteSpamCheck
+
+> DeletePolicyRule200Response deleteSpamCheck(checkId)
+
+Delete spam check
+
+Delete a spam check result.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SpamChecksApi,
+} from '@mailodds/sdk';
+import type { DeleteSpamCheckRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new SpamChecksApi(config);
+
+  const body = {
+    // string | Spam check ID
+    checkId: checkId_example,
+  } satisfies DeleteSpamCheckRequest;
+
+  try {
+    const data = await api.deleteSpamCheck(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **checkId** | `string` | Spam check ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**DeletePolicyRule200Response**](DeletePolicyRule200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Spam check deleted |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **404** | Resource not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## getSpamCheck

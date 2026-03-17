@@ -6,10 +6,12 @@ All URIs are relative to *https://api.mailodds.com/v1*
 |------------- | ------------- | -------------|
 | [**createSendingDomain**](SendingDomainsApi.md#createsendingdomainoperation) | **POST** /v1/sending-domains | Add a sending domain |
 | [**deleteSendingDomain**](SendingDomainsApi.md#deletesendingdomain) | **DELETE** /v1/sending-domains/{domain_id} | Delete a sending domain |
+| [**getReplyForwarding**](SendingDomainsApi.md#getreplyforwarding) | **GET** /v1/sending-domains/{domain_id}/reply-forwarding | Get reply forwarding config |
 | [**getSendingDomain**](SendingDomainsApi.md#getsendingdomain) | **GET** /v1/sending-domains/{domain_id} | Get a sending domain |
 | [**getSendingDomainIdentityScore**](SendingDomainsApi.md#getsendingdomainidentityscore) | **GET** /v1/sending-domains/{domain_id}/identity-score | Get domain identity score |
 | [**getSendingStats**](SendingDomainsApi.md#getsendingstats) | **GET** /v1/sending-stats | Get sending statistics |
 | [**listSendingDomains**](SendingDomainsApi.md#listsendingdomains) | **GET** /v1/sending-domains | List sending domains |
+| [**updateReplyForwarding**](SendingDomainsApi.md#updatereplyforwardingoperation) | **PATCH** /v1/sending-domains/{domain_id}/reply-forwarding | Update reply forwarding config |
 | [**verifySendingDomain**](SendingDomainsApi.md#verifysendingdomain) | **POST** /v1/sending-domains/{domain_id}/verify | Verify domain DNS records |
 
 
@@ -156,6 +158,80 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Domain deleted |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
+| **404** | Resource not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getReplyForwarding
+
+> GetReplyForwarding200Response getReplyForwarding(domainId)
+
+Get reply forwarding config
+
+Get the reply forwarding configuration for a sending domain. Requires Growth+ plan.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SendingDomainsApi,
+} from '@mailodds/sdk';
+import type { GetReplyForwardingRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new SendingDomainsApi(config);
+
+  const body = {
+    // string | Sending domain ID
+    domainId: domainId_example,
+  } satisfies GetReplyForwardingRequest;
+
+  try {
+    const data = await api.getReplyForwarding(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **domainId** | `string` | Sending domain ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**GetReplyForwarding200Response**](GetReplyForwarding200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Reply forwarding configuration |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **403** | Forbidden - Insufficient permissions or no credits |  -  |
 | **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -444,6 +520,84 @@ This endpoint does not need any parameter.
 | **200** | List of sending domains |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## updateReplyForwarding
+
+> GetReplyForwarding200Response updateReplyForwarding(domainId, updateReplyForwardingRequest)
+
+Update reply forwarding config
+
+Configure reply forwarding for a sending domain. Set forward_replies_to to null to disable. Requires Growth+ plan.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SendingDomainsApi,
+} from '@mailodds/sdk';
+import type { UpdateReplyForwardingOperationRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new SendingDomainsApi(config);
+
+  const body = {
+    // string | Sending domain ID
+    domainId: domainId_example,
+    // UpdateReplyForwardingRequest
+    updateReplyForwardingRequest: ...,
+  } satisfies UpdateReplyForwardingOperationRequest;
+
+  try {
+    const data = await api.updateReplyForwarding(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **domainId** | `string` | Sending domain ID | [Defaults to `undefined`] |
+| **updateReplyForwardingRequest** | [UpdateReplyForwardingRequest](UpdateReplyForwardingRequest.md) |  | |
+
+### Return type
+
+[**GetReplyForwarding200Response**](GetReplyForwarding200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Reply forwarding updated |  -  |
+| **400** | Bad request |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **403** | Forbidden - Insufficient permissions or no credits |  -  |
+| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

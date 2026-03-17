@@ -19,7 +19,9 @@ import type {
   CreateStoreRequest,
   DisconnectStore200Response,
   ErrorResponse,
+  GetSyncJobErrors200Response,
   ListStores200Response,
+  ListSyncJobs200Response,
   SyncResponse,
   UpdateStoreRequest,
 } from '../models/index';
@@ -32,8 +34,12 @@ import {
     DisconnectStore200ResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    GetSyncJobErrors200ResponseFromJSON,
+    GetSyncJobErrors200ResponseToJSON,
     ListStores200ResponseFromJSON,
     ListStores200ResponseToJSON,
+    ListSyncJobs200ResponseFromJSON,
+    ListSyncJobs200ResponseToJSON,
     SyncResponseFromJSON,
     SyncResponseToJSON,
     UpdateStoreRequestFromJSON,
@@ -52,8 +58,21 @@ export interface GetStoreRequest {
     storeId: string;
 }
 
+export interface GetSyncJobErrorsRequest {
+    storeId: string;
+    jobId: string;
+    page?: number;
+    perPage?: number;
+}
+
 export interface ListStoresRequest {
     status?: ListStoresStatusEnum;
+}
+
+export interface ListSyncJobsRequest {
+    storeId: string;
+    page?: number;
+    perPage?: number;
 }
 
 export interface TriggerSyncRequest {
@@ -215,6 +234,69 @@ export class StoreConnectionsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Get error details for a sync job.
+     * Get sync job errors
+     */
+    async getSyncJobErrorsRaw(requestParameters: GetSyncJobErrorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSyncJobErrors200Response>> {
+        if (requestParameters['storeId'] == null) {
+            throw new runtime.RequiredError(
+                'storeId',
+                'Required parameter "storeId" was null or undefined when calling getSyncJobErrors().'
+            );
+        }
+
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling getSyncJobErrors().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['perPage'] != null) {
+            queryParameters['per_page'] = requestParameters['perPage'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/stores/{store_id}/sync-jobs/{job_id}/errors`;
+        urlPath = urlPath.replace(`{${"store_id"}}`, encodeURIComponent(String(requestParameters['storeId'])));
+        urlPath = urlPath.replace(`{${"job_id"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetSyncJobErrors200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get error details for a sync job.
+     * Get sync job errors
+     */
+    async getSyncJobErrors(requestParameters: GetSyncJobErrorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSyncJobErrors200Response> {
+        const response = await this.getSyncJobErrorsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * List all store connections for the authenticated account. Optionally filter by status.
      * List store connections
      */
@@ -254,6 +336,61 @@ export class StoreConnectionsApi extends runtime.BaseAPI {
      */
     async listStores(requestParameters: ListStoresRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ListStores200Response> {
         const response = await this.listStoresRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * List sync job history for a store.
+     * List sync jobs
+     */
+    async listSyncJobsRaw(requestParameters: ListSyncJobsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListSyncJobs200Response>> {
+        if (requestParameters['storeId'] == null) {
+            throw new runtime.RequiredError(
+                'storeId',
+                'Required parameter "storeId" was null or undefined when calling listSyncJobs().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['perPage'] != null) {
+            queryParameters['per_page'] = requestParameters['perPage'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/stores/{store_id}/sync-jobs`;
+        urlPath = urlPath.replace(`{${"store_id"}}`, encodeURIComponent(String(requestParameters['storeId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ListSyncJobs200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * List sync job history for a store.
+     * List sync jobs
+     */
+    async listSyncJobs(requestParameters: ListSyncJobsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ListSyncJobs200Response> {
+        const response = await this.listSyncJobsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

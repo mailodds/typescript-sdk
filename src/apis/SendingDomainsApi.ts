@@ -19,9 +19,11 @@ import type {
   CreateSendingDomainRequest,
   DeletePolicyRule200Response,
   ErrorResponse,
+  GetReplyForwarding200Response,
   GetSendingDomainIdentityScore200Response,
   GetSendingStats200Response,
   ListSendingDomains200Response,
+  UpdateReplyForwardingRequest,
 } from '../models/index';
 import {
     CreateSendingDomain201ResponseFromJSON,
@@ -32,12 +34,16 @@ import {
     DeletePolicyRule200ResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+    GetReplyForwarding200ResponseFromJSON,
+    GetReplyForwarding200ResponseToJSON,
     GetSendingDomainIdentityScore200ResponseFromJSON,
     GetSendingDomainIdentityScore200ResponseToJSON,
     GetSendingStats200ResponseFromJSON,
     GetSendingStats200ResponseToJSON,
     ListSendingDomains200ResponseFromJSON,
     ListSendingDomains200ResponseToJSON,
+    UpdateReplyForwardingRequestFromJSON,
+    UpdateReplyForwardingRequestToJSON,
 } from '../models/index';
 
 export interface CreateSendingDomainOperationRequest {
@@ -45,6 +51,10 @@ export interface CreateSendingDomainOperationRequest {
 }
 
 export interface DeleteSendingDomainRequest {
+    domainId: string;
+}
+
+export interface GetReplyForwardingRequest {
     domainId: string;
 }
 
@@ -59,6 +69,11 @@ export interface GetSendingDomainIdentityScoreRequest {
 export interface GetSendingStatsRequest {
     period?: GetSendingStatsPeriodEnum;
     domainId?: string;
+}
+
+export interface UpdateReplyForwardingOperationRequest {
+    domainId: string;
+    updateReplyForwardingRequest: UpdateReplyForwardingRequest;
 }
 
 export interface VerifySendingDomainRequest {
@@ -163,6 +178,53 @@ export class SendingDomainsApi extends runtime.BaseAPI {
      */
     async deleteSendingDomain(requestParameters: DeleteSendingDomainRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletePolicyRule200Response> {
         const response = await this.deleteSendingDomainRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get the reply forwarding configuration for a sending domain. Requires Growth+ plan.
+     * Get reply forwarding config
+     */
+    async getReplyForwardingRaw(requestParameters: GetReplyForwardingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReplyForwarding200Response>> {
+        if (requestParameters['domainId'] == null) {
+            throw new runtime.RequiredError(
+                'domainId',
+                'Required parameter "domainId" was null or undefined when calling getReplyForwarding().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/sending-domains/{domain_id}/reply-forwarding`;
+        urlPath = urlPath.replace(`{${"domain_id"}}`, encodeURIComponent(String(requestParameters['domainId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetReplyForwarding200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get the reply forwarding configuration for a sending domain. Requires Growth+ plan.
+     * Get reply forwarding config
+     */
+    async getReplyForwarding(requestParameters: GetReplyForwardingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetReplyForwarding200Response> {
+        const response = await this.getReplyForwardingRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -343,6 +405,63 @@ export class SendingDomainsApi extends runtime.BaseAPI {
      */
     async listSendingDomains(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ListSendingDomains200Response> {
         const response = await this.listSendingDomainsRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Configure reply forwarding for a sending domain. Set forward_replies_to to null to disable. Requires Growth+ plan.
+     * Update reply forwarding config
+     */
+    async updateReplyForwardingRaw(requestParameters: UpdateReplyForwardingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReplyForwarding200Response>> {
+        if (requestParameters['domainId'] == null) {
+            throw new runtime.RequiredError(
+                'domainId',
+                'Required parameter "domainId" was null or undefined when calling updateReplyForwarding().'
+            );
+        }
+
+        if (requestParameters['updateReplyForwardingRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateReplyForwardingRequest',
+                'Required parameter "updateReplyForwardingRequest" was null or undefined when calling updateReplyForwarding().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/sending-domains/{domain_id}/reply-forwarding`;
+        urlPath = urlPath.replace(`{${"domain_id"}}`, encodeURIComponent(String(requestParameters['domainId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateReplyForwardingRequestToJSON(requestParameters['updateReplyForwardingRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetReplyForwarding200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Configure reply forwarding for a sending domain. Set forward_replies_to to null to disable. Requires Growth+ plan.
+     * Update reply forwarding config
+     */
+    async updateReplyForwarding(requestParameters: UpdateReplyForwardingOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetReplyForwarding200Response> {
+        const response = await this.updateReplyForwardingRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

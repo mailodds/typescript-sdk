@@ -15,6 +15,8 @@
 
 import * as runtime from '../runtime';
 import type {
+  AddContact201Response,
+  AddContactRequest,
   AppendToContactList200Response,
   AppendToContactListRequest,
   CreateContactList201Response,
@@ -22,11 +24,17 @@ import type {
   DeletePolicyRule200Response,
   ErrorResponse,
   GetInactiveContactsReport200Response,
+  ImportContactList200Response,
   ListContactLists200Response,
   QueryContactList200Response,
   QueryContactListRequest,
+  UpdateContactRequest,
 } from '../models/index';
 import {
+    AddContact201ResponseFromJSON,
+    AddContact201ResponseToJSON,
+    AddContactRequestFromJSON,
+    AddContactRequestToJSON,
     AppendToContactList200ResponseFromJSON,
     AppendToContactList200ResponseToJSON,
     AppendToContactListRequestFromJSON,
@@ -41,13 +49,22 @@ import {
     ErrorResponseToJSON,
     GetInactiveContactsReport200ResponseFromJSON,
     GetInactiveContactsReport200ResponseToJSON,
+    ImportContactList200ResponseFromJSON,
+    ImportContactList200ResponseToJSON,
     ListContactLists200ResponseFromJSON,
     ListContactLists200ResponseToJSON,
     QueryContactList200ResponseFromJSON,
     QueryContactList200ResponseToJSON,
     QueryContactListRequestFromJSON,
     QueryContactListRequestToJSON,
+    UpdateContactRequestFromJSON,
+    UpdateContactRequestToJSON,
 } from '../models/index';
+
+export interface AddContactOperationRequest {
+    listId: string;
+    addContactRequest: AddContactRequest;
+}
 
 export interface AppendToContactListOperationRequest {
     listId: string;
@@ -58,12 +75,29 @@ export interface CreateContactListOperationRequest {
     createContactListRequest: CreateContactListRequest;
 }
 
+export interface DeleteContactRequest {
+    listId: string;
+    contactId: string;
+}
+
 export interface DeleteContactListRequest {
+    listId: string;
+}
+
+export interface ExportContactListRequest {
     listId: string;
 }
 
 export interface GetInactiveContactsReportRequest {
     days?: number;
+}
+
+export interface ImportContactListRequest {
+    listId: string;
+    file: Blob;
+    columnMapping?: string;
+    consentSource?: string;
+    tags?: string;
 }
 
 export interface ListContactListsRequest {
@@ -76,10 +110,73 @@ export interface QueryContactListOperationRequest {
     queryContactListRequest: QueryContactListRequest;
 }
 
+export interface UpdateContactOperationRequest {
+    listId: string;
+    contactId: string;
+    updateContactRequest: UpdateContactRequest;
+}
+
 /**
  * 
  */
 export class ContactListsApi extends runtime.BaseAPI {
+
+    /**
+     * Add a single contact to a contact list.
+     * Add contact to list
+     */
+    async addContactRaw(requestParameters: AddContactOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AddContact201Response>> {
+        if (requestParameters['listId'] == null) {
+            throw new runtime.RequiredError(
+                'listId',
+                'Required parameter "listId" was null or undefined when calling addContact().'
+            );
+        }
+
+        if (requestParameters['addContactRequest'] == null) {
+            throw new runtime.RequiredError(
+                'addContactRequest',
+                'Required parameter "addContactRequest" was null or undefined when calling addContact().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/contact-lists/{list_id}/contacts`;
+        urlPath = urlPath.replace(`{${"list_id"}}`, encodeURIComponent(String(requestParameters['listId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AddContactRequestToJSON(requestParameters['addContactRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AddContact201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Add a single contact to a contact list.
+     * Add contact to list
+     */
+    async addContact(requestParameters: AddContactOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AddContact201Response> {
+        const response = await this.addContactRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Append validated emails from additional jobs to an existing contact list. Duplicates are automatically skipped.
@@ -188,6 +285,61 @@ export class ContactListsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Remove a single contact from a contact list.
+     * Delete contact
+     */
+    async deleteContactRaw(requestParameters: DeleteContactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeletePolicyRule200Response>> {
+        if (requestParameters['listId'] == null) {
+            throw new runtime.RequiredError(
+                'listId',
+                'Required parameter "listId" was null or undefined when calling deleteContact().'
+            );
+        }
+
+        if (requestParameters['contactId'] == null) {
+            throw new runtime.RequiredError(
+                'contactId',
+                'Required parameter "contactId" was null or undefined when calling deleteContact().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/contact-lists/{list_id}/contacts/{contact_id}`;
+        urlPath = urlPath.replace(`{${"list_id"}}`, encodeURIComponent(String(requestParameters['listId'])));
+        urlPath = urlPath.replace(`{${"contact_id"}}`, encodeURIComponent(String(requestParameters['contactId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeletePolicyRule200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Remove a single contact from a contact list.
+     * Delete contact
+     */
+    async deleteContact(requestParameters: DeleteContactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletePolicyRule200Response> {
+        const response = await this.deleteContactRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Permanently delete a contact list and all its entries.
      * Delete a contact list
      */
@@ -235,6 +387,57 @@ export class ContactListsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Export a contact list as CSV.
+     * Export contact list
+     */
+    async exportContactListRaw(requestParameters: ExportContactListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        if (requestParameters['listId'] == null) {
+            throw new runtime.RequiredError(
+                'listId',
+                'Required parameter "listId" was null or undefined when calling exportContactList().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/contact-lists/{list_id}/export`;
+        urlPath = urlPath.replace(`{${"list_id"}}`, encodeURIComponent(String(requestParameters['listId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Export a contact list as CSV.
+     * Export contact list
+     */
+    async exportContactList(requestParameters: ExportContactListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.exportContactListRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Get a report of contacts across all lists with no engagement activity (opens, clicks) in the specified period.
      * Get inactive contacts report
      */
@@ -274,6 +477,93 @@ export class ContactListsApi extends runtime.BaseAPI {
      */
     async getInactiveContactsReport(requestParameters: GetInactiveContactsReportRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetInactiveContactsReport200Response> {
         const response = await this.getInactiveContactsReportRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Import contacts into a list from a CSV file (max 10MB).
+     * Import contacts from CSV
+     */
+    async importContactListRaw(requestParameters: ImportContactListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ImportContactList200Response>> {
+        if (requestParameters['listId'] == null) {
+            throw new runtime.RequiredError(
+                'listId',
+                'Required parameter "listId" was null or undefined when calling importContactList().'
+            );
+        }
+
+        if (requestParameters['file'] == null) {
+            throw new runtime.RequiredError(
+                'file',
+                'Required parameter "file" was null or undefined when calling importContactList().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['file'] != null) {
+            formParams.append('file', requestParameters['file'] as any);
+        }
+
+        if (requestParameters['columnMapping'] != null) {
+            formParams.append('column_mapping', requestParameters['columnMapping'] as any);
+        }
+
+        if (requestParameters['consentSource'] != null) {
+            formParams.append('consent_source', requestParameters['consentSource'] as any);
+        }
+
+        if (requestParameters['tags'] != null) {
+            formParams.append('tags', requestParameters['tags'] as any);
+        }
+
+
+        let urlPath = `/v1/contact-lists/{list_id}/import`;
+        urlPath = urlPath.replace(`{${"list_id"}}`, encodeURIComponent(String(requestParameters['listId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ImportContactList200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Import contacts into a list from a CSV file (max 10MB).
+     * Import contacts from CSV
+     */
+    async importContactList(requestParameters: ImportContactListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ImportContactList200Response> {
+        const response = await this.importContactListRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -378,6 +668,71 @@ export class ContactListsApi extends runtime.BaseAPI {
      */
     async queryContactList(requestParameters: QueryContactListOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<QueryContactList200Response> {
         const response = await this.queryContactListRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Update a single contact in a contact list.
+     * Update contact
+     */
+    async updateContactRaw(requestParameters: UpdateContactOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AddContact201Response>> {
+        if (requestParameters['listId'] == null) {
+            throw new runtime.RequiredError(
+                'listId',
+                'Required parameter "listId" was null or undefined when calling updateContact().'
+            );
+        }
+
+        if (requestParameters['contactId'] == null) {
+            throw new runtime.RequiredError(
+                'contactId',
+                'Required parameter "contactId" was null or undefined when calling updateContact().'
+            );
+        }
+
+        if (requestParameters['updateContactRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateContactRequest',
+                'Required parameter "updateContactRequest" was null or undefined when calling updateContact().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/contact-lists/{list_id}/contacts/{contact_id}`;
+        urlPath = urlPath.replace(`{${"list_id"}}`, encodeURIComponent(String(requestParameters['listId'])));
+        urlPath = urlPath.replace(`{${"contact_id"}}`, encodeURIComponent(String(requestParameters['contactId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateContactRequestToJSON(requestParameters['updateContactRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AddContact201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Update a single contact in a contact list.
+     * Update contact
+     */
+    async updateContact(requestParameters: UpdateContactOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AddContact201Response> {
+        const response = await this.updateContactRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

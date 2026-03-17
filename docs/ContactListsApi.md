@@ -4,13 +4,95 @@ All URIs are relative to *https://api.mailodds.com/v1*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**addContact**](ContactListsApi.md#addcontactoperation) | **POST** /v1/contact-lists/{list_id}/contacts | Add contact to list |
 | [**appendToContactList**](ContactListsApi.md#appendtocontactlistoperation) | **POST** /v1/contact-lists/{list_id}/append | Append to contact list |
 | [**createContactList**](ContactListsApi.md#createcontactlistoperation) | **POST** /v1/contact-lists | Create contact list |
+| [**deleteContact**](ContactListsApi.md#deletecontact) | **DELETE** /v1/contact-lists/{list_id}/contacts/{contact_id} | Delete contact |
 | [**deleteContactList**](ContactListsApi.md#deletecontactlist) | **DELETE** /v1/contact-lists/{list_id} | Delete a contact list |
+| [**exportContactList**](ContactListsApi.md#exportcontactlist) | **GET** /v1/contact-lists/{list_id}/export | Export contact list |
 | [**getInactiveContactsReport**](ContactListsApi.md#getinactivecontactsreport) | **GET** /v1/contacts/inactive-report | Get inactive contacts report |
+| [**importContactList**](ContactListsApi.md#importcontactlist) | **POST** /v1/contact-lists/{list_id}/import | Import contacts from CSV |
 | [**listContactLists**](ContactListsApi.md#listcontactlists) | **GET** /v1/contact-lists | List contact lists |
 | [**queryContactList**](ContactListsApi.md#querycontactlistoperation) | **POST** /v1/contact-lists/{list_id}/query | Query contact list |
+| [**updateContact**](ContactListsApi.md#updatecontactoperation) | **PATCH** /v1/contact-lists/{list_id}/contacts/{contact_id} | Update contact |
 
+
+
+## addContact
+
+> AddContact201Response addContact(listId, addContactRequest)
+
+Add contact to list
+
+Add a single contact to a contact list.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ContactListsApi,
+} from '@mailodds/sdk';
+import type { AddContactOperationRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ContactListsApi(config);
+
+  const body = {
+    // string | Contact list ID
+    listId: listId_example,
+    // AddContactRequest
+    addContactRequest: ...,
+  } satisfies AddContactOperationRequest;
+
+  try {
+    const data = await api.addContact(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
+| **addContactRequest** | [AddContactRequest](AddContactRequest.md) |  | |
+
+### Return type
+
+[**AddContact201Response**](AddContact201Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Contact added |  -  |
+| **400** | Bad request |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **404** | Resource not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## appendToContactList
@@ -164,6 +246,82 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## deleteContact
+
+> DeletePolicyRule200Response deleteContact(listId, contactId)
+
+Delete contact
+
+Remove a single contact from a contact list.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ContactListsApi,
+} from '@mailodds/sdk';
+import type { DeleteContactRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ContactListsApi(config);
+
+  const body = {
+    // string | Contact list ID
+    listId: listId_example,
+    // string | Contact ID
+    contactId: contactId_example,
+  } satisfies DeleteContactRequest;
+
+  try {
+    const data = await api.deleteContact(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
+| **contactId** | `string` | Contact ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**DeletePolicyRule200Response**](DeletePolicyRule200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Contact deleted |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **404** | Resource not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## deleteContactList
 
 > DeletePolicyRule200Response deleteContactList(listId)
@@ -231,6 +389,79 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Contact list deleted |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **404** | Resource not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## exportContactList
+
+> string exportContactList(listId)
+
+Export contact list
+
+Export a contact list as CSV.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ContactListsApi,
+} from '@mailodds/sdk';
+import type { ExportContactListRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ContactListsApi(config);
+
+  const body = {
+    // string | Contact list ID
+    listId: listId_example,
+  } satisfies ExportContactListRequest;
+
+  try {
+    const data = await api.exportContactList(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
+
+### Return type
+
+**string**
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `text/csv`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | CSV export |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
 
@@ -306,6 +537,92 @@ example().catch(console.error);
 | **200** | Inactive contacts report |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## importContactList
+
+> ImportContactList200Response importContactList(listId, file, columnMapping, consentSource, tags)
+
+Import contacts from CSV
+
+Import contacts into a list from a CSV file (max 10MB).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ContactListsApi,
+} from '@mailodds/sdk';
+import type { ImportContactListRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ContactListsApi(config);
+
+  const body = {
+    // string | Contact list ID
+    listId: listId_example,
+    // Blob | CSV file (max 10MB)
+    file: BINARY_DATA_HERE,
+    // string | JSON mapping of CSV columns to contact fields (optional)
+    columnMapping: columnMapping_example,
+    // string | Source of consent for imported contacts (optional)
+    consentSource: consentSource_example,
+    // string | JSON array of tags to apply (optional)
+    tags: tags_example,
+  } satisfies ImportContactListRequest;
+
+  try {
+    const data = await api.importContactList(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
+| **file** | `Blob` | CSV file (max 10MB) | [Defaults to `undefined`] |
+| **columnMapping** | `string` | JSON mapping of CSV columns to contact fields | [Optional] [Defaults to `undefined`] |
+| **consentSource** | `string` | Source of consent for imported contacts | [Optional] [Defaults to `undefined`] |
+| **tags** | `string` | JSON array of tags to apply | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ImportContactList200Response**](ImportContactList200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `multipart/form-data`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Import results |  -  |
+| **400** | Bad request |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -456,6 +773,86 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Query results |  -  |
+| **400** | Bad request |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **404** | Resource not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## updateContact
+
+> AddContact201Response updateContact(listId, contactId, updateContactRequest)
+
+Update contact
+
+Update a single contact in a contact list.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ContactListsApi,
+} from '@mailodds/sdk';
+import type { UpdateContactOperationRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ContactListsApi(config);
+
+  const body = {
+    // string | Contact list ID
+    listId: listId_example,
+    // string | Contact ID
+    contactId: contactId_example,
+    // UpdateContactRequest
+    updateContactRequest: ...,
+  } satisfies UpdateContactOperationRequest;
+
+  try {
+    const data = await api.updateContact(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
+| **contactId** | `string` | Contact ID | [Defaults to `undefined`] |
+| **updateContactRequest** | [UpdateContactRequest](UpdateContactRequest.md) |  | |
+
+### Return type
+
+[**AddContact201Response**](AddContact201Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Contact updated |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |

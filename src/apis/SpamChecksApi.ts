@@ -15,12 +15,15 @@
 
 import * as runtime from '../runtime';
 import type {
+  DeletePolicyRule200Response,
   ErrorResponse,
   ListSpamChecks200Response,
   RunSpamCheck201Response,
   RunSpamCheckRequest,
 } from '../models/index';
 import {
+    DeletePolicyRule200ResponseFromJSON,
+    DeletePolicyRule200ResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     ListSpamChecks200ResponseFromJSON,
@@ -30,6 +33,10 @@ import {
     RunSpamCheckRequestFromJSON,
     RunSpamCheckRequestToJSON,
 } from '../models/index';
+
+export interface DeleteSpamCheckRequest {
+    checkId: string;
+}
 
 export interface GetSpamCheckRequest {
     checkId: string;
@@ -48,6 +55,53 @@ export interface RunSpamCheckOperationRequest {
  * 
  */
 export class SpamChecksApi extends runtime.BaseAPI {
+
+    /**
+     * Delete a spam check result.
+     * Delete spam check
+     */
+    async deleteSpamCheckRaw(requestParameters: DeleteSpamCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeletePolicyRule200Response>> {
+        if (requestParameters['checkId'] == null) {
+            throw new runtime.RequiredError(
+                'checkId',
+                'Required parameter "checkId" was null or undefined when calling deleteSpamCheck().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/spam-checks/{check_id}`;
+        urlPath = urlPath.replace(`{${"check_id"}}`, encodeURIComponent(String(requestParameters['checkId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeletePolicyRule200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Delete a spam check result.
+     * Delete spam check
+     */
+    async deleteSpamCheck(requestParameters: DeleteSpamCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletePolicyRule200Response> {
+        const response = await this.deleteSpamCheckRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Get the detailed result of a specific spam check.

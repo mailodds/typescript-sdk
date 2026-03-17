@@ -13,6 +13,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 | [**getJobResults**](BulkValidationApi.md#getjobresults) | **GET** /v1/jobs/{job_id}/results | Get job results |
 | [**getPresignedUpload**](BulkValidationApi.md#getpresigneduploadoperation) | **POST** /v1/jobs/upload/presigned | Get S3 presigned upload URL |
 | [**listJobs**](BulkValidationApi.md#listjobs) | **GET** /v1/jobs | List validation jobs |
+| [**retryJob**](BulkValidationApi.md#retryjob) | **POST** /v1/jobs/{job_id}/retry | Retry failed job |
 
 
 
@@ -693,6 +694,80 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | List of jobs |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## retryJob
+
+> RetryJob200Response retryJob(jobId)
+
+Retry failed job
+
+Retry processing for a failed or cancelled validation job. Re-queues unprocessed emails.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BulkValidationApi,
+} from '@mailodds/sdk';
+import type { RetryJobRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new BulkValidationApi(config);
+
+  const body = {
+    // string | Job ID
+    jobId: jobId_example,
+  } satisfies RetryJobRequest;
+
+  try {
+    const data = await api.retryJob(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **jobId** | `string` | Job ID | [Defaults to `undefined`] |
+
+### Return type
+
+[**RetryJob200Response**](RetryJob200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Job retry initiated |  -  |
+| **400** | Bad request |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

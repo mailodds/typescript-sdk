@@ -24,6 +24,7 @@ import type {
   JobResponse,
   PresignedUploadResponse,
   ResultsResponse,
+  RetryJob200Response,
 } from '../models/index';
 import {
     CreateJobFromS3RequestFromJSON,
@@ -44,6 +45,8 @@ import {
     PresignedUploadResponseToJSON,
     ResultsResponseFromJSON,
     ResultsResponseToJSON,
+    RetryJob200ResponseFromJSON,
+    RetryJob200ResponseToJSON,
 } from '../models/index';
 
 export interface CancelJobRequest {
@@ -88,6 +91,10 @@ export interface ListJobsRequest {
     cursor?: string;
     limit?: number;
     status?: ListJobsStatusEnum;
+}
+
+export interface RetryJobRequest {
+    jobId: string;
 }
 
 /**
@@ -569,6 +576,53 @@ export class BulkValidationApi extends runtime.BaseAPI {
      */
     async listJobs(requestParameters: ListJobsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JobListResponse> {
         const response = await this.listJobsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retry processing for a failed or cancelled validation job. Re-queues unprocessed emails.
+     * Retry failed job
+     */
+    async retryJobRaw(requestParameters: RetryJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RetryJob200Response>> {
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling retryJob().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/jobs/{job_id}/retry`;
+        urlPath = urlPath.replace(`{${"job_id"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RetryJob200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Retry processing for a failed or cancelled validation job. Re-queues unprocessed emails.
+     * Retry failed job
+     */
+    async retryJob(requestParameters: RetryJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RetryJob200Response> {
+        const response = await this.retryJobRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

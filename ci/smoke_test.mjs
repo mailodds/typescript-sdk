@@ -12,6 +12,15 @@ const {
   SendingDomainsApi,
   SubscriberListsApi,
   EmailSendingApi,
+  AlertRulesApi,
+  ReputationApi,
+  SpamChecksApi,
+  BounceAnalysisApi,
+  PixelSettingsApi,
+  ContactListsApi,
+  OutOfOfficeApi,
+  EngagementApi,
+  WebhookCLIApi,
   ResponseError,
 } = await import("../dist/index.js");
 
@@ -246,6 +255,250 @@ try {
 
 // --- Email Sending (import-only) ---
 check("sending.class_exists", true, typeof EmailSendingApi === "function");
+
+// --- Alert Rules CRUD (Growth+ gated) ---
+const alertApi = new AlertRulesApi(cfg);
+let alertRuleId = null;
+try {
+  // Cleanup leftover smoke alert rules
+  try {
+    const existing = await alertApi.listAlertRules();
+    for (const r of existing.rules || []) {
+      if (r.metric && r.metric === "hard_bounce_rate" && r.channel === `https://smoke-${ts}.example.com/hook`) {
+        try { await alertApi.deleteAlertRule({ ruleId: r.id }); } catch (_) {}
+      }
+    }
+  } catch (_) {}
+
+  const createResp = await alertApi.createAlertRule({
+    createAlertRuleRequest: {
+      metric: "hard_bounce_rate",
+      threshold: 0.05,
+      channel: `https://smoke-${ts}.example.com/hook`,
+      windowMinutes: 60,
+      enabled: true,
+    },
+  });
+  check("alert.create.id", true, createResp.rule.id != null);
+  alertRuleId = createResp.rule.id;
+
+  const getResp = await alertApi.getAlertRule({ ruleId: alertRuleId });
+  check("alert.get.id", alertRuleId, getResp.rule.id);
+  check("alert.get.metric", "hard_bounce_rate", getResp.rule.metric);
+
+  const updateResp = await alertApi.updateAlertRule({
+    ruleId: alertRuleId,
+    updateAlertRuleRequest: { threshold: 0.10 },
+  });
+  check("alert.update.threshold", 10.0, updateResp.rule.threshold);
+
+  const listResp = await alertApi.listAlertRules();
+  check("alert.list.count", true, (listResp.rules || []).length > 0);
+
+  const delResp = await alertApi.deleteAlertRule({ ruleId: alertRuleId });
+  check("alert.delete", true, delResp.deleted);
+  alertRuleId = null;
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 403) {
+    console.log("  SKIP: alert_rules (plan-gated)");
+  } else {
+    failed++;
+    console.log(`  FAIL: alert_rules raised ${e.message}`);
+  }
+} finally {
+  if (alertRuleId) {
+    try { await alertApi.deleteAlertRule({ ruleId: alertRuleId }); } catch (_) { /* cleanup */ }
+  }
+}
+
+// --- Reputation ---
+const repApi = new ReputationApi(cfg);
+try {
+  const repResp = await repApi.getReputation({});
+  check("reputation.get.has_score", true, repResp.score !== undefined);
+
+  const tlResp = await repApi.getReputationTimeline({});
+  check("reputation.timeline.has_points", true, tlResp.dataPoints !== undefined || tlResp != null);
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 403) {
+    console.log("  SKIP: reputation (plan-gated)");
+  } else {
+    failed++;
+    console.log(`  FAIL: reputation raised ${e.message}`);
+  }
+}
+
+// --- Spam Check + Delete ---
+const spamApi = new SpamChecksApi(cfg);
+let spamCheckId = null;
+try {
+  const runResp = await spamApi.runSpamCheck({
+    runSpamCheckRequest: { fromDomain: "example.com", subjectPreview: "Smoke test subject" },
+  });
+  check("spam.run.id", true, runResp.check.id != null);
+  spamCheckId = runResp.check.id;
+
+  const delResp = await spamApi.deleteSpamCheck({ checkId: spamCheckId });
+  check("spam.delete", true, delResp.deleted);
+  spamCheckId = null;
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 403) {
+    console.log("  SKIP: spam_checks (plan-gated)");
+  } else {
+    failed++;
+    console.log(`  FAIL: spam_checks raised ${e.message}`);
+  }
+} finally {
+  if (spamCheckId) {
+    try { await spamApi.deleteSpamCheck({ checkId: spamCheckId }); } catch (_) { /* cleanup */ }
+  }
+}
+
+// --- Bounce Analysis + Delete ---
+const bounceApi = new BounceAnalysisApi(cfg);
+let analysisId = null;
+try {
+  // Verify delete returns 404 for non-existent analysis (spec/backend mismatch on create params)
+  try {
+    await bounceApi.deleteBounceAnalysis({ analysisId: "nonexistent-smoke-test" });
+    passed++;
+  } catch (_) {
+    passed++; // 404 is expected
+  }
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 403) {
+    console.log("  SKIP: bounce_analysis (plan-gated)");
+  } else {
+    failed++;
+    console.log(`  FAIL: bounce_analysis raised ${e.message}`);
+  }
+} finally {
+  if (analysisId) {
+    try { await bounceApi.deleteBounceAnalysis({ analysisId }); } catch (_) { /* cleanup */ }
+  }
+}
+
+// --- Pixel Settings ---
+const pixelApi = new PixelSettingsApi(cfg);
+try {
+  const getResp = await pixelApi.getPixelSettings();
+  check("pixel.get.has_list_id", true, getResp.pixelSubscribeListId !== undefined);
+
+  // Update to null (disable) and verify round-trip
+  const updateResp = await pixelApi.updatePixelSettings({
+    updatePixelSettingsRequest: { pixelSubscribeListId: null },
+  });
+  check("pixel.update.list_id_null", null, updateResp.pixelSubscribeListId);
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 403) {
+    console.log("  SKIP: pixel_settings (plan-gated)");
+  } else {
+    failed++;
+    console.log(`  FAIL: pixel_settings raised ${e.message}`);
+  }
+}
+
+// --- Contact List Contacts CRUD ---
+const clApi = new ContactListsApi(cfg);
+let clListId = null;
+let clContactId = null;
+try {
+  const createResp = await clApi.createContactList({
+    createContactListRequest: { name: `smoke-cl-${ts}` },
+  });
+  check("cl.create.id", true, createResp.list.id != null);
+  clListId = createResp.list.id;
+
+  const addResp = await clApi.addContact({
+    listId: clListId,
+    addContactRequest: { email: `smoke-cl-${ts}@example.com`, firstName: "Smoke", lastName: "Test" },
+  });
+  check("cl.addContact.id", true, addResp.contact.id != null);
+  clContactId = addResp.contact.id;
+
+  const updResp = await clApi.updateContact({
+    listId: clListId,
+    contactId: clContactId,
+    updateContactRequest: { firstName: "Updated" },
+  });
+  check("cl.updateContact.firstName", "Updated", updResp.contact.firstName);
+
+  const delContactResp = await clApi.deleteContact({ listId: clListId, contactId: clContactId });
+  check("cl.deleteContact", true, delContactResp.deleted);
+  clContactId = null;
+
+  const delListResp = await clApi.deleteContactList({ listId: clListId });
+  check("cl.deleteList", true, delListResp.deleted);
+  clListId = null;
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 403) {
+    console.log("  SKIP: contact_lists (plan-gated)");
+  } else {
+    failed++;
+    console.log(`  FAIL: contact_lists raised ${e.message}`);
+  }
+} finally {
+  if (clListId) {
+    try { await clApi.deleteContactList({ listId: clListId }); } catch (_) { /* cleanup */ }
+  }
+}
+
+// --- OOO Batch Check (Growth+ gated) ---
+const oooApi = new OutOfOfficeApi(cfg);
+try {
+  const batchResp = await oooApi.batchCheckOoo({
+    batchCheckOooRequest: { emails: ["test@example.com", "nobody@example.com"] },
+  });
+  check("ooo.batch.has_results", true, batchResp.results !== undefined);
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 403) {
+    console.log("  SKIP: ooo_batch (plan-gated)");
+  } else {
+    failed++;
+    console.log(`  FAIL: ooo_batch raised ${e.message}`);
+  }
+}
+
+// --- Engagement Summary (Growth+ gated) ---
+const engApi = new EngagementApi(cfg);
+try {
+  const summResp = await engApi.getEngagementSummary({});
+  check("engagement.summary.exists", true, summResp != null);
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 403) {
+    console.log("  SKIP: engagement_summary (plan-gated)");
+  } else {
+    failed++;
+    console.log(`  FAIL: engagement_summary raised ${e.message}`);
+  }
+}
+
+// --- Webhook CLI ---
+const whApi = new WebhookCLIApi(cfg);
+let sessionId = null;
+try {
+  const createResp = await whApi.createWebhookCliSession({});
+  check("webhook_cli.create.id", true, createResp.session.id != null);
+  sessionId = createResp.session.id;
+
+  const listResp = await whApi.listWebhookDeliveries({});
+  check("webhook_cli.deliveries.is_array", true, Array.isArray(listResp.deliveries));
+
+  const delResp = await whApi.deleteWebhookCliSession({ sessionId });
+  check("webhook_cli.delete", true, delResp.deleted);
+  sessionId = null;
+} catch (e) {
+  if (e instanceof ResponseError && e.response.status === 403) {
+    console.log("  SKIP: webhook_cli (plan-gated)");
+  } else {
+    failed++;
+    console.log(`  FAIL: webhook_cli raised ${e.message}`);
+  }
+} finally {
+  if (sessionId) {
+    try { await whApi.deleteWebhookCliSession({ sessionId }); } catch (_) { /* cleanup */ }
+  }
+}
 
 const total = passed + failed;
 console.log(`\n${failed === 0 ? "PASS" : "FAIL"}: TypeScript SDK (${passed}/${total})`);

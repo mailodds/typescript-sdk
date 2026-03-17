@@ -18,6 +18,7 @@ import type {
   BounceAnalysisResponse,
   CreateBounceAnalysisRequest,
   CrossReferenceBounces200Response,
+  DeletePolicyRule200Response,
   ErrorResponse,
   GetBounceRecords200Response,
 } from '../models/index';
@@ -28,6 +29,8 @@ import {
     CreateBounceAnalysisRequestToJSON,
     CrossReferenceBounces200ResponseFromJSON,
     CrossReferenceBounces200ResponseToJSON,
+    DeletePolicyRule200ResponseFromJSON,
+    DeletePolicyRule200ResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     GetBounceRecords200ResponseFromJSON,
@@ -39,6 +42,10 @@ export interface CreateBounceAnalysisOperationRequest {
 }
 
 export interface CrossReferenceBouncesRequest {
+    analysisId: string;
+}
+
+export interface DeleteBounceAnalysisRequest {
     analysisId: string;
 }
 
@@ -151,6 +158,53 @@ export class BounceAnalysisApi extends runtime.BaseAPI {
      */
     async crossReferenceBounces(requestParameters: CrossReferenceBouncesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CrossReferenceBounces200Response> {
         const response = await this.crossReferenceBouncesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Delete a bounce analysis and all associated records.
+     * Delete bounce analysis
+     */
+    async deleteBounceAnalysisRaw(requestParameters: DeleteBounceAnalysisRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeletePolicyRule200Response>> {
+        if (requestParameters['analysisId'] == null) {
+            throw new runtime.RequiredError(
+                'analysisId',
+                'Required parameter "analysisId" was null or undefined when calling deleteBounceAnalysis().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/bounce-analyses/{analysis_id}`;
+        urlPath = urlPath.replace(`{${"analysis_id"}}`, encodeURIComponent(String(requestParameters['analysisId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeletePolicyRule200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Delete a bounce analysis and all associated records.
+     * Delete bounce analysis
+     */
+    async deleteBounceAnalysis(requestParameters: DeleteBounceAnalysisRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletePolicyRule200Response> {
+        const response = await this.deleteBounceAnalysisRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

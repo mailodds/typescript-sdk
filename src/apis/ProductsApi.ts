@@ -17,6 +17,8 @@ import * as runtime from '../runtime';
 import type {
   BatchProductsRequest,
   BatchProductsResponse,
+  BulkUpdateProducts200Response,
+  BulkUpdateProductsRequest,
   ErrorResponse,
   GetProduct200Response,
   QueryProducts200Response,
@@ -26,6 +28,10 @@ import {
     BatchProductsRequestToJSON,
     BatchProductsResponseFromJSON,
     BatchProductsResponseToJSON,
+    BulkUpdateProducts200ResponseFromJSON,
+    BulkUpdateProducts200ResponseToJSON,
+    BulkUpdateProductsRequestFromJSON,
+    BulkUpdateProductsRequestToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     GetProduct200ResponseFromJSON,
@@ -37,6 +43,10 @@ import {
 export interface BatchProductsOperationRequest {
     storeId: string;
     batchProductsRequest: BatchProductsRequest;
+}
+
+export interface BulkUpdateProductsOperationRequest {
+    bulkUpdateProductsRequest: BulkUpdateProductsRequest;
 }
 
 export interface GetProductRequest {
@@ -114,6 +124,55 @@ export class ProductsApi extends runtime.BaseAPI {
      */
     async batchProducts(requestParameters: BatchProductsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BatchProductsResponse> {
         const response = await this.batchProductsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Bulk update product visibility. Maximum 500 products per request.
+     * Bulk update products
+     */
+    async bulkUpdateProductsRaw(requestParameters: BulkUpdateProductsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkUpdateProducts200Response>> {
+        if (requestParameters['bulkUpdateProductsRequest'] == null) {
+            throw new runtime.RequiredError(
+                'bulkUpdateProductsRequest',
+                'Required parameter "bulkUpdateProductsRequest" was null or undefined when calling bulkUpdateProducts().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/store-products/bulk`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: BulkUpdateProductsRequestToJSON(requestParameters['bulkUpdateProductsRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => BulkUpdateProducts200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Bulk update product visibility. Maximum 500 products per request.
+     * Bulk update products
+     */
+    async bulkUpdateProducts(requestParameters: BulkUpdateProductsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BulkUpdateProducts200Response> {
+        const response = await this.bulkUpdateProductsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
