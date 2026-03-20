@@ -88,6 +88,12 @@ export interface SendingDomain {
      */
     forwardRepliesTo?: string | null;
     /**
+     * Whether this is the account primary/default sending domain
+     * @type {boolean}
+     * @memberof SendingDomain
+     */
+    isPrimary?: boolean;
+    /**
      * 
      * @type {Date}
      * @memberof SendingDomain
@@ -141,6 +147,7 @@ export function SendingDomainFromJSONTyped(json: any, ignoreDiscriminator: boole
         'bimiVmcUrl': json['bimi_vmc_url'] == null ? undefined : json['bimi_vmc_url'],
         'bimiEnabled': json['bimi_enabled'] == null ? undefined : json['bimi_enabled'],
         'forwardRepliesTo': json['forward_replies_to'] == null ? undefined : json['forward_replies_to'],
+        'isPrimary': json['is_primary'] == null ? undefined : json['is_primary'],
         'createdAt': json['created_at'] == null ? undefined : (new Date(json['created_at'])),
         'updatedAt': json['updated_at'] == null ? undefined : (new Date(json['updated_at'])),
     };
@@ -167,6 +174,7 @@ export function SendingDomainToJSONTyped(value?: SendingDomain | null, ignoreDis
         'bimi_vmc_url': value['bimiVmcUrl'],
         'bimi_enabled': value['bimiEnabled'],
         'forward_replies_to': value['forwardRepliesTo'],
+        'is_primary': value['isPrimary'],
         'created_at': value['createdAt'] == null ? value['createdAt'] : value['createdAt'].toISOString(),
         'updated_at': value['updatedAt'] == null ? value['updatedAt'] : value['updatedAt'].toISOString(),
     };

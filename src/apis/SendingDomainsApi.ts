@@ -71,6 +71,10 @@ export interface GetSendingStatsRequest {
     domainId?: string;
 }
 
+export interface SetPrimarySendingDomainRequest {
+    domainId: string;
+}
+
 export interface UpdateReplyForwardingOperationRequest {
     domainId: string;
     updateReplyForwardingRequest: UpdateReplyForwardingRequest;
@@ -405,6 +409,53 @@ export class SendingDomainsApi extends runtime.BaseAPI {
      */
     async listSendingDomains(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ListSendingDomains200Response> {
         const response = await this.listSendingDomainsRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Designate a domain as the primary/default sending domain. When domain_id is omitted from deliver calls, the primary domain is used automatically.
+     * Set primary sending domain
+     */
+    async setPrimarySendingDomainRaw(requestParameters: SetPrimarySendingDomainRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSendingDomain201Response>> {
+        if (requestParameters['domainId'] == null) {
+            throw new runtime.RequiredError(
+                'domainId',
+                'Required parameter "domainId" was null or undefined when calling setPrimarySendingDomain().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/sending-domains/{domain_id}/set-primary`;
+        urlPath = urlPath.replace(`{${"domain_id"}}`, encodeURIComponent(String(requestParameters['domainId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateSendingDomain201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Designate a domain as the primary/default sending domain. When domain_id is omitted from deliver calls, the primary domain is used automatically.
+     * Set primary sending domain
+     */
+    async setPrimarySendingDomain(requestParameters: SetPrimarySendingDomainRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSendingDomain201Response> {
+        const response = await this.setPrimarySendingDomainRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

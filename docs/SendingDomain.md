@@ -16,6 +16,7 @@ Name | Type
 `bimiVmcUrl` | string
 `bimiEnabled` | boolean
 `forwardRepliesTo` | string
+`isPrimary` | boolean
 `createdAt` | Date
 `updatedAt` | Date
 
@@ -36,6 +37,7 @@ const example = {
   "bimiVmcUrl": null,
   "bimiEnabled": null,
   "forwardRepliesTo": null,
+  "isPrimary": null,
   "createdAt": null,
   "updatedAt": null,
 } satisfies SendingDomain

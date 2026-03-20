@@ -49,6 +49,7 @@ docs/CheckSuppressionRequest.md
 docs/ClassifyContent200Response.md
 docs/ClassifyContent200ResponseContentCheck.md
 docs/ClassifyContentRequest.md
+docs/ConfigurationSetsApi.md
 docs/ConfirmSubscription200Response.md
 docs/ContactList.md
 docs/ContactListsApi.md
@@ -78,6 +79,7 @@ docs/CreateWebhookCliSessionRequest.md
 docs/CrossReferenceBounces200Response.md
 docs/CrossReferenceBounces200ResponseCrossReference.md
 docs/CrossReferenceBounces200ResponseCrossReferenceEntriesInner.md
+docs/DKIMManagementApi.md
 docs/DMARCMonitoringApi.md
 docs/DeleteJob200Response.md
 docs/DeleteOooContact200Response.md
@@ -90,6 +92,7 @@ docs/DeliverRequestStructuredData.md
 docs/DeliverRequestToInner.md
 docs/DeliverResponse.md
 docs/DeliverResponseDelivery.md
+docs/DeliverabilityAdvisorApi.md
 docs/DisconnectStore200Response.md
 docs/DmarcDomain.md
 docs/DomainInsightsApi.md
@@ -97,6 +100,7 @@ docs/EmailSendingApi.md
 docs/EmailValidationApi.md
 docs/EngagementApi.md
 docs/ErrorResponse.md
+docs/EventDestinationsApi.md
 docs/EventsApi.md
 docs/GetBlacklistHistory200Response.md
 docs/GetBlacklistHistory200ResponseChecksInner.md
@@ -165,10 +169,13 @@ docs/GetSendingStats200Response.md
 docs/GetSendingStats200ResponseStats.md
 docs/GetSubscribers200Response.md
 docs/GetSyncJobErrors200Response.md
+docs/GlobalSuppressionsApi.md
 docs/HealthCheck200Response.md
+docs/ISPFBLGuidesApi.md
 docs/IdentityScoreCheck.md
 docs/ImportContactList200Response.md
 docs/InboundProcessingApi.md
+docs/InboundRulesApi.md
 docs/IntrospectToken200Response.md
 docs/Job.md
 docs/JobArtifacts.md
@@ -191,6 +198,7 @@ docs/ListStores200Response.md
 docs/ListSyncJobs200Response.md
 docs/ListWebhookDeliveries200Response.md
 docs/ListWebhookDeliveries200ResponseDeliveriesInner.md
+docs/ManagedSPFApi.md
 docs/McpCapabilities.md
 docs/McpCapabilitiesPillarsInner.md
 docs/McpCapabilitiesPillarsInnerToolsInner.md
@@ -199,6 +207,7 @@ docs/OAuth20Api.md
 docs/OAuthServerMetadata.md
 docs/OutOfOfficeApi.md
 docs/Pagination.md
+docs/PipelineSimulationApi.md
 docs/PixelSettingsApi.md
 docs/Policy.md
 docs/PolicyListResponse.md
@@ -225,6 +234,7 @@ docs/RemoveSuppression200Response.md
 docs/RemoveSuppressionRequest.md
 docs/ReplayWebhookDelivery200Response.md
 docs/ReputationApi.md
+docs/ReputationPoliciesApi.md
 docs/ResultsResponse.md
 docs/RetryJob200Response.md
 docs/RunBlacklistCheck200Response.md
@@ -235,6 +245,7 @@ docs/RunSpamCheck201Response.md
 docs/RunSpamCheckRequest.md
 docs/ScheduleCampaignRequest.md
 docs/SenderHealthApi.md
+docs/SendingDelegationsApi.md
 docs/SendingDomain.md
 docs/SendingDomainDnsRecords.md
 docs/SendingDomainDnsRecordsNs.md
@@ -273,6 +284,7 @@ docs/TelemetrySummaryRates.md
 docs/TelemetrySummaryTopDomainsInner.md
 docs/TelemetrySummaryTopReasonsInner.md
 docs/TelemetrySummaryTotals.md
+docs/TemplateVersionsApi.md
 docs/TestPolicyRequest.md
 docs/TestPolicyRequestTestResult.md
 docs/TrackEventRequest.md
@@ -304,22 +316,33 @@ src/apis/BounceAnalysisApi.ts
 src/apis/BulkValidationApi.ts
 src/apis/CampaignAnalyticsApi.ts
 src/apis/CampaignsApi.ts
+src/apis/ConfigurationSetsApi.ts
 src/apis/ContactListsApi.ts
 src/apis/ContentClassificationApi.ts
+src/apis/DKIMManagementApi.ts
 src/apis/DMARCMonitoringApi.ts
+src/apis/DeliverabilityAdvisorApi.ts
 src/apis/DomainInsightsApi.ts
 src/apis/EmailSendingApi.ts
 src/apis/EmailValidationApi.ts
 src/apis/EngagementApi.ts
+src/apis/EventDestinationsApi.ts
 src/apis/EventsApi.ts
+src/apis/GlobalSuppressionsApi.ts
+src/apis/ISPFBLGuidesApi.ts
 src/apis/InboundProcessingApi.ts
+src/apis/InboundRulesApi.ts
+src/apis/ManagedSPFApi.ts
 src/apis/MessageEventsApi.ts
 src/apis/OAuth20Api.ts
 src/apis/OutOfOfficeApi.ts
+src/apis/PipelineSimulationApi.ts
 src/apis/PixelSettingsApi.ts
 src/apis/ProductsApi.ts
 src/apis/ReputationApi.ts
+src/apis/ReputationPoliciesApi.ts
 src/apis/SenderHealthApi.ts
+src/apis/SendingDelegationsApi.ts
 src/apis/SendingDomainsApi.ts
 src/apis/ServerTestsApi.ts
 src/apis/SpamChecksApi.ts
@@ -327,6 +350,7 @@ src/apis/StoreConnectionsApi.ts
 src/apis/SubscriberListsApi.ts
 src/apis/SuppressionListsApi.ts
 src/apis/SystemApi.ts
+src/apis/TemplateVersionsApi.ts
 src/apis/ValidationPoliciesApi.ts
 src/apis/WebhookCLIApi.ts
 src/apis/index.ts

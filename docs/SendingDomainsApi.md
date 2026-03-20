@@ -11,6 +11,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 | [**getSendingDomainIdentityScore**](SendingDomainsApi.md#getsendingdomainidentityscore) | **GET** /v1/sending-domains/{domain_id}/identity-score | Get domain identity score |
 | [**getSendingStats**](SendingDomainsApi.md#getsendingstats) | **GET** /v1/sending-stats | Get sending statistics |
 | [**listSendingDomains**](SendingDomainsApi.md#listsendingdomains) | **GET** /v1/sending-domains | List sending domains |
+| [**setPrimarySendingDomain**](SendingDomainsApi.md#setprimarysendingdomain) | **POST** /v1/sending-domains/{domain_id}/set-primary | Set primary sending domain |
 | [**updateReplyForwarding**](SendingDomainsApi.md#updatereplyforwardingoperation) | **PATCH** /v1/sending-domains/{domain_id}/reply-forwarding | Update reply forwarding config |
 | [**verifySendingDomain**](SendingDomainsApi.md#verifysendingdomain) | **POST** /v1/sending-domains/{domain_id}/verify | Verify domain DNS records |
 
@@ -519,6 +520,79 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 | **200** | List of sending domains |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## setPrimarySendingDomain
+
+> CreateSendingDomain201Response setPrimarySendingDomain(domainId)
+
+Set primary sending domain
+
+Designate a domain as the primary/default sending domain. When domain_id is omitted from deliver calls, the primary domain is used automatically.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SendingDomainsApi,
+} from '@mailodds/sdk';
+import type { SetPrimarySendingDomainRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new SendingDomainsApi(config);
+
+  const body = {
+    // string
+    domainId: domainId_example,
+  } satisfies SetPrimarySendingDomainRequest;
+
+  try {
+    const data = await api.setPrimarySendingDomain(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **domainId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**CreateSendingDomain201Response**](CreateSendingDomain201Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Primary domain set |  -  |
+| **404** | Resource not found |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

@@ -72,11 +72,11 @@ export interface DeliverRequest {
      */
     text?: string;
     /**
-     * Sending domain UUID
+     * Sending domain UUID. Optional -- auto-resolved from the from address, or falls back to primary domain.
      * @type {string}
      * @memberof DeliverRequest
      */
-    domainId: string;
+    domainId?: string;
     /**
      * Reply-to address
      * @type {string}
@@ -159,7 +159,6 @@ export function instanceOfDeliverRequest(value: object): value is DeliverRequest
     if (!('to' in value) || value['to'] === undefined) return false;
     if (!('from' in value) || value['from'] === undefined) return false;
     if (!('subject' in value) || value['subject'] === undefined) return false;
-    if (!('domainId' in value) || value['domainId'] === undefined) return false;
     return true;
 }
 
@@ -178,7 +177,7 @@ export function DeliverRequestFromJSONTyped(json: any, ignoreDiscriminator: bool
         'subject': json['subject'],
         'html': json['html'] == null ? undefined : json['html'],
         'text': json['text'] == null ? undefined : json['text'],
-        'domainId': json['domain_id'],
+        'domainId': json['domain_id'] == null ? undefined : json['domain_id'],
         'replyTo': json['reply_to'] == null ? undefined : json['reply_to'],
         'headers': json['headers'] == null ? undefined : json['headers'],
         'tags': json['tags'] == null ? undefined : json['tags'],

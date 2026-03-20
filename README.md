@@ -1,96 +1,47 @@
-# MailOdds TypeScript SDK
+# @mailodds/sdk@1.0.0
 
-The official TypeScript client for email validation, transactional sending, and deliverability monitoring through the MailOdds API. Works in Node.js, Webpack, and Browserify environments.
+A TypeScript SDK client for the api.mailodds.com API.
 
-[![npm](https://img.shields.io/npm/v/@mailodds/sdk)](https://www.npmjs.com/package/@mailodds/sdk)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![API Docs](https://img.shields.io/badge/docs-api--reference-blue)](https://mailodds.com/api-reference)
+## Usage
 
-## Installation
+First, install the SDK from npm.
 
 ```bash
-npm install @mailodds/sdk
+npm install @mailodds/sdk --save
 ```
 
-## Quick Start
+Next, try it out.
 
-```typescript
-import { Configuration, EmailValidationApi, ValidateRequest } from '@mailodds/sdk';
 
-const config = new Configuration({
-  basePath: 'https://api.mailodds.com/v1',
-  accessToken: process.env.MAILODDS_API_KEY,
-});
+```ts
+import {
+  Configuration,
+  AgentControlPlaneApi,
+} from '@mailodds/sdk';
+import type { GetMcpCapabilitiesRequest } from '@mailodds/sdk';
 
-const api = new EmailValidationApi(config);
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const api = new AgentControlPlaneApi();
 
-async function main() {
-  const request: ValidateRequest = { email: 'user@example.com' };
-  const result = await api.validateEmail(request);
-  console.log(`Status: ${result.result.status}, Action: ${result.result.action}`);
-}
-
-main();
-```
-
-## Error Handling
-
-```typescript
-try {
-  const result = await api.validateEmail(request);
-} catch (error) {
-  if (error instanceof Response) {
-    console.error(`API error ${error.status}: ${await error.text()}`);
+  try {
+    const data = await api.getMcpCapabilities();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
   }
-  throw error;
 }
+
+// Run the test
+example().catch(console.error);
 ```
 
-All API methods throw on non-2xx responses. The thrown object includes the HTTP status, response body, and headers.
 
-## MailOdds Platform
+## Documentation
 
-<details>
-<summary>This SDK is part of the MailOdds email deliverability platform. Explore all capabilities.</summary>
+### API Endpoints
 
-- [Email Validation API](https://mailodds.com/email-validation-api) - Single and batch email verification with 25+ real-time checks
-- [Bulk Email Validation](https://mailodds.com/bulk-email-validation) - Process lists of up to 500,000 emails per job
-- [Email Sending API](https://mailodds.com/email-sending-api) - Transactional email delivery with DKIM dual signing
-- [Email Deliverability Platform](https://mailodds.com/email-deliverability-platform) - Full-stack deliverability monitoring and optimization
-- [DMARC Monitoring](https://mailodds.com/dmarc-monitoring) - Aggregate report analysis with policy recommendations
-- [Sender Reputation](https://mailodds.com/sender-reputation) - Real-time sender health scoring and trend analysis
-- [SMTP Server Test](https://mailodds.com/smtp-server-test) - DNS, MX, and SMTP connectivity diagnostics
-- [API Reference](https://mailodds.com/api-reference) - Full endpoint documentation with request and response examples
-- [Guide: Email Authentication](https://mailodds.com/guides/email-authentication) - SPF, DKIM, and DMARC setup guide
-- [Security](https://mailodds.com/security) - Infrastructure security and data protection practices
-
-</details>
-
-## Features
-
-- **Fetch API based** - Built on the standard Fetch API for broad runtime compatibility across Node.js, browsers, and edge runtimes
-- **Full TypeScript types** - Every request and response is fully typed with generated interfaces for compile-time safety
-- **ES5 and ES6 support** - Works with both CommonJS and ES module systems
-- **Async/await** - All API methods return Promises for clean async control flow
-- **Full platform coverage** - Access all MailOdds capabilities including validation, sending, campaigns, DMARC monitoring, blacklist checks, and suppression management
-- **Structured error handling** - API errors include HTTP status codes, response bodies, and request IDs for debugging
-
-## Why MailOdds
-
-MailOdds is a complete email deliverability platform built for developers. Every email validated or sent through MailOdds passes through 25+ real-time checks including syntax verification, DNS and MX validation, SMTP mailbox probing, disposable domain detection, and role account identification.
-
-The platform maintains sub-200ms median response times for single validations, 99.9% API uptime, and processes bulk lists of up to 500,000 emails per job. MailOdds supports 11 language SDKs, an MCP server for AI agent integration, a CLI for local development, and a WordPress plugin for no-code deployments.
-
-All email sending uses DKIM dual signing with automated key rotation, and the deliverability monitoring stack covers DMARC aggregate reports, blacklist surveillance across 80+ DNSBLs, and real-time sender health scoring.
-
-## API Reference
-
-Full documentation is available at the [MailOdds API Reference](https://mailodds.com/api-reference).
-
-All URIs are relative to `https://api.mailodds.com/v1`.
-
-<details>
-<summary>All Endpoints</summary>
+All URIs are relative to *https://api.mailodds.com/v1*
 
 | Class | Method | HTTP request | Description
 | ----- | ------ | ------------ | -------------
@@ -132,6 +83,12 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 *CampaignsApi* | [**listCampaigns**](docs/CampaignsApi.md#listcampaigns) | **GET** /v1/campaigns | List campaigns
 *CampaignsApi* | [**scheduleCampaign**](docs/CampaignsApi.md#schedulecampaignoperation) | **POST** /v1/campaigns/{campaign_id}/schedule | Schedule a campaign
 *CampaignsApi* | [**sendCampaign**](docs/CampaignsApi.md#sendcampaign) | **POST** /v1/campaigns/{campaign_id}/send | Send a campaign
+*ConfigurationSetsApi* | [**createConfigurationSet**](docs/ConfigurationSetsApi.md#createconfigurationset) | **POST** /v1/configuration-sets | Create a configuration set
+*ConfigurationSetsApi* | [**deleteConfigurationSet**](docs/ConfigurationSetsApi.md#deleteconfigurationset) | **DELETE** /v1/configuration-sets/{name} | Delete a configuration set
+*ConfigurationSetsApi* | [**getConfigurationSet**](docs/ConfigurationSetsApi.md#getconfigurationset) | **GET** /v1/configuration-sets/{name} | Get a configuration set
+*ConfigurationSetsApi* | [**getConfigurationSetMetrics**](docs/ConfigurationSetsApi.md#getconfigurationsetmetrics) | **GET** /v1/configuration-sets/{name}/metrics | Get configuration set metrics
+*ConfigurationSetsApi* | [**listConfigurationSets**](docs/ConfigurationSetsApi.md#listconfigurationsets) | **GET** /v1/configuration-sets | List configuration sets
+*ConfigurationSetsApi* | [**updateConfigurationSet**](docs/ConfigurationSetsApi.md#updateconfigurationset) | **PUT** /v1/configuration-sets/{name} | Update a configuration set
 *ContactListsApi* | [**addContact**](docs/ContactListsApi.md#addcontactoperation) | **POST** /v1/contact-lists/{list_id}/contacts | Add contact to list
 *ContactListsApi* | [**appendToContactList**](docs/ContactListsApi.md#appendtocontactlistoperation) | **POST** /v1/contact-lists/{list_id}/append | Append to contact list
 *ContactListsApi* | [**createContactList**](docs/ContactListsApi.md#createcontactlistoperation) | **POST** /v1/contact-lists | Create contact list
@@ -144,6 +101,8 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 *ContactListsApi* | [**queryContactList**](docs/ContactListsApi.md#querycontactlistoperation) | **POST** /v1/contact-lists/{list_id}/query | Query contact list
 *ContactListsApi* | [**updateContact**](docs/ContactListsApi.md#updatecontactoperation) | **PATCH** /v1/contact-lists/{list_id}/contacts/{contact_id} | Update contact
 *ContentClassificationApi* | [**classifyContent**](docs/ContentClassificationApi.md#classifycontentoperation) | **POST** /v1/content-check | Classify email content
+*DKIMManagementApi* | [**getDkimDnsRecord**](docs/DKIMManagementApi.md#getdkimdnsrecord) | **GET** /v1/sending-domains/{domain_id}/dkim/dns-record | Get DKIM DNS record
+*DKIMManagementApi* | [**rotateDkim**](docs/DKIMManagementApi.md#rotatedkim) | **POST** /v1/sending-domains/{domain_id}/dkim/rotate | Rotate DKIM keys
 *DMARCMonitoringApi* | [**addDmarcDomain**](docs/DMARCMonitoringApi.md#adddmarcdomainoperation) | **POST** /v1/dmarc-domains | Add DMARC domain
 *DMARCMonitoringApi* | [**deleteDmarcDomain**](docs/DMARCMonitoringApi.md#deletedmarcdomain) | **DELETE** /v1/dmarc-domains/{domain_id} | Delete a DMARC domain
 *DMARCMonitoringApi* | [**getDmarcDomain**](docs/DMARCMonitoringApi.md#getdmarcdomain) | **GET** /v1/dmarc-domains/{domain_id} | Get DMARC domain
@@ -152,6 +111,8 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 *DMARCMonitoringApi* | [**getDmarcTrend**](docs/DMARCMonitoringApi.md#getdmarctrend) | **GET** /v1/dmarc-domains/{domain_id}/trend | Get DMARC trend
 *DMARCMonitoringApi* | [**listDmarcDomains**](docs/DMARCMonitoringApi.md#listdmarcdomains) | **GET** /v1/dmarc-domains | List DMARC domains
 *DMARCMonitoringApi* | [**verifyDmarcDomain**](docs/DMARCMonitoringApi.md#verifydmarcdomain) | **POST** /v1/dmarc-domains/{domain_id}/verify | Verify DMARC DNS records
+*DeliverabilityAdvisorApi* | [**dismissDeliverabilityRecommendation**](docs/DeliverabilityAdvisorApi.md#dismissdeliverabilityrecommendation) | **POST** /v1/deliverability/recommendations/{recommendation_id}/dismiss | Dismiss a deliverability recommendation
+*DeliverabilityAdvisorApi* | [**getDeliverabilityRecommendations**](docs/DeliverabilityAdvisorApi.md#getdeliverabilityrecommendations) | **GET** /v1/deliverability/recommendations | Get deliverability recommendations
 *DomainInsightsApi* | [**getDomainHookEffectiveness**](docs/DomainInsightsApi.md#getdomainhookeffectiveness) | **GET** /v1/sending-domains/{domain_id}/insights/hook-effectiveness | Get hook effectiveness metrics
 *DomainInsightsApi* | [**getDomainInsightsFunnel**](docs/DomainInsightsApi.md#getdomaininsightsfunnel) | **GET** /v1/sending-domains/{domain_id}/insights/funnel | Get domain engagement funnel
 *DomainInsightsApi* | [**getDomainInsightsTrends**](docs/DomainInsightsApi.md#getdomaininsightstrends) | **GET** /v1/sending-domains/{domain_id}/insights/trends | Get domain engagement trends
@@ -163,13 +124,35 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 *EngagementApi* | [**getEngagementScore**](docs/EngagementApi.md#getengagementscore) | **GET** /v1/engagement/score/{email} | Get engagement score
 *EngagementApi* | [**getEngagementSummary**](docs/EngagementApi.md#getengagementsummary) | **GET** /v1/engagement/summary | Get engagement summary
 *EngagementApi* | [**suppressDisengaged**](docs/EngagementApi.md#suppressdisengagedoperation) | **POST** /v1/engagement/suppress-disengaged | Suppress disengaged contacts
+*EventDestinationsApi* | [**createEventDestination**](docs/EventDestinationsApi.md#createeventdestination) | **POST** /v1/event-destinations | Create an event destination
+*EventDestinationsApi* | [**deleteEventDestination**](docs/EventDestinationsApi.md#deleteeventdestination) | **DELETE** /v1/event-destinations/{destination_id} | Delete an event destination
+*EventDestinationsApi* | [**getEventDestination**](docs/EventDestinationsApi.md#geteventdestination) | **GET** /v1/event-destinations/{destination_id} | Get an event destination
+*EventDestinationsApi* | [**listEventDestinationTemplates**](docs/EventDestinationsApi.md#listeventdestinationtemplates) | **GET** /v1/event-destinations/templates | List event destination templates
+*EventDestinationsApi* | [**listEventDestinations**](docs/EventDestinationsApi.md#listeventdestinations) | **GET** /v1/event-destinations | List event destinations
+*EventDestinationsApi* | [**listEventSchemas**](docs/EventDestinationsApi.md#listeventschemas) | **GET** /v1/event-destinations/schemas | List event schemas
+*EventDestinationsApi* | [**updateEventDestination**](docs/EventDestinationsApi.md#updateeventdestination) | **PUT** /v1/event-destinations/{destination_id} | Update an event destination
 *EventsApi* | [**trackEvent**](docs/EventsApi.md#trackeventoperation) | **POST** /v1/events/track | Track a commerce event
+*GlobalSuppressionsApi* | [**addGlobalSuppressionOverride**](docs/GlobalSuppressionsApi.md#addglobalsuppressionoverride) | **POST** /v1/global-suppressions/overrides | Add global suppression override
+*GlobalSuppressionsApi* | [**checkGlobalSuppression**](docs/GlobalSuppressionsApi.md#checkglobalsuppression) | **GET** /v1/global-suppressions/check | Check global suppression
+*GlobalSuppressionsApi* | [**removeGlobalSuppressionOverride**](docs/GlobalSuppressionsApi.md#removeglobalsuppressionoverride) | **DELETE** /v1/global-suppressions/overrides | Remove global suppression override
+*ISPFBLGuidesApi* | [**getIspFblGuide**](docs/ISPFBLGuidesApi.md#getispfblguide) | **GET** /v1/isp-fbl/guides/{isp_id} | Get ISP FBL guide
+*ISPFBLGuidesApi* | [**listIspFblGuides**](docs/ISPFBLGuidesApi.md#listispfblguides) | **GET** /v1/isp-fbl/guides | List ISP FBL guides
 *InboundProcessingApi* | [**correctInboundMessage**](docs/InboundProcessingApi.md#correctinboundmessageoperation) | **PATCH** /v1/inbound-messages/{message_id}/correction | Correct inbound message classification
 *InboundProcessingApi* | [**getBounceStats**](docs/InboundProcessingApi.md#getbouncestats) | **GET** /v1/bounce-stats | Get bounce statistics
 *InboundProcessingApi* | [**getBounceStatsSummary**](docs/InboundProcessingApi.md#getbouncestatssummary) | **GET** /v1/bounce-stats/summary | Get bounce statistics summary
 *InboundProcessingApi* | [**getComplaintAssessment**](docs/InboundProcessingApi.md#getcomplaintassessment) | **GET** /v1/complaint-assessment | Get complaint assessment
 *InboundProcessingApi* | [**getInboundMessage**](docs/InboundProcessingApi.md#getinboundmessage) | **GET** /v1/inbound-messages/{message_id} | Get inbound message
 *InboundProcessingApi* | [**listInboundMessages**](docs/InboundProcessingApi.md#listinboundmessages) | **GET** /v1/inbound-messages | List inbound messages
+*InboundRulesApi* | [**createInboundRule**](docs/InboundRulesApi.md#createinboundrule) | **POST** /v1/sending-domains/{domain_id}/inbound-rules | Create an inbound rule
+*InboundRulesApi* | [**deleteInboundRule**](docs/InboundRulesApi.md#deleteinboundrule) | **DELETE** /v1/sending-domains/{domain_id}/inbound-rules/{rule_id} | Delete an inbound rule
+*InboundRulesApi* | [**dryRunInboundRules**](docs/InboundRulesApi.md#dryruninboundrules) | **POST** /v1/sending-domains/{domain_id}/inbound-rules/dry-run | Dry-run inbound rules
+*InboundRulesApi* | [**getInboundRule**](docs/InboundRulesApi.md#getinboundrule) | **GET** /v1/sending-domains/{domain_id}/inbound-rules/{rule_id} | Get an inbound rule
+*InboundRulesApi* | [**listInboundRules**](docs/InboundRulesApi.md#listinboundrules) | **GET** /v1/sending-domains/{domain_id}/inbound-rules | List inbound rules
+*InboundRulesApi* | [**updateInboundRule**](docs/InboundRulesApi.md#updateinboundrule) | **PUT** /v1/sending-domains/{domain_id}/inbound-rules/{rule_id} | Update an inbound rule
+*ManagedSPFApi* | [**createManagedSpf**](docs/ManagedSPFApi.md#createmanagedspf) | **POST** /v1/sending-domains/{domain_id}/managed-spf | Create managed SPF record
+*ManagedSPFApi* | [**getManagedSpf**](docs/ManagedSPFApi.md#getmanagedspf) | **GET** /v1/sending-domains/{domain_id}/managed-spf | Get managed SPF record
+*ManagedSPFApi* | [**refreshManagedSpf**](docs/ManagedSPFApi.md#refreshmanagedspf) | **POST** /v1/sending-domains/{domain_id}/managed-spf/refresh | Refresh managed SPF record
+*ManagedSPFApi* | [**updateManagedSpf**](docs/ManagedSPFApi.md#updatemanagedspf) | **PUT** /v1/sending-domains/{domain_id}/managed-spf | Update managed SPF settings
 *MessageEventsApi* | [**getMessageEvents**](docs/MessageEventsApi.md#getmessageevents) | **GET** /v1/message-events | Get message events
 *OAuth20Api* | [**createToken**](docs/OAuth20Api.md#createtoken) | **POST** /oauth/token | Create token
 *OAuth20Api* | [**getJwks**](docs/OAuth20Api.md#getjwks) | **GET** /.well-known/jwks.json | Get JSON Web Key Set
@@ -181,6 +164,7 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 *OutOfOfficeApi* | [**getOooStatus**](docs/OutOfOfficeApi.md#getooostatus) | **GET** /v1/out-of-office/{email}/status | Get OOO status for email
 *OutOfOfficeApi* | [**listOooContacts**](docs/OutOfOfficeApi.md#listooocontacts) | **GET** /v1/out-of-office | List out-of-office contacts
 *OutOfOfficeApi* | [**updateOooContact**](docs/OutOfOfficeApi.md#updateooocontactoperation) | **PATCH** /v1/out-of-office/{email} | Update OOO contact
+*PipelineSimulationApi* | [**simulatePipeline**](docs/PipelineSimulationApi.md#simulatepipeline) | **POST** /v1/simulate | Simulate sending pipeline
 *PixelSettingsApi* | [**getPixelSettings**](docs/PixelSettingsApi.md#getpixelsettings) | **GET** /v1/pixel-settings | Get pixel settings
 *PixelSettingsApi* | [**updatePixelSettings**](docs/PixelSettingsApi.md#updatepixelsettingsoperation) | **PATCH** /v1/pixel-settings | Update pixel settings
 *ProductsApi* | [**batchProducts**](docs/ProductsApi.md#batchproductsoperation) | **POST** /v1/stores/{store_id}/products/batch | Batch push products
@@ -189,8 +173,19 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 *ProductsApi* | [**queryProducts**](docs/ProductsApi.md#queryproducts) | **GET** /v1/store-products | Query products
 *ReputationApi* | [**getReputation**](docs/ReputationApi.md#getreputation) | **GET** /v1/reputation | Get account reputation
 *ReputationApi* | [**getReputationTimeline**](docs/ReputationApi.md#getreputationtimeline) | **GET** /v1/reputation/timeline | Get reputation timeline
+*ReputationPoliciesApi* | [**createReputationPolicy**](docs/ReputationPoliciesApi.md#createreputationpolicy) | **POST** /v1/reputation-policies | Create a reputation policy
+*ReputationPoliciesApi* | [**createReputationPolicyFromPreset**](docs/ReputationPoliciesApi.md#createreputationpolicyfrompreset) | **POST** /v1/reputation-policies/from-preset | Create a reputation policy from preset
+*ReputationPoliciesApi* | [**deleteReputationPolicy**](docs/ReputationPoliciesApi.md#deletereputationpolicy) | **DELETE** /v1/reputation-policies/{policy_id} | Delete a reputation policy
+*ReputationPoliciesApi* | [**getReputationPolicy**](docs/ReputationPoliciesApi.md#getreputationpolicy) | **GET** /v1/reputation-policies/{policy_id} | Get a reputation policy
+*ReputationPoliciesApi* | [**getReputationPolicyStatus**](docs/ReputationPoliciesApi.md#getreputationpolicystatus) | **GET** /v1/reputation-policies/{policy_id}/status | Get reputation policy status
+*ReputationPoliciesApi* | [**listReputationPolicies**](docs/ReputationPoliciesApi.md#listreputationpolicies) | **GET** /v1/reputation-policies | List reputation policies
+*ReputationPoliciesApi* | [**testReputationPolicy**](docs/ReputationPoliciesApi.md#testreputationpolicy) | **POST** /v1/reputation-policies/{policy_id}/test | Test a reputation policy
+*ReputationPoliciesApi* | [**updateReputationPolicy**](docs/ReputationPoliciesApi.md#updatereputationpolicy) | **PUT** /v1/reputation-policies/{policy_id} | Update a reputation policy
 *SenderHealthApi* | [**getSenderHealth**](docs/SenderHealthApi.md#getsenderhealth) | **GET** /v1/sender-health | Get sender health score
 *SenderHealthApi* | [**getSenderHealthTrend**](docs/SenderHealthApi.md#getsenderhealthtrend) | **GET** /v1/sender-health/trend | Get sender health trend
+*SendingDelegationsApi* | [**createDelegation**](docs/SendingDelegationsApi.md#createdelegation) | **POST** /v1/sending-domains/{domain_id}/delegations | Create a sending delegation
+*SendingDelegationsApi* | [**listDelegations**](docs/SendingDelegationsApi.md#listdelegations) | **GET** /v1/sending-domains/{domain_id}/delegations | List sending delegations
+*SendingDelegationsApi* | [**revokeDelegation**](docs/SendingDelegationsApi.md#revokedelegation) | **DELETE** /v1/sending-domains/{domain_id}/delegations/{delegation_id} | Revoke a sending delegation
 *SendingDomainsApi* | [**createSendingDomain**](docs/SendingDomainsApi.md#createsendingdomainoperation) | **POST** /v1/sending-domains | Add a sending domain
 *SendingDomainsApi* | [**deleteSendingDomain**](docs/SendingDomainsApi.md#deletesendingdomain) | **DELETE** /v1/sending-domains/{domain_id} | Delete a sending domain
 *SendingDomainsApi* | [**getReplyForwarding**](docs/SendingDomainsApi.md#getreplyforwarding) | **GET** /v1/sending-domains/{domain_id}/reply-forwarding | Get reply forwarding config
@@ -198,6 +193,7 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 *SendingDomainsApi* | [**getSendingDomainIdentityScore**](docs/SendingDomainsApi.md#getsendingdomainidentityscore) | **GET** /v1/sending-domains/{domain_id}/identity-score | Get domain identity score
 *SendingDomainsApi* | [**getSendingStats**](docs/SendingDomainsApi.md#getsendingstats) | **GET** /v1/sending-stats | Get sending statistics
 *SendingDomainsApi* | [**listSendingDomains**](docs/SendingDomainsApi.md#listsendingdomains) | **GET** /v1/sending-domains | List sending domains
+*SendingDomainsApi* | [**setPrimarySendingDomain**](docs/SendingDomainsApi.md#setprimarysendingdomain) | **POST** /v1/sending-domains/{domain_id}/set-primary | Set primary sending domain
 *SendingDomainsApi* | [**updateReplyForwarding**](docs/SendingDomainsApi.md#updatereplyforwardingoperation) | **PATCH** /v1/sending-domains/{domain_id}/reply-forwarding | Update reply forwarding config
 *SendingDomainsApi* | [**verifySendingDomain**](docs/SendingDomainsApi.md#verifysendingdomain) | **POST** /v1/sending-domains/{domain_id}/verify | Verify domain DNS records
 *ServerTestsApi* | [**getServerTest**](docs/ServerTestsApi.md#getservertest) | **GET** /v1/server-tests/{test_id} | Get server test
@@ -231,6 +227,13 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 *SuppressionListsApi* | [**removeSuppression**](docs/SuppressionListsApi.md#removesuppressionoperation) | **DELETE** /v1/suppression | Remove suppression entries
 *SystemApi* | [**getTelemetrySummary**](docs/SystemApi.md#gettelemetrysummary) | **GET** /v1/telemetry/summary | Get validation telemetry
 *SystemApi* | [**healthCheck**](docs/SystemApi.md#healthcheck) | **GET** /health | Health check
+*TemplateVersionsApi* | [**canaryTemplateVersion**](docs/TemplateVersionsApi.md#canarytemplateversion) | **POST** /v1/campaigns/{campaign_id}/template-versions/{version_id}/canary | Start canary deployment
+*TemplateVersionsApi* | [**createTemplateVersion**](docs/TemplateVersionsApi.md#createtemplateversion) | **POST** /v1/campaigns/{campaign_id}/template-versions | Create a template version
+*TemplateVersionsApi* | [**getTemplateVersion**](docs/TemplateVersionsApi.md#gettemplateversion) | **GET** /v1/campaigns/{campaign_id}/template-versions/{version_id} | Get a template version
+*TemplateVersionsApi* | [**listTemplateVersions**](docs/TemplateVersionsApi.md#listtemplateversions) | **GET** /v1/campaigns/{campaign_id}/template-versions | List template versions
+*TemplateVersionsApi* | [**promoteTemplateVersion**](docs/TemplateVersionsApi.md#promotetemplateversion) | **POST** /v1/campaigns/{campaign_id}/template-versions/{version_id}/promote | Promote a template version
+*TemplateVersionsApi* | [**rollbackTemplateVersion**](docs/TemplateVersionsApi.md#rollbacktemplateversion) | **POST** /v1/campaigns/{campaign_id}/template-versions/rollback | Rollback template version
+*TemplateVersionsApi* | [**updateTemplateVersion**](docs/TemplateVersionsApi.md#updatetemplateversion) | **PUT** /v1/campaigns/{campaign_id}/template-versions/{version_id} | Update a template version
 *ValidationPoliciesApi* | [**addPolicyRule**](docs/ValidationPoliciesApi.md#addpolicyrule) | **POST** /v1/policies/{policy_id}/rules | Add rule to policy
 *ValidationPoliciesApi* | [**createPolicy**](docs/ValidationPoliciesApi.md#createpolicyoperation) | **POST** /v1/policies | Create policy
 *ValidationPoliciesApi* | [**createPolicyFromPreset**](docs/ValidationPoliciesApi.md#createpolicyfrompresetoperation) | **POST** /v1/policies/from-preset | Create policy from preset
@@ -246,10 +249,8 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 *WebhookCLIApi* | [**listWebhookDeliveries**](docs/WebhookCLIApi.md#listwebhookdeliveries) | **GET** /v1/webhook-cli/deliveries | List recent webhook deliveries
 *WebhookCLIApi* | [**replayWebhookDelivery**](docs/WebhookCLIApi.md#replaywebhookdelivery) | **POST** /v1/webhook-cli/deliveries/{delivery_id}/replay | Replay webhook delivery
 
-</details>
 
-<details>
-<summary>All Models</summary>
+### Models
 
 - [AddBlacklistMonitor201Response](docs/AddBlacklistMonitor201Response.md)
 - [AddBlacklistMonitorRequest](docs/AddBlacklistMonitorRequest.md)
@@ -516,32 +517,62 @@ All URIs are relative to `https://api.mailodds.com/v1`.
 - [ValidationResultSuppression](docs/ValidationResultSuppression.md)
 - [WebhookEvent](docs/WebhookEvent.md)
 
-</details>
+### Authorization
 
-## Other SDKs
 
-| Language | Package | Source |
-|----------|---------|--------|
-| [Python](https://mailodds.com/sdks) | [PyPI](https://pypi.org/project/mailodds/) | [GitHub](https://github.com/mailodds/python-sdk) |
-| [TypeScript](https://mailodds.com/sdks) | [npm](https://www.npmjs.com/package/@mailodds/sdk) | [GitHub](https://github.com/mailodds/typescript-sdk) |
-| [PHP](https://mailodds.com/sdks) | [Packagist](https://packagist.org/packages/mailodds/mailodds-php) | [GitHub](https://github.com/mailodds/php-sdk) |
-| [Java](https://mailodds.com/sdks) | [GitHub](https://github.com/mailodds/java-sdk) | [GitHub](https://github.com/mailodds/java-sdk) |
-| [Go](https://mailodds.com/sdks) | [pkg.go.dev](https://pkg.go.dev/github.com/mailodds/go-sdk) | [GitHub](https://github.com/mailodds/go-sdk) |
-| [C# / .NET](https://mailodds.com/sdks) | [GitHub](https://github.com/mailodds/csharp-sdk) | [GitHub](https://github.com/mailodds/csharp-sdk) |
-| [Ruby](https://mailodds.com/sdks) | [RubyGems](https://rubygems.org/gems/mailodds) | [GitHub](https://github.com/mailodds/ruby-sdk) |
-| [Kotlin](https://mailodds.com/sdks) | [GitHub](https://github.com/mailodds/kotlin-sdk) | [GitHub](https://github.com/mailodds/kotlin-sdk) |
-| [Rust](https://mailodds.com/sdks) | [crates.io](https://crates.io/crates/mailodds) | [GitHub](https://github.com/mailodds/rust-sdk) |
-| [Swift](https://mailodds.com/sdks) | [GitHub](https://github.com/mailodds/swift-sdk) | [GitHub](https://github.com/mailodds/swift-sdk) |
-| [Dart / Flutter](https://mailodds.com/sdks) | [pub.dev](https://pub.dev/packages/mailodds) | [GitHub](https://github.com/mailodds/dart-sdk) |
+Authentication schemes defined for the API:
+<a id="BearerAuth"></a>
+#### BearerAuth
 
-## Resources
 
-- [Documentation](https://mailodds.com/docs)
-- [Developer Quickstart](https://mailodds.com/developers)
-- [All SDKs](https://mailodds.com/sdks)
-- [Security](https://mailodds.com/security)
-- [Guide: Email Authentication](https://mailodds.com/guides/email-authentication)
+- **Type**: HTTP Bearer Token authentication
+
+## About
+
+This TypeScript SDK client supports the [Fetch API](https://fetch.spec.whatwg.org/)
+and is automatically generated by the
+[OpenAPI Generator](https://openapi-generator.tech) project:
+
+- API version: `1.0.0`
+- Package version: `1.0.0`
+- Generator version: `7.19.0`
+- Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`
+
+The generated npm module supports the following:
+
+- Environments
+  * Node.js
+  * Webpack
+  * Browserify
+- Language levels
+  * ES5 - you must have a Promises/A+ library installed
+  * ES6
+- Module systems
+  * CommonJS
+  * ES6 module system
+
+For more information, please visit [https://mailodds.com/contact](https://mailodds.com/contact)
+
+## Development
+
+### Building
+
+To build the TypeScript source code, you need to have Node.js and npm installed.
+After cloning the repository, navigate to the project directory and run:
+
+```bash
+npm install
+npm run build
+```
+
+### Publishing
+
+Once you've built the package, you can publish it to npm:
+
+```bash
+npm publish
+```
 
 ## License
 
-MIT
+[Proprietary](https://mailodds.com/terms)
