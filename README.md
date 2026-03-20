@@ -1,47 +1,96 @@
-# @mailodds/sdk@1.0.0
+# MailOdds TypeScript SDK
 
-A TypeScript SDK client for the api.mailodds.com API.
+The official TypeScript client for email validation, transactional sending, and deliverability monitoring through the MailOdds API. Works in Node.js, Webpack, and Browserify environments.
 
-## Usage
+[![npm](https://img.shields.io/npm/v/@mailodds/sdk)](https://www.npmjs.com/package/@mailodds/sdk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![API Docs](https://img.shields.io/badge/docs-api--reference-blue)](https://mailodds.com/api-reference)
 
-First, install the SDK from npm.
+## Installation
 
 ```bash
-npm install @mailodds/sdk --save
+npm install @mailodds/sdk
 ```
 
-Next, try it out.
+## Quick Start
 
+```typescript
+import { Configuration, EmailValidationApi, ValidateRequest } from '@mailodds/sdk';
 
-```ts
-import {
-  Configuration,
-  AgentControlPlaneApi,
-} from '@mailodds/sdk';
-import type { GetMcpCapabilitiesRequest } from '@mailodds/sdk';
+const config = new Configuration({
+  basePath: 'https://api.mailodds.com/v1',
+  accessToken: process.env.MAILODDS_API_KEY,
+});
 
-async function example() {
-  console.log("🚀 Testing @mailodds/sdk SDK...");
-  const api = new AgentControlPlaneApi();
+const api = new EmailValidationApi(config);
 
-  try {
-    const data = await api.getMcpCapabilities();
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
+async function main() {
+  const request: ValidateRequest = { email: 'user@example.com' };
+  const result = await api.validateEmail(request);
+  console.log(`Status: ${result.result.status}, Action: ${result.result.action}`);
 }
 
-// Run the test
-example().catch(console.error);
+main();
 ```
 
+## Error Handling
 
-## Documentation
+```typescript
+try {
+  const result = await api.validateEmail(request);
+} catch (error) {
+  if (error instanceof Response) {
+    console.error(`API error ${error.status}: ${await error.text()}`);
+  }
+  throw error;
+}
+```
 
-### API Endpoints
+All API methods throw on non-2xx responses. The thrown object includes the HTTP status, response body, and headers.
 
-All URIs are relative to *https://api.mailodds.com/v1*
+## MailOdds Platform
+
+<details>
+<summary>This SDK is part of the MailOdds email deliverability platform. Explore all capabilities.</summary>
+
+- [Email Validation API](https://mailodds.com/email-validation-api) - Single and batch email verification with 25+ real-time checks
+- [Bulk Email Validation](https://mailodds.com/bulk-email-validation) - Process lists of up to 500,000 emails per job
+- [Email Sending API](https://mailodds.com/email-sending-api) - Transactional email delivery with DKIM dual signing
+- [Email Deliverability Platform](https://mailodds.com/email-deliverability-platform) - Full-stack deliverability monitoring and optimization
+- [DMARC Monitoring](https://mailodds.com/dmarc-monitoring) - Aggregate report analysis with policy recommendations
+- [Sender Reputation](https://mailodds.com/sender-reputation) - Real-time sender health scoring and trend analysis
+- [SMTP Server Test](https://mailodds.com/smtp-server-test) - DNS, MX, and SMTP connectivity diagnostics
+- [API Reference](https://mailodds.com/api-reference) - Full endpoint documentation with request and response examples
+- [Guide: Email Authentication](https://mailodds.com/guides/email-authentication) - SPF, DKIM, and DMARC setup guide
+- [Security](https://mailodds.com/security) - Infrastructure security and data protection practices
+
+</details>
+
+## Features
+
+- **Fetch API based** - Built on the standard Fetch API for broad runtime compatibility across Node.js, browsers, and edge runtimes
+- **Full TypeScript types** - Every request and response is fully typed with generated interfaces for compile-time safety
+- **ES5 and ES6 support** - Works with both CommonJS and ES module systems
+- **Async/await** - All API methods return Promises for clean async control flow
+- **Full platform coverage** - Access all MailOdds capabilities including validation, sending, campaigns, DMARC monitoring, blacklist checks, and suppression management
+- **Structured error handling** - API errors include HTTP status codes, response bodies, and request IDs for debugging
+
+## Why MailOdds
+
+MailOdds is a complete email deliverability platform built for developers. Every email validated or sent through MailOdds passes through 25+ real-time checks including syntax verification, DNS and MX validation, SMTP mailbox probing, disposable domain detection, and role account identification.
+
+The platform maintains sub-200ms median response times for single validations, 99.9% API uptime, and processes bulk lists of up to 500,000 emails per job. MailOdds supports 11 language SDKs, an MCP server for AI agent integration, a CLI for local development, and a WordPress plugin for no-code deployments.
+
+All email sending uses DKIM dual signing with automated key rotation, and the deliverability monitoring stack covers DMARC aggregate reports, blacklist surveillance across 80+ DNSBLs, and real-time sender health scoring.
+
+## API Reference
+
+Full documentation is available at the [MailOdds API Reference](https://mailodds.com/api-reference).
+
+All URIs are relative to `https://api.mailodds.com/v1`.
+
+<details>
+<summary>All Endpoints</summary>
 
 | Class | Method | HTTP request | Description
 | ----- | ------ | ------------ | -------------
@@ -197,8 +246,10 @@ All URIs are relative to *https://api.mailodds.com/v1*
 *WebhookCLIApi* | [**listWebhookDeliveries**](docs/WebhookCLIApi.md#listwebhookdeliveries) | **GET** /v1/webhook-cli/deliveries | List recent webhook deliveries
 *WebhookCLIApi* | [**replayWebhookDelivery**](docs/WebhookCLIApi.md#replaywebhookdelivery) | **POST** /v1/webhook-cli/deliveries/{delivery_id}/replay | Replay webhook delivery
 
+</details>
 
-### Models
+<details>
+<summary>All Models</summary>
 
 - [AddBlacklistMonitor201Response](docs/AddBlacklistMonitor201Response.md)
 - [AddBlacklistMonitorRequest](docs/AddBlacklistMonitorRequest.md)
@@ -287,6 +338,7 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [GetBounceRecords200Response](docs/GetBounceRecords200Response.md)
 - [GetBounceRecords200ResponseRecordsInner](docs/GetBounceRecords200ResponseRecordsInner.md)
 - [GetBounceStats200Response](docs/GetBounceStats200Response.md)
+- [GetBounceStats200ResponseStats](docs/GetBounceStats200ResponseStats.md)
 - [GetBounceStatsSummary200Response](docs/GetBounceStatsSummary200Response.md)
 - [GetCampaignABResults200Response](docs/GetCampaignABResults200Response.md)
 - [GetCampaignABResults200ResponseVariantsInner](docs/GetCampaignABResults200ResponseVariantsInner.md)
@@ -464,62 +516,32 @@ All URIs are relative to *https://api.mailodds.com/v1*
 - [ValidationResultSuppression](docs/ValidationResultSuppression.md)
 - [WebhookEvent](docs/WebhookEvent.md)
 
-### Authorization
+</details>
 
+## Other SDKs
 
-Authentication schemes defined for the API:
-<a id="BearerAuth"></a>
-#### BearerAuth
+| Language | Package | Source |
+|----------|---------|--------|
+| [Python](https://mailodds.com/sdks) | [PyPI](https://pypi.org/project/mailodds/) | [GitHub](https://github.com/mailodds/python-sdk) |
+| [TypeScript](https://mailodds.com/sdks) | [npm](https://www.npmjs.com/package/@mailodds/sdk) | [GitHub](https://github.com/mailodds/typescript-sdk) |
+| [PHP](https://mailodds.com/sdks) | [Packagist](https://packagist.org/packages/mailodds/mailodds-php) | [GitHub](https://github.com/mailodds/php-sdk) |
+| [Java](https://mailodds.com/sdks) | [GitHub](https://github.com/mailodds/java-sdk) | [GitHub](https://github.com/mailodds/java-sdk) |
+| [Go](https://mailodds.com/sdks) | [pkg.go.dev](https://pkg.go.dev/github.com/mailodds/go-sdk) | [GitHub](https://github.com/mailodds/go-sdk) |
+| [C# / .NET](https://mailodds.com/sdks) | [GitHub](https://github.com/mailodds/csharp-sdk) | [GitHub](https://github.com/mailodds/csharp-sdk) |
+| [Ruby](https://mailodds.com/sdks) | [RubyGems](https://rubygems.org/gems/mailodds) | [GitHub](https://github.com/mailodds/ruby-sdk) |
+| [Kotlin](https://mailodds.com/sdks) | [GitHub](https://github.com/mailodds/kotlin-sdk) | [GitHub](https://github.com/mailodds/kotlin-sdk) |
+| [Rust](https://mailodds.com/sdks) | [crates.io](https://crates.io/crates/mailodds) | [GitHub](https://github.com/mailodds/rust-sdk) |
+| [Swift](https://mailodds.com/sdks) | [GitHub](https://github.com/mailodds/swift-sdk) | [GitHub](https://github.com/mailodds/swift-sdk) |
+| [Dart / Flutter](https://mailodds.com/sdks) | [pub.dev](https://pub.dev/packages/mailodds) | [GitHub](https://github.com/mailodds/dart-sdk) |
 
+## Resources
 
-- **Type**: HTTP Bearer Token authentication
-
-## About
-
-This TypeScript SDK client supports the [Fetch API](https://fetch.spec.whatwg.org/)
-and is automatically generated by the
-[OpenAPI Generator](https://openapi-generator.tech) project:
-
-- API version: `1.0.0`
-- Package version: `1.0.0`
-- Generator version: `7.19.0`
-- Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`
-
-The generated npm module supports the following:
-
-- Environments
-  * Node.js
-  * Webpack
-  * Browserify
-- Language levels
-  * ES5 - you must have a Promises/A+ library installed
-  * ES6
-- Module systems
-  * CommonJS
-  * ES6 module system
-
-For more information, please visit [https://mailodds.com/contact](https://mailodds.com/contact)
-
-## Development
-
-### Building
-
-To build the TypeScript source code, you need to have Node.js and npm installed.
-After cloning the repository, navigate to the project directory and run:
-
-```bash
-npm install
-npm run build
-```
-
-### Publishing
-
-Once you've built the package, you can publish it to npm:
-
-```bash
-npm publish
-```
+- [Documentation](https://mailodds.com/docs)
+- [Developer Quickstart](https://mailodds.com/developers)
+- [All SDKs](https://mailodds.com/sdks)
+- [Security](https://mailodds.com/security)
+- [Guide: Email Authentication](https://mailodds.com/guides/email-authentication)
 
 ## License
 
-[Proprietary](https://mailodds.com/terms)
+MIT
