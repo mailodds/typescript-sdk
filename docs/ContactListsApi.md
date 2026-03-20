@@ -44,7 +44,7 @@ async function example() {
   const api = new ContactListsApi(config);
 
   const body = {
-    // string | Contact list ID
+    // string
     listId: listId_example,
     // AddContactRequest
     addContactRequest: ...,
@@ -67,7 +67,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
+| **listId** | `string` |  | [Defaults to `undefined`] |
 | **addContactRequest** | [AddContactRequest](AddContactRequest.md) |  | |
 
 ### Return type
@@ -88,9 +88,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Contact added |  -  |
+| **404** | Resource not found |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -121,7 +121,7 @@ async function example() {
   const api = new ContactListsApi(config);
 
   const body = {
-    // string | Contact list UUID
+    // string
     listId: listId_example,
     // AppendToContactListRequest
     appendToContactListRequest: ...,
@@ -144,7 +144,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **listId** | `string` | Contact list UUID | [Defaults to `undefined`] |
+| **listId** | `string` |  | [Defaults to `undefined`] |
 | **appendToContactListRequest** | [AppendToContactListRequest](AppendToContactListRequest.md) |  | |
 
 ### Return type
@@ -165,9 +165,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Append result |  -  |
+| **404** | Resource not found |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -239,9 +239,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Contact list created |  -  |
+| **403** | Forbidden - Insufficient permissions or no credits |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **403** | Forbidden - Insufficient permissions or no credits |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -272,9 +272,9 @@ async function example() {
   const api = new ContactListsApi(config);
 
   const body = {
-    // string | Contact list ID
+    // string
     listId: listId_example,
-    // string | Contact ID
+    // string
     contactId: contactId_example,
   } satisfies DeleteContactRequest;
 
@@ -295,8 +295,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
-| **contactId** | `string` | Contact ID | [Defaults to `undefined`] |
+| **listId** | `string` |  | [Defaults to `undefined`] |
+| **contactId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -316,8 +316,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Contact deleted |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -348,7 +348,7 @@ async function example() {
   const api = new ContactListsApi(config);
 
   const body = {
-    // string | Contact list UUID
+    // string
     listId: listId_example,
   } satisfies DeleteContactListRequest;
 
@@ -369,7 +369,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **listId** | `string` | Contact list UUID | [Defaults to `undefined`] |
+| **listId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -389,8 +389,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Contact list deleted |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -421,7 +421,7 @@ async function example() {
   const api = new ContactListsApi(config);
 
   const body = {
-    // string | Contact list ID
+    // string
     listId: listId_example,
   } satisfies ExportContactListRequest;
 
@@ -442,7 +442,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
+| **listId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -462,8 +462,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | CSV export |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -535,8 +535,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Inactive contacts report |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -567,7 +567,7 @@ async function example() {
   const api = new ContactListsApi(config);
 
   const body = {
-    // string | Contact list ID
+    // string
     listId: listId_example,
     // Blob | CSV file (max 10MB)
     file: BINARY_DATA_HERE,
@@ -596,7 +596,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
+| **listId** | `string` |  | [Defaults to `undefined`] |
 | **file** | `Blob` | CSV file (max 10MB) | [Defaults to `undefined`] |
 | **columnMapping** | `string` | JSON mapping of CSV columns to contact fields | [Optional] [Defaults to `undefined`] |
 | **consentSource** | `string` | Source of consent for imported contacts | [Optional] [Defaults to `undefined`] |
@@ -620,9 +620,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Import results |  -  |
+| **404** | Resource not found |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -697,8 +697,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | List of contact lists |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -729,7 +729,7 @@ async function example() {
   const api = new ContactListsApi(config);
 
   const body = {
-    // string | Contact list UUID
+    // string
     listId: listId_example,
     // QueryContactListRequest
     queryContactListRequest: ...,
@@ -752,7 +752,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **listId** | `string` | Contact list UUID | [Defaults to `undefined`] |
+| **listId** | `string` |  | [Defaults to `undefined`] |
 | **queryContactListRequest** | [QueryContactListRequest](QueryContactListRequest.md) |  | |
 
 ### Return type
@@ -773,9 +773,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Query results |  -  |
+| **404** | Resource not found |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -806,9 +806,9 @@ async function example() {
   const api = new ContactListsApi(config);
 
   const body = {
-    // string | Contact list ID
+    // string
     listId: listId_example,
-    // string | Contact ID
+    // string
     contactId: contactId_example,
     // UpdateContactRequest
     updateContactRequest: ...,
@@ -831,8 +831,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **listId** | `string` | Contact list ID | [Defaults to `undefined`] |
-| **contactId** | `string` | Contact ID | [Defaults to `undefined`] |
+| **listId** | `string` |  | [Defaults to `undefined`] |
+| **contactId** | `string` |  | [Defaults to `undefined`] |
 | **updateContactRequest** | [UpdateContactRequest](UpdateContactRequest.md) |  | |
 
 ### Return type
@@ -853,9 +853,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Contact updated |  -  |
+| **404** | Resource not found |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

@@ -7,18 +7,32 @@
 Name | Type
 ------------ | -------------
 `id` | string
+`accountId` | number
 `name` | string
 `status` | string
-`listId` | string
 `domainId` | string
-`fromEmail` | string
-`fromName` | string
+`subject` | string
+`fromAddress` | string
 `replyTo` | string
+`htmlBody` | string
+`textBody` | string
+`htmlBodyDark` | string
+`textBodyDark` | string
+`campaignType` | string
+`autoDetectSchema` | boolean
+`promoAnnotations` | object
+`throwawayPolicy` | string
 `scheduledAt` | Date
-`sentAt` | Date
-`cancelledAt` | Date
-`variantCount` | number
+`startedAt` | Date
+`completedAt` | Date
+`recipientCount` | number
+`isAbTest` | boolean
+`winningVariantId` | string
+`abTestConfig` | object
+`errorMessage` | string
 `stats` | [CampaignStats](CampaignStats.md)
+`openRate` | number
+`clickRate` | number
 `createdAt` | Date
 `updatedAt` | Date
 
@@ -30,18 +44,32 @@ import type { Campaign } from '@mailodds/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "id": null,
+  "accountId": null,
   "name": null,
   "status": null,
-  "listId": null,
   "domainId": null,
-  "fromEmail": null,
-  "fromName": null,
+  "subject": null,
+  "fromAddress": null,
   "replyTo": null,
+  "htmlBody": null,
+  "textBody": null,
+  "htmlBodyDark": null,
+  "textBodyDark": null,
+  "campaignType": null,
+  "autoDetectSchema": null,
+  "promoAnnotations": null,
+  "throwawayPolicy": null,
   "scheduledAt": null,
-  "sentAt": null,
-  "cancelledAt": null,
-  "variantCount": null,
+  "startedAt": null,
+  "completedAt": null,
+  "recipientCount": null,
+  "isAbTest": null,
+  "winningVariantId": null,
+  "abTestConfig": null,
+  "errorMessage": null,
   "stats": null,
+  "openRate": null,
+  "clickRate": null,
   "createdAt": null,
   "updatedAt": null,
 } satisfies Campaign

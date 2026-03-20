@@ -79,9 +79,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Batch OOO check results |  -  |
+| **403** | Forbidden - Insufficient permissions or no credits |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **403** | Forbidden - Insufficient permissions or no credits |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -112,7 +112,7 @@ async function example() {
   const api = new OutOfOfficeApi(config);
 
   const body = {
-    // string | Email address
+    // string
     email: email_example,
   } satisfies DeleteOooContactRequest;
 
@@ -133,7 +133,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **email** | `string` | Email address | [Defaults to `undefined`] |
+| **email** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -153,9 +153,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OOO status cleared |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -186,7 +186,7 @@ async function example() {
   const api = new OutOfOfficeApi(config);
 
   const body = {
-    // string | Email address to check
+    // string
     email: email_example,
   } satisfies GetOooStatusRequest;
 
@@ -207,7 +207,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **email** | `string` | Email address to check | [Defaults to `undefined`] |
+| **email** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -227,8 +227,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OOO status |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -306,8 +306,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Paginated list of OOO contacts |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -338,7 +338,7 @@ async function example() {
   const api = new OutOfOfficeApi(config);
 
   const body = {
-    // string | Email address
+    // string
     email: email_example,
     // UpdateOooContactRequest
     updateOooContactRequest: ...,
@@ -361,7 +361,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **email** | `string` | Email address | [Defaults to `undefined`] |
+| **email** | `string` |  | [Defaults to `undefined`] |
 | **updateOooContactRequest** | [UpdateOooContactRequest](UpdateOooContactRequest.md) |  | |
 
 ### Return type
@@ -382,8 +382,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OOO contact updated |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
+| **400** | Bad request |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

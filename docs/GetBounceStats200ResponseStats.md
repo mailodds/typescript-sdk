@@ -1,26 +1,27 @@
 
-# GetBounceStats200Response
+# GetBounceStats200ResponseStats
 
+Bounce statistics with time-series data
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`schemaVersion` | string
-`requestId` | string
-`stats` | [GetBounceStats200ResponseStats](GetBounceStats200ResponseStats.md)
+`period` | string
+`groupBy` | string
+`data` | Array&lt;object&gt;
 
 ## Example
 
 ```typescript
-import type { GetBounceStats200Response } from '@mailodds/sdk'
+import type { GetBounceStats200ResponseStats } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "schemaVersion": null,
-  "requestId": null,
-  "stats": null,
-} satisfies GetBounceStats200Response
+  "period": null,
+  "groupBy": null,
+  "data": null,
+} satisfies GetBounceStats200ResponseStats
 
 console.log(example)
 
@@ -29,7 +30,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as GetBounceStats200Response
+const exampleParsed = JSON.parse(exampleJSON) as GetBounceStats200ResponseStats
 console.log(exampleParsed)
 ```
 

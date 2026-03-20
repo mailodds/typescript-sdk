@@ -114,7 +114,7 @@ async function example() {
   const api = new StoreConnectionsApi(config);
 
   const body = {
-    // string | Store connection UUID
+    // string
     storeId: storeId_example,
   } satisfies DisconnectStoreRequest;
 
@@ -135,7 +135,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **storeId** | `string` | Store connection UUID | [Defaults to `undefined`] |
+| **storeId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -155,8 +155,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Store disconnected |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -187,7 +187,7 @@ async function example() {
   const api = new StoreConnectionsApi(config);
 
   const body = {
-    // string | Store connection UUID
+    // string
     storeId: storeId_example,
   } satisfies GetStoreRequest;
 
@@ -208,7 +208,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **storeId** | `string` | Store connection UUID | [Defaults to `undefined`] |
+| **storeId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -228,8 +228,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Store connection details |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -260,9 +260,9 @@ async function example() {
   const api = new StoreConnectionsApi(config);
 
   const body = {
-    // string | Store ID
+    // string
     storeId: storeId_example,
-    // string | Sync job ID
+    // string
     jobId: jobId_example,
     // number (optional)
     page: 56,
@@ -287,8 +287,8 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **storeId** | `string` | Store ID | [Defaults to `undefined`] |
-| **jobId** | `string` | Sync job ID | [Defaults to `undefined`] |
+| **storeId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
 | **page** | `number` |  | [Optional] [Defaults to `1`] |
 | **perPage** | `number` |  | [Optional] [Defaults to `50`] |
 
@@ -310,8 +310,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Sync job errors |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -414,7 +414,7 @@ async function example() {
   const api = new StoreConnectionsApi(config);
 
   const body = {
-    // string | Store ID
+    // string
     storeId: storeId_example,
     // number (optional)
     page: 56,
@@ -439,7 +439,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **storeId** | `string` | Store ID | [Defaults to `undefined`] |
+| **storeId** | `string` |  | [Defaults to `undefined`] |
 | **page** | `number` |  | [Optional] [Defaults to `1`] |
 | **perPage** | `number` |  | [Optional] [Defaults to `20`] |
 
@@ -461,8 +461,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | List of sync jobs |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -493,7 +493,7 @@ async function example() {
   const api = new StoreConnectionsApi(config);
 
   const body = {
-    // string | Store connection UUID
+    // string
     storeId: storeId_example,
     // string | Idempotency key to prevent duplicate syncs (5 min TTL) (optional)
     idempotencyKey: idempotencyKey_example,
@@ -516,7 +516,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **storeId** | `string` | Store connection UUID | [Defaults to `undefined`] |
+| **storeId** | `string` |  | [Defaults to `undefined`] |
 | **idempotencyKey** | `string` | Idempotency key to prevent duplicate syncs (5 min TTL) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
@@ -538,8 +538,8 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Sync scheduled |  -  |
 | **400** | Bad request |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -570,7 +570,7 @@ async function example() {
   const api = new StoreConnectionsApi(config);
 
   const body = {
-    // string | Store connection UUID
+    // string
     storeId: storeId_example,
     // UpdateStoreRequest
     updateStoreRequest: ...,
@@ -593,7 +593,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **storeId** | `string` | Store connection UUID | [Defaults to `undefined`] |
+| **storeId** | `string` |  | [Defaults to `undefined`] |
 | **updateStoreRequest** | [UpdateStoreRequest](UpdateStoreRequest.md) |  | |
 
 ### Return type
@@ -614,9 +614,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Store connection updated |  -  |
+| **404** | Resource not found |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

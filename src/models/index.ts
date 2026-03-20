@@ -87,6 +87,7 @@ export * from './GetBlacklistHistory200ResponseChecksInner';
 export * from './GetBounceRecords200Response';
 export * from './GetBounceRecords200ResponseRecordsInner';
 export * from './GetBounceStats200Response';
+export * from './GetBounceStats200ResponseStats';
 export * from './GetBounceStatsSummary200Response';
 export * from './GetCampaignABResults200Response';
 export * from './GetCampaignABResults200ResponseVariantsInner';

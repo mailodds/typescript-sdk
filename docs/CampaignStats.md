@@ -1,7 +1,7 @@
 
 # CampaignStats
 
-Delivery and engagement statistics. Present when the campaign has started sending.
+Delivery and engagement statistics.
 
 ## Properties
 
@@ -13,10 +13,9 @@ Name | Type
 `clicked` | number
 `bounced` | number
 `unsubscribed` | number
-`complained` | number
-`deliveryRate` | number
-`openRate` | number
-`clickRate` | number
+`suppressed` | number
+`failed` | number
+`conversions` | number
 
 ## Example
 
@@ -31,10 +30,9 @@ const example = {
   "clicked": null,
   "bounced": null,
   "unsubscribed": null,
-  "complained": null,
-  "deliveryRate": null,
-  "openRate": null,
-  "clickRate": null,
+  "suppressed": null,
+  "failed": null,
+  "conversions": null,
 } satisfies CampaignStats
 
 console.log(example)

@@ -13,101 +13,69 @@
  */
 
 import { mapValues } from '../runtime';
-import type { IdentityScoreCheck } from './IdentityScoreCheck';
-import {
-    IdentityScoreCheckFromJSON,
-    IdentityScoreCheckFromJSONTyped,
-    IdentityScoreCheckToJSON,
-    IdentityScoreCheckToJSONTyped,
-} from './IdentityScoreCheck';
-
 /**
- * Per-check scoring breakdown
+ * Bounce statistics with time-series data
  * @export
- * @interface SendingDomainIdentityScoreBreakdown
+ * @interface GetBounceStats200ResponseStats
  */
-export interface SendingDomainIdentityScoreBreakdown {
+export interface GetBounceStats200ResponseStats {
     /**
      * 
-     * @type {IdentityScoreCheck}
-     * @memberof SendingDomainIdentityScoreBreakdown
+     * @type {string}
+     * @memberof GetBounceStats200ResponseStats
      */
-    spf?: IdentityScoreCheck;
+    period?: string;
     /**
      * 
-     * @type {IdentityScoreCheck}
-     * @memberof SendingDomainIdentityScoreBreakdown
+     * @type {string}
+     * @memberof GetBounceStats200ResponseStats
      */
-    dkim?: IdentityScoreCheck;
+    groupBy?: string;
     /**
      * 
-     * @type {IdentityScoreCheck}
-     * @memberof SendingDomainIdentityScoreBreakdown
+     * @type {Array<object>}
+     * @memberof GetBounceStats200ResponseStats
      */
-    dmarc?: IdentityScoreCheck;
-    /**
-     * 
-     * @type {IdentityScoreCheck}
-     * @memberof SendingDomainIdentityScoreBreakdown
-     */
-    bounce?: IdentityScoreCheck;
-    /**
-     * 
-     * @type {IdentityScoreCheck}
-     * @memberof SendingDomainIdentityScoreBreakdown
-     */
-    tracking?: IdentityScoreCheck;
-    /**
-     * 
-     * @type {IdentityScoreCheck}
-     * @memberof SendingDomainIdentityScoreBreakdown
-     */
-    bimi?: IdentityScoreCheck;
+    data?: Array<object>;
 }
 
 /**
- * Check if a given object implements the SendingDomainIdentityScoreBreakdown interface.
+ * Check if a given object implements the GetBounceStats200ResponseStats interface.
  */
-export function instanceOfSendingDomainIdentityScoreBreakdown(value: object): value is SendingDomainIdentityScoreBreakdown {
+export function instanceOfGetBounceStats200ResponseStats(value: object): value is GetBounceStats200ResponseStats {
     return true;
 }
 
-export function SendingDomainIdentityScoreBreakdownFromJSON(json: any): SendingDomainIdentityScoreBreakdown {
-    return SendingDomainIdentityScoreBreakdownFromJSONTyped(json, false);
+export function GetBounceStats200ResponseStatsFromJSON(json: any): GetBounceStats200ResponseStats {
+    return GetBounceStats200ResponseStatsFromJSONTyped(json, false);
 }
 
-export function SendingDomainIdentityScoreBreakdownFromJSONTyped(json: any, ignoreDiscriminator: boolean): SendingDomainIdentityScoreBreakdown {
+export function GetBounceStats200ResponseStatsFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetBounceStats200ResponseStats {
     if (json == null) {
         return json;
     }
     return {
         
-        'spf': json['spf'] == null ? undefined : IdentityScoreCheckFromJSON(json['spf']),
-        'dkim': json['dkim'] == null ? undefined : IdentityScoreCheckFromJSON(json['dkim']),
-        'dmarc': json['dmarc'] == null ? undefined : IdentityScoreCheckFromJSON(json['dmarc']),
-        'bounce': json['bounce'] == null ? undefined : IdentityScoreCheckFromJSON(json['bounce']),
-        'tracking': json['tracking'] == null ? undefined : IdentityScoreCheckFromJSON(json['tracking']),
-        'bimi': json['bimi'] == null ? undefined : IdentityScoreCheckFromJSON(json['bimi']),
+        'period': json['period'] == null ? undefined : json['period'],
+        'groupBy': json['group_by'] == null ? undefined : json['group_by'],
+        'data': json['data'] == null ? undefined : json['data'],
     };
 }
 
-export function SendingDomainIdentityScoreBreakdownToJSON(json: any): SendingDomainIdentityScoreBreakdown {
-    return SendingDomainIdentityScoreBreakdownToJSONTyped(json, false);
+export function GetBounceStats200ResponseStatsToJSON(json: any): GetBounceStats200ResponseStats {
+    return GetBounceStats200ResponseStatsToJSONTyped(json, false);
 }
 
-export function SendingDomainIdentityScoreBreakdownToJSONTyped(value?: SendingDomainIdentityScoreBreakdown | null, ignoreDiscriminator: boolean = false): any {
+export function GetBounceStats200ResponseStatsToJSONTyped(value?: GetBounceStats200ResponseStats | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'spf': IdentityScoreCheckToJSON(value['spf']),
-        'dkim': IdentityScoreCheckToJSON(value['dkim']),
-        'dmarc': IdentityScoreCheckToJSON(value['dmarc']),
-        'bounce': IdentityScoreCheckToJSON(value['bounce']),
-        'tracking': IdentityScoreCheckToJSON(value['tracking']),
-        'bimi': IdentityScoreCheckToJSON(value['bimi']),
+        'period': value['period'],
+        'group_by': value['groupBy'],
+        'data': value['data'],
     };
 }
 

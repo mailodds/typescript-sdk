@@ -281,7 +281,7 @@ try {
   try {
     const existing = await alertApi.listAlertRules();
     for (const r of existing.rules || []) {
-      if (r.metric && r.metric === "hard_bounce_rate" && r.channel === `https://smoke-${ts}.example.com/hook`) {
+      if (r.metric && r.metric === "hard_bounce_rate" && r.channel === "webhook") {
         try { await alertApi.deleteAlertRule({ ruleId: r.id }); } catch (_) {}
       }
     }
@@ -291,7 +291,7 @@ try {
     createAlertRuleRequest: {
       metric: "hard_bounce_rate",
       threshold: 0.05,
-      channel: `https://smoke-${ts}.example.com/hook`,
+      channel: "webhook",
       windowMinutes: 60,
       enabled: true,
     },

@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { GetBounceStats200ResponseStats } from './GetBounceStats200ResponseStats';
+import {
+    GetBounceStats200ResponseStatsFromJSON,
+    GetBounceStats200ResponseStatsFromJSONTyped,
+    GetBounceStats200ResponseStatsToJSON,
+    GetBounceStats200ResponseStatsToJSONTyped,
+} from './GetBounceStats200ResponseStats';
+
 /**
  * 
  * @export
@@ -33,10 +41,10 @@ export interface GetBounceStats200Response {
     requestId?: string;
     /**
      * 
-     * @type {Array<object>}
+     * @type {GetBounceStats200ResponseStats}
      * @memberof GetBounceStats200Response
      */
-    stats?: Array<object>;
+    stats?: GetBounceStats200ResponseStats;
 }
 
 /**
@@ -58,7 +66,7 @@ export function GetBounceStats200ResponseFromJSONTyped(json: any, ignoreDiscrimi
         
         'schemaVersion': json['schema_version'] == null ? undefined : json['schema_version'],
         'requestId': json['request_id'] == null ? undefined : json['request_id'],
-        'stats': json['stats'] == null ? undefined : json['stats'],
+        'stats': json['stats'] == null ? undefined : GetBounceStats200ResponseStatsFromJSON(json['stats']),
     };
 }
 
@@ -75,7 +83,7 @@ export function GetBounceStats200ResponseToJSONTyped(value?: GetBounceStats200Re
         
         'schema_version': value['schemaVersion'],
         'request_id': value['requestId'],
-        'stats': value['stats'],
+        'stats': GetBounceStats200ResponseStatsToJSON(value['stats']),
     };
 }
 

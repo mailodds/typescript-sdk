@@ -34,6 +34,12 @@ export interface Campaign {
      */
     id: string;
     /**
+     * 
+     * @type {number}
+     * @memberof Campaign
+     */
+    accountId?: number;
+    /**
      * Campaign name
      * @type {string}
      * @memberof Campaign
@@ -46,12 +52,6 @@ export interface Campaign {
      */
     status: CampaignStatusEnum;
     /**
-     * Target subscriber list UUID
-     * @type {string}
-     * @memberof Campaign
-     */
-    listId: string;
-    /**
      * Sending domain UUID
      * @type {string}
      * @memberof Campaign
@@ -62,19 +62,67 @@ export interface Campaign {
      * @type {string}
      * @memberof Campaign
      */
-    fromEmail: string;
+    subject?: string;
     /**
-     * 
+     * Sender email address
      * @type {string}
      * @memberof Campaign
      */
-    fromName?: string;
+    fromAddress: string;
     /**
      * 
      * @type {string}
      * @memberof Campaign
      */
     replyTo?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Campaign
+     */
+    htmlBody?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Campaign
+     */
+    textBody?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Campaign
+     */
+    htmlBodyDark?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Campaign
+     */
+    textBodyDark?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Campaign
+     */
+    campaignType?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Campaign
+     */
+    autoDetectSchema?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof Campaign
+     */
+    promoAnnotations?: object | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Campaign
+     */
+    throwawayPolicy?: string;
     /**
      * 
      * @type {Date}
@@ -86,25 +134,61 @@ export interface Campaign {
      * @type {Date}
      * @memberof Campaign
      */
-    sentAt?: Date | null;
+    startedAt?: Date | null;
     /**
      * 
      * @type {Date}
      * @memberof Campaign
      */
-    cancelledAt?: Date | null;
+    completedAt?: Date | null;
     /**
-     * Number of A/B variants
+     * 
      * @type {number}
      * @memberof Campaign
      */
-    variantCount?: number;
+    recipientCount?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Campaign
+     */
+    isAbTest?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Campaign
+     */
+    winningVariantId?: string | null;
+    /**
+     * 
+     * @type {object}
+     * @memberof Campaign
+     */
+    abTestConfig?: object | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Campaign
+     */
+    errorMessage?: string | null;
     /**
      * 
      * @type {CampaignStats}
      * @memberof Campaign
      */
     stats?: CampaignStats;
+    /**
+     * 
+     * @type {number}
+     * @memberof Campaign
+     */
+    openRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Campaign
+     */
+    clickRate?: number;
     /**
      * 
      * @type {Date}
@@ -140,9 +224,8 @@ export function instanceOfCampaign(value: object): value is Campaign {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
-    if (!('listId' in value) || value['listId'] === undefined) return false;
     if (!('domainId' in value) || value['domainId'] === undefined) return false;
-    if (!('fromEmail' in value) || value['fromEmail'] === undefined) return false;
+    if (!('fromAddress' in value) || value['fromAddress'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     return true;
 }
@@ -158,18 +241,32 @@ export function CampaignFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'id': json['id'],
+        'accountId': json['account_id'] == null ? undefined : json['account_id'],
         'name': json['name'],
         'status': json['status'],
-        'listId': json['list_id'],
         'domainId': json['domain_id'],
-        'fromEmail': json['from_email'],
-        'fromName': json['from_name'] == null ? undefined : json['from_name'],
+        'subject': json['subject'] == null ? undefined : json['subject'],
+        'fromAddress': json['from_address'],
         'replyTo': json['reply_to'] == null ? undefined : json['reply_to'],
+        'htmlBody': json['html_body'] == null ? undefined : json['html_body'],
+        'textBody': json['text_body'] == null ? undefined : json['text_body'],
+        'htmlBodyDark': json['html_body_dark'] == null ? undefined : json['html_body_dark'],
+        'textBodyDark': json['text_body_dark'] == null ? undefined : json['text_body_dark'],
+        'campaignType': json['campaign_type'] == null ? undefined : json['campaign_type'],
+        'autoDetectSchema': json['auto_detect_schema'] == null ? undefined : json['auto_detect_schema'],
+        'promoAnnotations': json['promo_annotations'] == null ? undefined : json['promo_annotations'],
+        'throwawayPolicy': json['throwaway_policy'] == null ? undefined : json['throwaway_policy'],
         'scheduledAt': json['scheduled_at'] == null ? undefined : (new Date(json['scheduled_at'])),
-        'sentAt': json['sent_at'] == null ? undefined : (new Date(json['sent_at'])),
-        'cancelledAt': json['cancelled_at'] == null ? undefined : (new Date(json['cancelled_at'])),
-        'variantCount': json['variant_count'] == null ? undefined : json['variant_count'],
+        'startedAt': json['started_at'] == null ? undefined : (new Date(json['started_at'])),
+        'completedAt': json['completed_at'] == null ? undefined : (new Date(json['completed_at'])),
+        'recipientCount': json['recipient_count'] == null ? undefined : json['recipient_count'],
+        'isAbTest': json['is_ab_test'] == null ? undefined : json['is_ab_test'],
+        'winningVariantId': json['winning_variant_id'] == null ? undefined : json['winning_variant_id'],
+        'abTestConfig': json['ab_test_config'] == null ? undefined : json['ab_test_config'],
+        'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
         'stats': json['stats'] == null ? undefined : CampaignStatsFromJSON(json['stats']),
+        'openRate': json['open_rate'] == null ? undefined : json['open_rate'],
+        'clickRate': json['click_rate'] == null ? undefined : json['click_rate'],
         'createdAt': (new Date(json['created_at'])),
         'updatedAt': json['updated_at'] == null ? undefined : (new Date(json['updated_at'])),
     };
@@ -187,18 +284,32 @@ export function CampaignToJSONTyped(value?: Campaign | null, ignoreDiscriminator
     return {
         
         'id': value['id'],
+        'account_id': value['accountId'],
         'name': value['name'],
         'status': value['status'],
-        'list_id': value['listId'],
         'domain_id': value['domainId'],
-        'from_email': value['fromEmail'],
-        'from_name': value['fromName'],
+        'subject': value['subject'],
+        'from_address': value['fromAddress'],
         'reply_to': value['replyTo'],
+        'html_body': value['htmlBody'],
+        'text_body': value['textBody'],
+        'html_body_dark': value['htmlBodyDark'],
+        'text_body_dark': value['textBodyDark'],
+        'campaign_type': value['campaignType'],
+        'auto_detect_schema': value['autoDetectSchema'],
+        'promo_annotations': value['promoAnnotations'],
+        'throwaway_policy': value['throwawayPolicy'],
         'scheduled_at': value['scheduledAt'] == null ? value['scheduledAt'] : value['scheduledAt'].toISOString(),
-        'sent_at': value['sentAt'] == null ? value['sentAt'] : value['sentAt'].toISOString(),
-        'cancelled_at': value['cancelledAt'] == null ? value['cancelledAt'] : value['cancelledAt'].toISOString(),
-        'variant_count': value['variantCount'],
+        'started_at': value['startedAt'] == null ? value['startedAt'] : value['startedAt'].toISOString(),
+        'completed_at': value['completedAt'] == null ? value['completedAt'] : value['completedAt'].toISOString(),
+        'recipient_count': value['recipientCount'],
+        'is_ab_test': value['isAbTest'],
+        'winning_variant_id': value['winningVariantId'],
+        'ab_test_config': value['abTestConfig'],
+        'error_message': value['errorMessage'],
         'stats': CampaignStatsToJSON(value['stats']),
+        'open_rate': value['openRate'],
+        'click_rate': value['clickRate'],
         'created_at': value['createdAt'].toISOString(),
         'updated_at': value['updatedAt'] == null ? value['updatedAt'] : value['updatedAt'].toISOString(),
     };

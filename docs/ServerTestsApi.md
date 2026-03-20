@@ -36,7 +36,7 @@ async function example() {
   const api = new ServerTestsApi(config);
 
   const body = {
-    // string | Server test UUID
+    // string
     testId: testId_example,
   } satisfies GetServerTestRequest;
 
@@ -57,7 +57,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **testId** | `string` | Server test UUID | [Defaults to `undefined`] |
+| **testId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -77,8 +77,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Server test details |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

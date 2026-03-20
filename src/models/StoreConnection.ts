@@ -113,7 +113,8 @@ export const StoreConnectionPlatformEnum = {
     Woocommerce: 'woocommerce',
     Prestashop: 'prestashop',
     Shopify: 'shopify',
-    Feed: 'feed'
+    Feed: 'feed',
+    Custom: 'custom'
 } as const;
 export type StoreConnectionPlatformEnum = typeof StoreConnectionPlatformEnum[keyof typeof StoreConnectionPlatformEnum];
 

@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * Delivery and engagement statistics. Present when the campaign has started sending.
+ * Delivery and engagement statistics.
  * @export
  * @interface CampaignStats
  */
@@ -60,25 +60,19 @@ export interface CampaignStats {
      * @type {number}
      * @memberof CampaignStats
      */
-    complained?: number;
+    suppressed?: number;
     /**
      * 
      * @type {number}
      * @memberof CampaignStats
      */
-    deliveryRate?: number;
+    failed?: number;
     /**
      * 
      * @type {number}
      * @memberof CampaignStats
      */
-    openRate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CampaignStats
-     */
-    clickRate?: number;
+    conversions?: number;
 }
 
 /**
@@ -104,10 +98,9 @@ export function CampaignStatsFromJSONTyped(json: any, ignoreDiscriminator: boole
         'clicked': json['clicked'] == null ? undefined : json['clicked'],
         'bounced': json['bounced'] == null ? undefined : json['bounced'],
         'unsubscribed': json['unsubscribed'] == null ? undefined : json['unsubscribed'],
-        'complained': json['complained'] == null ? undefined : json['complained'],
-        'deliveryRate': json['delivery_rate'] == null ? undefined : json['delivery_rate'],
-        'openRate': json['open_rate'] == null ? undefined : json['open_rate'],
-        'clickRate': json['click_rate'] == null ? undefined : json['click_rate'],
+        'suppressed': json['suppressed'] == null ? undefined : json['suppressed'],
+        'failed': json['failed'] == null ? undefined : json['failed'],
+        'conversions': json['conversions'] == null ? undefined : json['conversions'],
     };
 }
 
@@ -128,10 +121,9 @@ export function CampaignStatsToJSONTyped(value?: CampaignStats | null, ignoreDis
         'clicked': value['clicked'],
         'bounced': value['bounced'],
         'unsubscribed': value['unsubscribed'],
-        'complained': value['complained'],
-        'delivery_rate': value['deliveryRate'],
-        'open_rate': value['openRate'],
-        'click_rate': value['clickRate'],
+        'suppressed': value['suppressed'],
+        'failed': value['failed'],
+        'conversions': value['conversions'],
     };
 }
 

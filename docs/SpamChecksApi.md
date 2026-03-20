@@ -37,7 +37,7 @@ async function example() {
   const api = new SpamChecksApi(config);
 
   const body = {
-    // string | Spam check ID
+    // string
     checkId: checkId_example,
   } satisfies DeleteSpamCheckRequest;
 
@@ -58,7 +58,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **checkId** | `string` | Spam check ID | [Defaults to `undefined`] |
+| **checkId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -78,8 +78,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Spam check deleted |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -110,7 +110,7 @@ async function example() {
   const api = new SpamChecksApi(config);
 
   const body = {
-    // string | Spam check UUID
+    // string
     checkId: checkId_example,
   } satisfies GetSpamCheckRequest;
 
@@ -131,7 +131,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **checkId** | `string` | Spam check UUID | [Defaults to `undefined`] |
+| **checkId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -151,8 +151,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Spam check details |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

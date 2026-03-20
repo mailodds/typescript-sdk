@@ -7,11 +7,11 @@ Per-check scoring breakdown
 
 Name | Type
 ------------ | -------------
-`dkim` | [IdentityScoreCheck](IdentityScoreCheck.md)
 `spf` | [IdentityScoreCheck](IdentityScoreCheck.md)
+`dkim` | [IdentityScoreCheck](IdentityScoreCheck.md)
 `dmarc` | [IdentityScoreCheck](IdentityScoreCheck.md)
-`mx` | [IdentityScoreCheck](IdentityScoreCheck.md)
-`returnPath` | [IdentityScoreCheck](IdentityScoreCheck.md)
+`bounce` | [IdentityScoreCheck](IdentityScoreCheck.md)
+`tracking` | [IdentityScoreCheck](IdentityScoreCheck.md)
 `bimi` | [IdentityScoreCheck](IdentityScoreCheck.md)
 
 ## Example
@@ -21,11 +21,11 @@ import type { SendingDomainIdentityScoreBreakdown } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
-  "dkim": null,
   "spf": null,
+  "dkim": null,
   "dmarc": null,
-  "mx": null,
-  "returnPath": null,
+  "bounce": null,
+  "tracking": null,
   "bimi": null,
 } satisfies SendingDomainIdentityScoreBreakdown
 

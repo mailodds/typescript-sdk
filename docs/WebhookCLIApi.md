@@ -78,6 +78,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Session created |  -  |
+| **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -109,7 +110,7 @@ async function example() {
   const api = new WebhookCLIApi(config);
 
   const body = {
-    // string | Session ID
+    // string
     sessionId: sessionId_example,
   } satisfies DeleteWebhookCliSessionRequest;
 
@@ -130,7 +131,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **sessionId** | `string` | Session ID | [Defaults to `undefined`] |
+| **sessionId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -150,8 +151,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Session closed |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -254,7 +255,7 @@ async function example() {
   const api = new WebhookCLIApi(config);
 
   const body = {
-    // number | Delivery ID
+    // number
     deliveryId: 56,
   } satisfies ReplayWebhookDeliveryRequest;
 
@@ -275,7 +276,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **deliveryId** | `number` | Delivery ID | [Defaults to `undefined`] |
+| **deliveryId** | `number` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -295,8 +296,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Delivery replayed |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

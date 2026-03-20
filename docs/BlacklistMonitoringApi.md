@@ -111,7 +111,7 @@ async function example() {
   const api = new BlacklistMonitoringApi(config);
 
   const body = {
-    // string | Monitor UUID
+    // string
     monitorId: monitorId_example,
   } satisfies DeleteBlacklistMonitorRequest;
 
@@ -132,7 +132,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **monitorId** | `string` | Monitor UUID | [Defaults to `undefined`] |
+| **monitorId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -152,8 +152,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Monitor deleted |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -184,7 +184,7 @@ async function example() {
   const api = new BlacklistMonitoringApi(config);
 
   const body = {
-    // string | Monitor UUID
+    // string
     monitorId: monitorId_example,
     // number (optional)
     page: 56,
@@ -209,7 +209,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **monitorId** | `string` | Monitor UUID | [Defaults to `undefined`] |
+| **monitorId** | `string` |  | [Defaults to `undefined`] |
 | **page** | `number` |  | [Optional] [Defaults to `1`] |
 | **perPage** | `number` |  | [Optional] [Defaults to `20`] |
 
@@ -231,8 +231,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Check history |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -327,7 +327,7 @@ async function example() {
   const api = new BlacklistMonitoringApi(config);
 
   const body = {
-    // string | Monitor UUID
+    // string
     monitorId: monitorId_example,
   } satisfies RunBlacklistCheckRequest;
 
@@ -348,7 +348,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **monitorId** | `string` | Monitor UUID | [Defaults to `undefined`] |
+| **monitorId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -368,8 +368,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Check result |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

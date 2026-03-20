@@ -37,7 +37,7 @@ async function example() {
   const api = new ProductsApi(config);
 
   const body = {
-    // string | Store connection UUID
+    // string
     storeId: storeId_example,
     // BatchProductsRequest
     batchProductsRequest: ...,
@@ -60,7 +60,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **storeId** | `string` | Store connection UUID | [Defaults to `undefined`] |
+| **storeId** | `string` |  | [Defaults to `undefined`] |
 | **batchProductsRequest** | [BatchProductsRequest](BatchProductsRequest.md) |  | |
 
 ### Return type
@@ -81,9 +81,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Batch results |  -  |
+| **404** | Resource not found |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **404** | Resource not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -187,7 +187,7 @@ async function example() {
   const api = new ProductsApi(config);
 
   const body = {
-    // string | Product UUID
+    // string
     productId: productId_example,
   } satisfies GetProductRequest;
 
@@ -208,7 +208,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **productId** | `string` | Product UUID | [Defaults to `undefined`] |
+| **productId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -228,8 +228,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Product details |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

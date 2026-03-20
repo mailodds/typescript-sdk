@@ -79,9 +79,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Alert rule created |  -  |
+| **403** | Forbidden - Insufficient permissions or no credits |  -  |
 | **400** | Bad request |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
-| **403** | Forbidden - Insufficient permissions or no credits |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -112,7 +112,7 @@ async function example() {
   const api = new AlertRulesApi(config);
 
   const body = {
-    // string | Alert rule ID
+    // string
     ruleId: ruleId_example,
   } satisfies DeleteAlertRuleRequest;
 
@@ -133,7 +133,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **ruleId** | `string` | Alert rule ID | [Defaults to `undefined`] |
+| **ruleId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -153,9 +153,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Alert rule deleted |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -186,7 +186,7 @@ async function example() {
   const api = new AlertRulesApi(config);
 
   const body = {
-    // string | Alert rule ID
+    // string
     ruleId: ruleId_example,
   } satisfies GetAlertRuleRequest;
 
@@ -207,7 +207,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **ruleId** | `string` | Alert rule ID | [Defaults to `undefined`] |
+| **ruleId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -227,9 +227,9 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Alert rule details |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
 | **404** | Resource not found |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -293,8 +293,8 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | List of alert rules |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -325,7 +325,7 @@ async function example() {
   const api = new AlertRulesApi(config);
 
   const body = {
-    // string | Alert rule ID
+    // string
     ruleId: ruleId_example,
     // UpdateAlertRuleRequest
     updateAlertRuleRequest: ...,
@@ -348,7 +348,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **ruleId** | `string` | Alert rule ID | [Defaults to `undefined`] |
+| **ruleId** | `string` |  | [Defaults to `undefined`] |
 | **updateAlertRuleRequest** | [UpdateAlertRuleRequest](UpdateAlertRuleRequest.md) |  | |
 
 ### Return type
@@ -369,10 +369,10 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Alert rule updated |  -  |
-| **400** | Bad request |  -  |
-| **401** | Unauthorized - Invalid or missing API key |  -  |
 | **403** | Forbidden - Insufficient permissions or no credits |  -  |
 | **404** | Resource not found |  -  |
+| **400** | Bad request |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

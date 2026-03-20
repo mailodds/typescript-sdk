@@ -16,6 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   CreateToken200Response,
+  ErrorResponse,
   IntrospectToken200Response,
   JwksResponse,
   OAuthServerMetadata,
@@ -23,6 +24,8 @@ import type {
 import {
     CreateToken200ResponseFromJSON,
     CreateToken200ResponseToJSON,
+    ErrorResponseFromJSON,
+    ErrorResponseToJSON,
     IntrospectToken200ResponseFromJSON,
     IntrospectToken200ResponseToJSON,
     JwksResponseFromJSON,
