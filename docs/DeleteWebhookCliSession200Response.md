@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`deleted` | boolean
 `status` | string
 
 ## Example
@@ -15,6 +16,7 @@ import type { DeleteWebhookCliSession200Response } from '@mailodds/sdk'
 
 // TODO: Update the object below with actual values
 const example = {
+  "deleted": null,
   "status": null,
 } satisfies DeleteWebhookCliSession200Response
 

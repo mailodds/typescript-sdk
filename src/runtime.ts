@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "https://api.mailodds.com/v1".replace(/\/+$/, "");
+export const BASE_PATH = "https://api.mailodds.com".replace(/\/+$/, "");
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path

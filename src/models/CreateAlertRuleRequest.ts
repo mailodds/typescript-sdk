@@ -26,7 +26,7 @@ export interface CreateAlertRuleRequest {
      */
     metric: string;
     /**
-     * Threshold value to trigger alert
+     * Threshold value (0-1, e.g. 0.02 for 2%)
      * @type {number}
      * @memberof CreateAlertRuleRequest
      */
@@ -42,7 +42,7 @@ export interface CreateAlertRuleRequest {
      * @type {number}
      * @memberof CreateAlertRuleRequest
      */
-    windowMinutes?: number;
+    windowMinutes?: CreateAlertRuleRequestWindowMinutesEnum;
     /**
      * 
      * @type {boolean}
@@ -50,6 +50,19 @@ export interface CreateAlertRuleRequest {
      */
     enabled?: boolean;
 }
+
+
+/**
+ * @export
+ */
+export const CreateAlertRuleRequestWindowMinutesEnum = {
+    NUMBER_15: 15,
+    NUMBER_60: 60,
+    NUMBER_1440: 1440,
+    NUMBER_2880: 2880
+} as const;
+export type CreateAlertRuleRequestWindowMinutesEnum = typeof CreateAlertRuleRequestWindowMinutesEnum[keyof typeof CreateAlertRuleRequestWindowMinutesEnum];
+
 
 /**
  * Check if a given object implements the CreateAlertRuleRequest interface.

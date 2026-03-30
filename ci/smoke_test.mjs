@@ -307,7 +307,7 @@ try {
     ruleId: alertRuleId,
     updateAlertRuleRequest: { threshold: 0.10 },
   });
-  check("alert.update.threshold", 10.0, updateResp.rule.threshold);
+  check("alert.update.threshold", 0.10, updateResp.rule.threshold);
 
   const listResp = await alertApi.listAlertRules();
   check("alert.list.count", true, (listResp.rules || []).length > 0);

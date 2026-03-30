@@ -21,6 +21,12 @@ import { mapValues } from '../runtime';
 export interface DeleteWebhookCliSession200Response {
     /**
      * 
+     * @type {boolean}
+     * @memberof DeleteWebhookCliSession200Response
+     */
+    deleted?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof DeleteWebhookCliSession200Response
      */
@@ -44,6 +50,7 @@ export function DeleteWebhookCliSession200ResponseFromJSONTyped(json: any, ignor
     }
     return {
         
+        'deleted': json['deleted'] == null ? undefined : json['deleted'],
         'status': json['status'] == null ? undefined : json['status'],
     };
 }
@@ -59,6 +66,7 @@ export function DeleteWebhookCliSession200ResponseToJSONTyped(value?: DeleteWebh
 
     return {
         
+        'deleted': value['deleted'],
         'status': value['status'],
     };
 }

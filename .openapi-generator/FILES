@@ -36,8 +36,6 @@ docs/BounceAnalysisResponse.md
 docs/BounceAnalysisResponseAnalysis.md
 docs/BounceAnalysisResponseAnalysisCategories.md
 docs/BounceAnalysisResponseAnalysisTopDomainsInner.md
-docs/BulkUpdateProducts200Response.md
-docs/BulkUpdateProductsRequest.md
 docs/BulkValidationApi.md
 docs/Campaign.md
 docs/CampaignAnalyticsApi.md
@@ -70,7 +68,6 @@ docs/CreatePolicyFromPresetRequest.md
 docs/CreatePolicyRequest.md
 docs/CreateSendingDomain201Response.md
 docs/CreateSendingDomainRequest.md
-docs/CreateStore201Response.md
 docs/CreateStoreRequest.md
 docs/CreateToken200Response.md
 docs/CreateVariantRequest.md
@@ -93,7 +90,6 @@ docs/DeliverRequestToInner.md
 docs/DeliverResponse.md
 docs/DeliverResponseDelivery.md
 docs/DeliverabilityAdvisorApi.md
-docs/DisconnectStore200Response.md
 docs/DmarcDomain.md
 docs/DomainInsightsApi.md
 docs/EmailSendingApi.md
@@ -152,7 +148,6 @@ docs/GetMessageEvents200ResponseSummary.md
 docs/GetOooStatus200Response.md
 docs/GetPixelSettings200Response.md
 docs/GetPresignedUploadRequest.md
-docs/GetProduct200Response.md
 docs/GetReplyForwarding200Response.md
 docs/GetReputation200Response.md
 docs/GetReputationTimeline200Response.md
@@ -168,7 +163,6 @@ docs/GetSendingDomainIdentityScore200Response.md
 docs/GetSendingStats200Response.md
 docs/GetSendingStats200ResponseStats.md
 docs/GetSubscribers200Response.md
-docs/GetSyncJobErrors200Response.md
 docs/GlobalSuppressionsApi.md
 docs/HealthCheck200Response.md
 docs/ISPFBLGuidesApi.md
@@ -194,8 +188,6 @@ docs/ListOooContacts200Response.md
 docs/ListSendingDomains200Response.md
 docs/ListServerTests200Response.md
 docs/ListSpamChecks200Response.md
-docs/ListStores200Response.md
-docs/ListSyncJobs200Response.md
 docs/ListWebhookDeliveries200Response.md
 docs/ListWebhookDeliveries200ResponseDeliveriesInner.md
 docs/ManagedSPFApi.md
@@ -204,6 +196,7 @@ docs/McpCapabilitiesPillarsInner.md
 docs/McpCapabilitiesPillarsInnerToolsInner.md
 docs/MessageEventsApi.md
 docs/OAuth20Api.md
+docs/OAuthClientRegistration.md
 docs/OAuthServerMetadata.md
 docs/OutOfOfficeApi.md
 docs/Pagination.md
@@ -224,12 +217,10 @@ docs/ProductFacets.md
 docs/ProductFacetsCategoriesInner.md
 docs/ProductFacetsPriceRangesInner.md
 docs/ProductFacetsStoresInner.md
-docs/ProductsApi.md
 docs/QueryContactList200Response.md
 docs/QueryContactList200ResponseEmailsInner.md
 docs/QueryContactListRequest.md
 docs/QueryContactListRequestFiltersInner.md
-docs/QueryProducts200Response.md
 docs/RemoveSuppression200Response.md
 docs/RemoveSuppressionRequest.md
 docs/ReplayWebhookDelivery200Response.md
@@ -261,7 +252,6 @@ docs/SpamCheck.md
 docs/SpamCheckChecks.md
 docs/SpamChecksApi.md
 docs/StoreConnection.md
-docs/StoreConnectionsApi.md
 docs/StoreProduct.md
 docs/SubscribeRequest.md
 docs/Subscriber.md
@@ -296,7 +286,6 @@ docs/UpdateOooContactRequest.md
 docs/UpdatePixelSettingsRequest.md
 docs/UpdatePolicyRequest.md
 docs/UpdateReplyForwardingRequest.md
-docs/UpdateStoreRequest.md
 docs/ValidateBatch200Response.md
 docs/ValidateBatch200ResponseSummary.md
 docs/ValidateBatchRequest.md
@@ -338,7 +327,6 @@ src/apis/OAuth20Api.ts
 src/apis/OutOfOfficeApi.ts
 src/apis/PipelineSimulationApi.ts
 src/apis/PixelSettingsApi.ts
-src/apis/ProductsApi.ts
 src/apis/ReputationApi.ts
 src/apis/ReputationPoliciesApi.ts
 src/apis/SenderHealthApi.ts
@@ -346,7 +334,6 @@ src/apis/SendingDelegationsApi.ts
 src/apis/SendingDomainsApi.ts
 src/apis/ServerTestsApi.ts
 src/apis/SpamChecksApi.ts
-src/apis/StoreConnectionsApi.ts
 src/apis/SubscriberListsApi.ts
 src/apis/SuppressionListsApi.ts
 src/apis/SystemApi.ts
@@ -386,8 +373,6 @@ src/models/BounceAnalysisResponse.ts
 src/models/BounceAnalysisResponseAnalysis.ts
 src/models/BounceAnalysisResponseAnalysisCategories.ts
 src/models/BounceAnalysisResponseAnalysisTopDomainsInner.ts
-src/models/BulkUpdateProducts200Response.ts
-src/models/BulkUpdateProductsRequest.ts
 src/models/Campaign.ts
 src/models/CampaignResponse.ts
 src/models/CampaignStats.ts
@@ -414,7 +399,6 @@ src/models/CreatePolicyFromPresetRequest.ts
 src/models/CreatePolicyRequest.ts
 src/models/CreateSendingDomain201Response.ts
 src/models/CreateSendingDomainRequest.ts
-src/models/CreateStore201Response.ts
 src/models/CreateStoreRequest.ts
 src/models/CreateToken200Response.ts
 src/models/CreateVariantRequest.ts
@@ -434,7 +418,6 @@ src/models/DeliverRequestStructuredData.ts
 src/models/DeliverRequestToInner.ts
 src/models/DeliverResponse.ts
 src/models/DeliverResponseDelivery.ts
-src/models/DisconnectStore200Response.ts
 src/models/DmarcDomain.ts
 src/models/ErrorResponse.ts
 src/models/GetBlacklistHistory200Response.ts
@@ -487,7 +470,6 @@ src/models/GetMessageEvents200ResponseSummary.ts
 src/models/GetOooStatus200Response.ts
 src/models/GetPixelSettings200Response.ts
 src/models/GetPresignedUploadRequest.ts
-src/models/GetProduct200Response.ts
 src/models/GetReplyForwarding200Response.ts
 src/models/GetReputation200Response.ts
 src/models/GetReputationTimeline200Response.ts
@@ -503,7 +485,6 @@ src/models/GetSendingDomainIdentityScore200Response.ts
 src/models/GetSendingStats200Response.ts
 src/models/GetSendingStats200ResponseStats.ts
 src/models/GetSubscribers200Response.ts
-src/models/GetSyncJobErrors200Response.ts
 src/models/HealthCheck200Response.ts
 src/models/IdentityScoreCheck.ts
 src/models/ImportContactList200Response.ts
@@ -525,13 +506,12 @@ src/models/ListOooContacts200Response.ts
 src/models/ListSendingDomains200Response.ts
 src/models/ListServerTests200Response.ts
 src/models/ListSpamChecks200Response.ts
-src/models/ListStores200Response.ts
-src/models/ListSyncJobs200Response.ts
 src/models/ListWebhookDeliveries200Response.ts
 src/models/ListWebhookDeliveries200ResponseDeliveriesInner.ts
 src/models/McpCapabilities.ts
 src/models/McpCapabilitiesPillarsInner.ts
 src/models/McpCapabilitiesPillarsInnerToolsInner.ts
+src/models/OAuthClientRegistration.ts
 src/models/OAuthServerMetadata.ts
 src/models/Pagination.ts
 src/models/Policy.ts
@@ -553,7 +533,6 @@ src/models/QueryContactList200Response.ts
 src/models/QueryContactList200ResponseEmailsInner.ts
 src/models/QueryContactListRequest.ts
 src/models/QueryContactListRequestFiltersInner.ts
-src/models/QueryProducts200Response.ts
 src/models/RemoveSuppression200Response.ts
 src/models/RemoveSuppressionRequest.ts
 src/models/ReplayWebhookDelivery200Response.ts
@@ -608,7 +587,6 @@ src/models/UpdateOooContactRequest.ts
 src/models/UpdatePixelSettingsRequest.ts
 src/models/UpdatePolicyRequest.ts
 src/models/UpdateReplyForwardingRequest.ts
-src/models/UpdateStoreRequest.ts
 src/models/ValidateBatch200Response.ts
 src/models/ValidateBatch200ResponseSummary.ts
 src/models/ValidateBatchRequest.ts

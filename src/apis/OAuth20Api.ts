@@ -19,6 +19,7 @@ import type {
   ErrorResponse,
   IntrospectToken200Response,
   JwksResponse,
+  OAuthClientRegistration,
   OAuthServerMetadata,
 } from '../models/index';
 import {
@@ -30,6 +31,8 @@ import {
     IntrospectToken200ResponseToJSON,
     JwksResponseFromJSON,
     JwksResponseToJSON,
+    OAuthClientRegistrationFromJSON,
+    OAuthClientRegistrationToJSON,
     OAuthServerMetadataFromJSON,
     OAuthServerMetadataToJSON,
 } from '../models/index';
@@ -246,6 +249,37 @@ export class OAuth20Api extends runtime.BaseAPI {
      */
     async introspectToken(requestParameters: IntrospectTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<IntrospectToken200Response> {
         const response = await this.introspectTokenRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Dynamic Client Registration (RFC 7591). Allows MCP clients to auto-register without user interaction.
+     * Register OAuth client
+     */
+    async oauthRegisterClientRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OAuthClientRegistration>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/oauth/register`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OAuthClientRegistrationFromJSON(jsonValue));
+    }
+
+    /**
+     * Dynamic Client Registration (RFC 7591). Allows MCP clients to auto-register without user interaction.
+     * Register OAuth client
+     */
+    async oauthRegisterClient(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OAuthClientRegistration> {
+        const response = await this.oauthRegisterClientRaw(initOverrides);
         return await response.value();
     }
 

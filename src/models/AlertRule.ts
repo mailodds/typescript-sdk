@@ -32,7 +32,7 @@ export interface AlertRule {
      */
     metric?: string;
     /**
-     * Alert threshold value
+     * Alert threshold value (0-1)
      * @type {number}
      * @memberof AlertRule
      */
@@ -48,7 +48,7 @@ export interface AlertRule {
      * @type {number}
      * @memberof AlertRule
      */
-    windowMinutes?: number;
+    windowMinutes?: AlertRuleWindowMinutesEnum;
     /**
      * 
      * @type {boolean}
@@ -68,6 +68,19 @@ export interface AlertRule {
      */
     updatedAt?: Date;
 }
+
+
+/**
+ * @export
+ */
+export const AlertRuleWindowMinutesEnum = {
+    NUMBER_15: 15,
+    NUMBER_60: 60,
+    NUMBER_1440: 1440,
+    NUMBER_2880: 2880
+} as const;
+export type AlertRuleWindowMinutesEnum = typeof AlertRuleWindowMinutesEnum[keyof typeof AlertRuleWindowMinutesEnum];
+
 
 /**
  * Check if a given object implements the AlertRule interface.
