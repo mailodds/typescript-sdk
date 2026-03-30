@@ -44,11 +44,11 @@ export interface AlertRule {
      */
     channel?: string;
     /**
-     * Evaluation window in minutes
+     * Evaluation window in minutes (15, 60, 1440, or 2880)
      * @type {number}
      * @memberof AlertRule
      */
-    windowMinutes?: AlertRuleWindowMinutesEnum;
+    windowMinutes?: number;
     /**
      * 
      * @type {boolean}
@@ -68,19 +68,6 @@ export interface AlertRule {
      */
     updatedAt?: Date;
 }
-
-
-/**
- * @export
- */
-export const AlertRuleWindowMinutesEnum = {
-    NUMBER_15: 15,
-    NUMBER_60: 60,
-    NUMBER_1440: 1440,
-    NUMBER_2880: 2880
-} as const;
-export type AlertRuleWindowMinutesEnum = typeof AlertRuleWindowMinutesEnum[keyof typeof AlertRuleWindowMinutesEnum];
-
 
 /**
  * Check if a given object implements the AlertRule interface.

@@ -38,11 +38,11 @@ export interface CreateAlertRuleRequest {
      */
     channel: string;
     /**
-     * Evaluation window in minutes
+     * Evaluation window in minutes (15, 60, 1440, or 2880)
      * @type {number}
      * @memberof CreateAlertRuleRequest
      */
-    windowMinutes?: CreateAlertRuleRequestWindowMinutesEnum;
+    windowMinutes?: number;
     /**
      * 
      * @type {boolean}
@@ -50,19 +50,6 @@ export interface CreateAlertRuleRequest {
      */
     enabled?: boolean;
 }
-
-
-/**
- * @export
- */
-export const CreateAlertRuleRequestWindowMinutesEnum = {
-    NUMBER_15: 15,
-    NUMBER_60: 60,
-    NUMBER_1440: 1440,
-    NUMBER_2880: 2880
-} as const;
-export type CreateAlertRuleRequestWindowMinutesEnum = typeof CreateAlertRuleRequestWindowMinutesEnum[keyof typeof CreateAlertRuleRequestWindowMinutesEnum];
-
 
 /**
  * Check if a given object implements the CreateAlertRuleRequest interface.

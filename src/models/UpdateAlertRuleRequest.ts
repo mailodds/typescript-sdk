@@ -38,11 +38,11 @@ export interface UpdateAlertRuleRequest {
      */
     channel?: string;
     /**
-     * 
+     * Evaluation window in minutes (15, 60, 1440, or 2880)
      * @type {number}
      * @memberof UpdateAlertRuleRequest
      */
-    windowMinutes?: UpdateAlertRuleRequestWindowMinutesEnum;
+    windowMinutes?: number;
     /**
      * 
      * @type {boolean}
@@ -50,19 +50,6 @@ export interface UpdateAlertRuleRequest {
      */
     enabled?: boolean;
 }
-
-
-/**
- * @export
- */
-export const UpdateAlertRuleRequestWindowMinutesEnum = {
-    NUMBER_15: 15,
-    NUMBER_60: 60,
-    NUMBER_1440: 1440,
-    NUMBER_2880: 2880
-} as const;
-export type UpdateAlertRuleRequestWindowMinutesEnum = typeof UpdateAlertRuleRequestWindowMinutesEnum[keyof typeof UpdateAlertRuleRequestWindowMinutesEnum];
-
 
 /**
  * Check if a given object implements the UpdateAlertRuleRequest interface.
