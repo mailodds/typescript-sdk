@@ -49,6 +49,7 @@ docs/ClassifyContent200ResponseContentCheck.md
 docs/ClassifyContentRequest.md
 docs/ConfigurationSetsApi.md
 docs/ConfirmSubscription200Response.md
+docs/ConnectDnsProviderRequest.md
 docs/ContactList.md
 docs/ContactListsApi.md
 docs/ContentClassificationApi.md
@@ -69,6 +70,7 @@ docs/CreatePolicyRequest.md
 docs/CreateSendingDomain201Response.md
 docs/CreateSendingDomainRequest.md
 docs/CreateStoreRequest.md
+docs/CreateStorefrontDomainRequest.md
 docs/CreateToken200Response.md
 docs/CreateVariantRequest.md
 docs/CreateWebhookCliSession201Response.md
@@ -78,6 +80,7 @@ docs/CrossReferenceBounces200ResponseCrossReference.md
 docs/CrossReferenceBounces200ResponseCrossReferenceEntriesInner.md
 docs/DKIMManagementApi.md
 docs/DMARCMonitoringApi.md
+docs/DNSProviderApi.md
 docs/DeleteJob200Response.md
 docs/DeleteOooContact200Response.md
 docs/DeletePolicy200Response.md
@@ -253,6 +256,7 @@ docs/SpamCheckChecks.md
 docs/SpamChecksApi.md
 docs/StoreConnection.md
 docs/StoreProduct.md
+docs/StorefrontDomainsApi.md
 docs/SubscribeRequest.md
 docs/Subscriber.md
 docs/SubscriberList.md
@@ -310,6 +314,7 @@ src/apis/ContactListsApi.ts
 src/apis/ContentClassificationApi.ts
 src/apis/DKIMManagementApi.ts
 src/apis/DMARCMonitoringApi.ts
+src/apis/DNSProviderApi.ts
 src/apis/DeliverabilityAdvisorApi.ts
 src/apis/DomainInsightsApi.ts
 src/apis/EmailSendingApi.ts
@@ -334,6 +339,7 @@ src/apis/SendingDelegationsApi.ts
 src/apis/SendingDomainsApi.ts
 src/apis/ServerTestsApi.ts
 src/apis/SpamChecksApi.ts
+src/apis/StorefrontDomainsApi.ts
 src/apis/SubscriberListsApi.ts
 src/apis/SuppressionListsApi.ts
 src/apis/SystemApi.ts
@@ -382,6 +388,7 @@ src/models/ClassifyContent200Response.ts
 src/models/ClassifyContent200ResponseContentCheck.ts
 src/models/ClassifyContentRequest.ts
 src/models/ConfirmSubscription200Response.ts
+src/models/ConnectDnsProviderRequest.ts
 src/models/ContactList.ts
 src/models/CorrectInboundMessageRequest.ts
 src/models/CreateAlertRule201Response.ts
@@ -400,6 +407,7 @@ src/models/CreatePolicyRequest.ts
 src/models/CreateSendingDomain201Response.ts
 src/models/CreateSendingDomainRequest.ts
 src/models/CreateStoreRequest.ts
+src/models/CreateStorefrontDomainRequest.ts
 src/models/CreateToken200Response.ts
 src/models/CreateVariantRequest.ts
 src/models/CreateWebhookCliSession201Response.ts

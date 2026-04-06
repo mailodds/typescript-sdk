@@ -19,6 +19,7 @@ import type {
   CreateCampaignRequest,
   CreateCampaignVariant201Response,
   CreateVariantRequest,
+  DeletePolicyRule200Response,
   ErrorResponse,
   ListCampaigns200Response,
   ScheduleCampaignRequest,
@@ -32,6 +33,8 @@ import {
     CreateCampaignVariant201ResponseToJSON,
     CreateVariantRequestFromJSON,
     CreateVariantRequestToJSON,
+    DeletePolicyRule200ResponseFromJSON,
+    DeletePolicyRule200ResponseToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     ListCampaigns200ResponseFromJSON,
@@ -51,6 +54,10 @@ export interface CreateCampaignOperationRequest {
 export interface CreateCampaignVariantRequest {
     campaignId: string;
     createVariantRequest: CreateVariantRequest;
+}
+
+export interface DeleteCampaignRequest {
+    campaignId: string;
 }
 
 export interface GetCampaignRequest {
@@ -227,6 +234,53 @@ export class CampaignsApi extends runtime.BaseAPI {
      */
     async createCampaignVariant(requestParameters: CreateCampaignVariantRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateCampaignVariant201Response> {
         const response = await this.createCampaignVariantRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Permanently delete a campaign. Only campaigns in draft, sent, failed, or cancelled status can be deleted.
+     * Delete a campaign
+     */
+    async deleteCampaignRaw(requestParameters: DeleteCampaignRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeletePolicyRule200Response>> {
+        if (requestParameters['campaignId'] == null) {
+            throw new runtime.RequiredError(
+                'campaignId',
+                'Required parameter "campaignId" was null or undefined when calling deleteCampaign().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/v1/campaigns/{campaign_id}`;
+        urlPath = urlPath.replace(`{${"campaign_id"}}`, encodeURIComponent(String(requestParameters['campaignId'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeletePolicyRule200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Permanently delete a campaign. Only campaigns in draft, sent, failed, or cancelled status can be deleted.
+     * Delete a campaign
+     */
+    async deleteCampaign(requestParameters: DeleteCampaignRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletePolicyRule200Response> {
+        const response = await this.deleteCampaignRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

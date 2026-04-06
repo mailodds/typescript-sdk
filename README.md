@@ -79,6 +79,7 @@ All URIs are relative to *https://api.mailodds.com*
 *CampaignsApi* | [**cancelCampaign**](docs/CampaignsApi.md#cancelcampaign) | **POST** /v1/campaigns/{campaign_id}/cancel | Cancel a campaign
 *CampaignsApi* | [**createCampaign**](docs/CampaignsApi.md#createcampaignoperation) | **POST** /v1/campaigns | Create a campaign
 *CampaignsApi* | [**createCampaignVariant**](docs/CampaignsApi.md#createcampaignvariant) | **POST** /v1/campaigns/{campaign_id}/variants | Create A/B variant
+*CampaignsApi* | [**deleteCampaign**](docs/CampaignsApi.md#deletecampaign) | **DELETE** /v1/campaigns/{campaign_id} | Delete a campaign
 *CampaignsApi* | [**getCampaign**](docs/CampaignsApi.md#getcampaign) | **GET** /v1/campaigns/{campaign_id} | Get campaign with stats
 *CampaignsApi* | [**listCampaigns**](docs/CampaignsApi.md#listcampaigns) | **GET** /v1/campaigns | List campaigns
 *CampaignsApi* | [**scheduleCampaign**](docs/CampaignsApi.md#schedulecampaignoperation) | **POST** /v1/campaigns/{campaign_id}/schedule | Schedule a campaign
@@ -111,6 +112,9 @@ All URIs are relative to *https://api.mailodds.com*
 *DMARCMonitoringApi* | [**getDmarcTrend**](docs/DMARCMonitoringApi.md#getdmarctrend) | **GET** /v1/dmarc-domains/{domain_id}/trend | Get DMARC trend
 *DMARCMonitoringApi* | [**listDmarcDomains**](docs/DMARCMonitoringApi.md#listdmarcdomains) | **GET** /v1/dmarc-domains | List DMARC domains
 *DMARCMonitoringApi* | [**verifyDmarcDomain**](docs/DMARCMonitoringApi.md#verifydmarcdomain) | **POST** /v1/dmarc-domains/{domain_id}/verify | Verify DMARC DNS records
+*DNSProviderApi* | [**connectDnsProvider**](docs/DNSProviderApi.md#connectdnsprovideroperation) | **POST** /v1/account/dns-provider | Connect DNS provider
+*DNSProviderApi* | [**disconnectDnsProvider**](docs/DNSProviderApi.md#disconnectdnsprovider) | **DELETE** /v1/account/dns-provider | Disconnect DNS provider
+*DNSProviderApi* | [**getDnsProvider**](docs/DNSProviderApi.md#getdnsprovider) | **GET** /v1/account/dns-provider | Get DNS provider status
 *DeliverabilityAdvisorApi* | [**dismissDeliverabilityRecommendation**](docs/DeliverabilityAdvisorApi.md#dismissdeliverabilityrecommendation) | **POST** /v1/deliverability/recommendations/{recommendation_id}/dismiss | Dismiss a deliverability recommendation
 *DeliverabilityAdvisorApi* | [**getDeliverabilityRecommendations**](docs/DeliverabilityAdvisorApi.md#getdeliverabilityrecommendations) | **GET** /v1/deliverability/recommendations | Get deliverability recommendations
 *DomainInsightsApi* | [**getDomainHookEffectiveness**](docs/DomainInsightsApi.md#getdomainhookeffectiveness) | **GET** /v1/sending-domains/{domain_id}/insights/hook-effectiveness | Get hook effectiveness metrics
@@ -200,6 +204,11 @@ All URIs are relative to *https://api.mailodds.com*
 *SpamChecksApi* | [**getSpamCheck**](docs/SpamChecksApi.md#getspamcheck) | **GET** /v1/spam-checks/{check_id} | Get spam check
 *SpamChecksApi* | [**listSpamChecks**](docs/SpamChecksApi.md#listspamchecks) | **GET** /v1/spam-checks | List spam checks
 *SpamChecksApi* | [**runSpamCheck**](docs/SpamChecksApi.md#runspamcheckoperation) | **POST** /v1/spam-checks | Run spam check
+*StorefrontDomainsApi* | [**createStorefrontDomain**](docs/StorefrontDomainsApi.md#createstorefrontdomainoperation) | **POST** /v1/storefront-domains | Add a custom storefront domain
+*StorefrontDomainsApi* | [**deleteStorefrontDomain**](docs/StorefrontDomainsApi.md#deletestorefrontdomain) | **DELETE** /v1/storefront-domains/{domain_id} | Delete a storefront domain
+*StorefrontDomainsApi* | [**getStorefrontDomain**](docs/StorefrontDomainsApi.md#getstorefrontdomain) | **GET** /v1/storefront-domains/{domain_id} | Get storefront domain details
+*StorefrontDomainsApi* | [**listStorefrontDomains**](docs/StorefrontDomainsApi.md#liststorefrontdomains) | **GET** /v1/storefront-domains | List storefront domains
+*StorefrontDomainsApi* | [**verifyStorefrontDomain**](docs/StorefrontDomainsApi.md#verifystorefrontdomain) | **POST** /v1/storefront-domains/{domain_id}/verify | Verify storefront domain DNS
 *SubscriberListsApi* | [**confirmSubscription**](docs/SubscriberListsApi.md#confirmsubscription) | **GET** /v1/confirm/{token} | Confirm subscription
 *SubscriberListsApi* | [**createList**](docs/SubscriberListsApi.md#createlistoperation) | **POST** /v1/lists | Create a subscriber list
 *SubscriberListsApi* | [**deleteList**](docs/SubscriberListsApi.md#deletelist) | **DELETE** /v1/lists/{list_id} | Delete a subscriber list
@@ -281,6 +290,7 @@ All URIs are relative to *https://api.mailodds.com*
 - [ClassifyContent200ResponseContentCheck](docs/ClassifyContent200ResponseContentCheck.md)
 - [ClassifyContentRequest](docs/ClassifyContentRequest.md)
 - [ConfirmSubscription200Response](docs/ConfirmSubscription200Response.md)
+- [ConnectDnsProviderRequest](docs/ConnectDnsProviderRequest.md)
 - [ContactList](docs/ContactList.md)
 - [CorrectInboundMessageRequest](docs/CorrectInboundMessageRequest.md)
 - [CreateAlertRule201Response](docs/CreateAlertRule201Response.md)
@@ -299,6 +309,7 @@ All URIs are relative to *https://api.mailodds.com*
 - [CreateSendingDomain201Response](docs/CreateSendingDomain201Response.md)
 - [CreateSendingDomainRequest](docs/CreateSendingDomainRequest.md)
 - [CreateStoreRequest](docs/CreateStoreRequest.md)
+- [CreateStorefrontDomainRequest](docs/CreateStorefrontDomainRequest.md)
 - [CreateToken200Response](docs/CreateToken200Response.md)
 - [CreateVariantRequest](docs/CreateVariantRequest.md)
 - [CreateWebhookCliSession201Response](docs/CreateWebhookCliSession201Response.md)

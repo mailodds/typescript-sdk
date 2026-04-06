@@ -7,6 +7,7 @@ All URIs are relative to *https://api.mailodds.com*
 | [**cancelCampaign**](CampaignsApi.md#cancelcampaign) | **POST** /v1/campaigns/{campaign_id}/cancel | Cancel a campaign |
 | [**createCampaign**](CampaignsApi.md#createcampaignoperation) | **POST** /v1/campaigns | Create a campaign |
 | [**createCampaignVariant**](CampaignsApi.md#createcampaignvariant) | **POST** /v1/campaigns/{campaign_id}/variants | Create A/B variant |
+| [**deleteCampaign**](CampaignsApi.md#deletecampaign) | **DELETE** /v1/campaigns/{campaign_id} | Delete a campaign |
 | [**getCampaign**](CampaignsApi.md#getcampaign) | **GET** /v1/campaigns/{campaign_id} | Get campaign with stats |
 | [**listCampaigns**](CampaignsApi.md#listcampaigns) | **GET** /v1/campaigns | List campaigns |
 | [**scheduleCampaign**](CampaignsApi.md#schedulecampaignoperation) | **POST** /v1/campaigns/{campaign_id}/schedule | Schedule a campaign |
@@ -234,6 +235,79 @@ example().catch(console.error);
 | **201** | Variant created |  -  |
 | **404** | Resource not found |  -  |
 | **400** | Bad request |  -  |
+| **401** | Unauthorized - Invalid or missing API key |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteCampaign
+
+> DeletePolicyRule200Response deleteCampaign(campaignId)
+
+Delete a campaign
+
+Permanently delete a campaign. Only campaigns in draft, sent, failed, or cancelled status can be deleted.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  CampaignsApi,
+} from '@mailodds/sdk';
+import type { DeleteCampaignRequest } from '@mailodds/sdk';
+
+async function example() {
+  console.log("🚀 Testing @mailodds/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new CampaignsApi(config);
+
+  const body = {
+    // string | Campaign UUID
+    campaignId: campaignId_example,
+  } satisfies DeleteCampaignRequest;
+
+  try {
+    const data = await api.deleteCampaign(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **campaignId** | `string` | Campaign UUID | [Defaults to `undefined`] |
+
+### Return type
+
+[**DeletePolicyRule200Response**](DeletePolicyRule200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Campaign deleted |  -  |
+| **404** | Resource not found |  -  |
 | **401** | Unauthorized - Invalid or missing API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
